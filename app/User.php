@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Menu;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,6 +19,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
+
+    public function menus()
+    {
+      return $this->hasMany(Menu::class);
+    }
+    
 
     /**
      * The attributes that should be hidden for arrays.

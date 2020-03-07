@@ -130,18 +130,18 @@
                     [
                       'title' => 'Menu',
                       'icon'  => 'ni ni-cart text-info',
-                      'url'   => '',
+                      'url'   => 'menu',
                     ],
                     [
                       'title' => 'Admin',
                       'icon'  => 'ni ni-single-02 text-orange',
-                      'url'   => '',
+                      'url'   => 'admin',
                     ],
                   ];
                 @endphp
                 @foreach ($menus as $menu)
                   <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="{{ $menu['url'] }}">
                       <i class="{{ $menu['icon'] }}"></i> {{ $menu['title'] }}
                     </a>
                   </li>
