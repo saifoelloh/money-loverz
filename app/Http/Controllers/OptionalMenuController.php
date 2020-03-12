@@ -14,7 +14,11 @@ class OptionalMenuController extends Controller
      */
     public function index()
     {
-        //
+      $items = OptionalMenu::all();
+      
+      return view('pages.optional-menu', [
+        'items' => $items
+      ]);
     }
 
     /**
@@ -24,7 +28,10 @@ class OptionalMenuController extends Controller
      */
     public function create()
     {
-        //
+      $categories = OptionalMenu::select('category')->get();
+      return view('pages.optional-menu.create', [
+        'categories' => $categories
+      ]);
     }
 
     /**
@@ -35,18 +42,17 @@ class OptionalMenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\OptionalMenu  $optionalMenu
-     * @return \Illuminate\Http\Response
-     */
-    public function show(OptionalMenu $optionalMenu)
-    {
-        //
+      try {
+        OptionalMenu::create([
+          'name' => $request->name,
+          'category' => $request->category,
+          'price' => $request->price,
+        ]);
+      } catch (Exception $e) {
+        return abort(400, $e);
+      } finally {
+        return redirect()->route('optional-menu');
+      }
     }
 
     /**
@@ -55,9 +61,12 @@ class OptionalMenuController extends Controller
      * @param  \App\OptionalMenu  $optionalMenu
      * @return \Illuminate\Http\Response
      */
-    public function edit(OptionalMenu $optionalMenu)
+    public function edit($id)
     {
-        //
+      $optionalMenu = OptionalMenu::find($id);
+      return view('optional_menus.edit', [
+        'optionalMenu' => $optionalMenu
+      ]);
     }
 
     /**
@@ -67,9 +76,24 @@ class OptionalMenuController extends Controller
      * @param  \App\OptionalMenu  $optionalMenu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OptionalMenu $optionalMenu)
+    public function update(Request $request, $id)
     {
-        //
+      $optionalMenu = OptionalMenu::find($id);
+      if (!$optionalMenu) {
+        return abort(404);
+      } else {
+        try {
+          OptionalMenu::update([
+            'name' => $request->name,
+            'category' => $request->category,
+            'price' => $request->price,
+          ]);
+        } catch (Exception $e) {
+          return abort(400, $e);
+        } finally {
+          return redirect()->route('optional-menu');
+        }
+      }
     }
 
     /**
@@ -78,8 +102,19 @@ class OptionalMenuController extends Controller
      * @param  \App\OptionalMenu  $optionalMenu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OptionalMenu $optionalMenu)
+    public function destroy($id)
     {
-        //
+      $item = OptionalMenu::find($id);
+      if (!$item) {
+        return abort(404);
+      }
+
+      try {
+        $item->delete();
+      } catch (Exception $e) {
+        return abort(400, $e);
+      } finally {
+        return redirect()->route('optional_menu');
+      }
     }
 }

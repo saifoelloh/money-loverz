@@ -16,6 +16,8 @@ class CreateOptionalMenusTable extends Migration
         Schema::create('optional_menus', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('category');
+            $table->integer('price');
             $table->softDeletes();
             $table->timestamps();
         });

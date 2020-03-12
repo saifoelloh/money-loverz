@@ -11,5 +11,7 @@ class OptionalMenu extends Model
 
     protected $fillable = [
       'name',
-    ]
+      'category',
+      'price'
+    ];
 }
