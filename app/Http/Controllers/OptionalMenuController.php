@@ -2,48 +2,91 @@
 
 namespace App\Http\Controllers;
 
+use App\Menu;
 use App\OptionalMenu;
 use Illuminate\Http\Request;
 
 class OptionalMenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-      $items = OptionalMenu::all();
-      
-      return view('pages.optional-menu', [
-        'items' => $items
-      ]);
-    }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index()
+  {
+    $items = OptionalMenu::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-      $categories = OptionalMenu::select('category')->get();
-      return view('pages.optional-menu.create', [
-        'categories' => $categories
-      ]);
-    }
+    return view('pages.optional-menu', [
+      'items' => $items
+    ]);
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create($menu_id)
+  {
+    $categories = OptionalMenu::select('category')->get();
+    return view('pages.optional-menu.create', [
+      'categories' => $categories,
+      'menu' => Menu::find($menu_id),
+    ]);
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $request)
+  {
+    $menu = Menu::find($request->menu_id);
+    try {
+      $menu->optionalMenus()->create([
+        'name' => $request->name,
+        'category' => $request->category,
+        'price' => $request->price,
+      ]);
+    } catch (\Throwable $th) {
+      return abort(400, $th);
+    } finally {
+      return redirect(route('menu.show', $menu->id));
+    }
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  \App\OptionalMenu  $optionalMenu
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id)
+  {
+    $optionalMenu = OptionalMenu::find($id);
+    return view('optional_menus.edit', [
+      'optionalMenu' => $optionalMenu
+    ]);
+  }
+
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\OptionalMenu  $optionalMenu
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
+    $optionalMenu = OptionalMenu::find($id);
+    if (!$optionalMenu) {
+      return abort(404);
+    } else {
       try {
-        OptionalMenu::create([
+        OptionalMenu::update([
           'name' => $request->name,
           'category' => $request->category,
           'price' => $request->price,
@@ -54,67 +97,27 @@ class OptionalMenuController extends Controller
         return redirect()->route('optional-menu');
       }
     }
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\OptionalMenu  $optionalMenu
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-      $optionalMenu = OptionalMenu::find($id);
-      return view('optional_menus.edit', [
-        'optionalMenu' => $optionalMenu
-      ]);
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  \App\OptionalMenu  $optionalMenu
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    $item = OptionalMenu::find($id);
+    if (!$item) {
+      return abort(404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\OptionalMenu  $optionalMenu
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-      $optionalMenu = OptionalMenu::find($id);
-      if (!$optionalMenu) {
-        return abort(404);
-      } else {
-        try {
-          OptionalMenu::update([
-            'name' => $request->name,
-            'category' => $request->category,
-            'price' => $request->price,
-          ]);
-        } catch (Exception $e) {
-          return abort(400, $e);
-        } finally {
-          return redirect()->route('optional-menu');
-        }
-      }
+    try {
+      $item->delete();
+    } catch (Exception $e) {
+      return abort(400, $e);
+    } finally {
+      return redirect()->route('optional_menu');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\OptionalMenu  $optionalMenu
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-      $item = OptionalMenu::find($id);
-      if (!$item) {
-        return abort(404);
-      }
-
-      try {
-        $item->delete();
-      } catch (Exception $e) {
-        return abort(400, $e);
-      } finally {
-        return redirect()->route('optional_menu');
-      }
-    }
+  }
 }

@@ -43,13 +43,18 @@ class MenuController extends Controller
     $account = auth()->user();
     $photo = $request->file('photo')->store('public');
     $url = Storage::url($photo);
-    $temp = $account->menus()->create([
-      'name' => $request->name,
-      'description' => $request->description,
-      'price' => intval($request->price),
-      'photo' => $url,
-    ]);
-    dd($temp);
+    try {
+      $temp = $account->menus()->create([
+        'name' => $request->name,
+        'description' => $request->description,
+        'price' => intval($request->price),
+        'photo' => $url,
+      ]);
+    } catch (\Throwable $th) {
+      return abort(400, $th);
+    } finally {
+      return redirect(route('menu.index'));
+    }
   }
 
   /**
@@ -58,9 +63,13 @@ class MenuController extends Controller
    * @param  \App\Menu  $menu
    * @return \Illuminate\Http\Response
    */
-  public function show(Menu $menu)
+  public function show($id)
   {
-    //
+    $menu = Menu::find($id);
+    return view('pages.menu.show', [
+      'menu' => $menu,
+      'options' => $menu->optionalMenus
+    ]);
   }
 
   /**
@@ -85,9 +94,29 @@ class MenuController extends Controller
    * @param  \App\Menu  $menu
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Menu $menu)
+  public function update(Request $request, $id)
   {
-    //
+    $menu = Menu::find($id);
+    $photo = '';
+    if ($request->photo == null) {
+      $photo = $menu->photo;
+    } else {
+      $temp = $request->photo()->store('public');
+      $photo = Storage::url($temp);
+    }
+
+    try {
+      $menu->update([
+        'name' => $request->name,
+        'description' => $request->description,
+        'price' => intval($request->price),
+        'photo' => $photo,
+      ]);
+    } catch (\Throwable $th) {
+      return abort(400, $th);
+    } finally {
+      return redirect(route('menu.index'));
+    }
   }
 
   /**
