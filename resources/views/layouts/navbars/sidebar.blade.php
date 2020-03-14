@@ -14,7 +14,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                            <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
                         </span>
                     </div>
                 </a>
@@ -126,25 +126,25 @@
                     </a>
                 </li>
                 @php
-                  $menus = [
-                    [
-                      'title' => 'Menu',
-                      'icon'  => 'ni ni-cart text-info',
-                      'url'   => 'menu',
-                    ],
-                    [
-                      'title' => 'Admin',
-                      'icon'  => 'ni ni-single-02 text-orange',
-                      'url'   => 'admin',
-                    ],
-                  ];
+                $menus = [
+                [
+                'title' => 'Menu',
+                'icon' => 'ni ni-cart text-info',
+                'url' => route('menu.index'),
+                ],
+                [
+                'title' => 'Admin',
+                'icon' => 'ni ni-single-02 text-orange',
+                'url' => route('admin.index'),
+                ],
+                ];
                 @endphp
                 @foreach ($menus as $menu)
-                  <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ $menu['url'] }}">
-                      <i class="{{ $menu['icon'] }}"></i> {{ $menu['title'] }}
+                        <i class="{{ $menu['icon'] }}"></i> {{ $menu['title'] }}
                     </a>
-                  </li>
+                </li>
                 @endforeach
             </ul>
         </div>
