@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Adding Menu')])
 
 @section('content')
-@include('layouts.headers.cards')
+@include('users.partials.header', ['title' => __('Edit Menu')])
 
 <div class="container-fluid mt--7">
   <div class="row">
@@ -21,7 +21,8 @@
               </div>
             </div>
           </div>
-          <form action="{{ route('menu.edit', $menu->id) }}" method="post" accept-charset="utf-8">
+          <form action="{{ route('menu.update', $menu->id) }}" method="POST" accept-charset="utf-8">
+            @method('PUT')
             @csrf
             <div class="row">
               <div class="col">
@@ -74,15 +75,15 @@
             <div class="col-6">
               <form action="">
                 <div class="form-group">
-                  <input type="text" class="form-control" value="{{ $menu->name }}">
+                  <input type="text" class="form-control form-control-muted" value="{{ $menu->name }}">
                 </div>
                 <div class="form-group">
-                  <textarea class="form-control">
+                  <textarea class="form-control form-control-muted">
                   {{ $menu->description}}
                   </textarea>
                 </div>
                 <div class="form-group">
-                  <input type="number" class="form-control" value="{{ $menu->price }}">
+                  <input type="number" class="form-control form-control-muted" value="{{ $menu->price }}">
                 </div>
               </form>
             </div>

@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Adding Menu')])
 
 @section('content')
-@include('layouts.headers.cards')
+@include('users.partials.header', ['title' => __('Tambah Menu')])
 
 <div class="container-fluid mt--7">
   <div class="row">
