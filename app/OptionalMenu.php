@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OptionalMenu extends Model
 {
-    use SoftDeletes;
+  use SoftDeletes;
 
-    protected $fillable = [
-      'name',
-      'category',
-      'price'
-    ];
+  protected $fillable = [
+    'name',
+    'category',
+    'price'
+  ];
+
+  public function menu()
+  {
+    return $this->belongsTo(Menu::class);
+  }
 }

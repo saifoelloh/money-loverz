@@ -8,18 +8,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Menu extends Model
 {
-    use SoftDeletes;
+  use SoftDeletes;
 
-    protected $fillable = [
-      'name',
-      'description',
-      'price',
-      'photo',
-    ];
+  protected $fillable = [
+    'name',
+    'description',
+    'price',
+    'photo',
+  ];
 
-    public function user()
-    {
-      return $this->belongsTo(User::class);
-    }
-    
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+  public function optionalMenus()
+  {
+    return $this->hasMany(OptionalMenu::class);
+  }
 }

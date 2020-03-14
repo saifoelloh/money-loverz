@@ -18,6 +18,11 @@ class CreateOptionalMenusTable extends Migration
             $table->string('name');
             $table->string('category');
             $table->integer('price');
+            $table->unsignedBigInteger('menu_id')
+                ->foreign()
+                ->references('id')
+                ->on('menus')
+                ->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
