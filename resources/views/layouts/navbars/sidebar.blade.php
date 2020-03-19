@@ -104,27 +104,6 @@
                         </ul>
                     </div>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-key-25 text-info"></i> {{ __('Login') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}
-                    </a>
-                </li>
                 @php
                 $menus = [
                 [
