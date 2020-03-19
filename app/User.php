@@ -3,13 +3,16 @@
 namespace App;
 
 use App\Menu;
+use App\Faq;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -22,9 +25,14 @@ class User extends Authenticatable
 
     public function menus()
     {
-      return $this->hasMany(Menu::class);
+        return $this->hasMany(Menu::class);
     }
-    
+
+    public function faqs()
+    {
+        return $this->hasMany(Faq::class);
+    }
+
 
     /**
      * The attributes that should be hidden for arrays.
