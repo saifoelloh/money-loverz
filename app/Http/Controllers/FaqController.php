@@ -57,9 +57,8 @@ class FaqController extends Controller
      * @param  \App\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function show(Faq $faq)
+    public function show($id)
     {
-        //
     }
 
     /**
@@ -68,9 +67,13 @@ class FaqController extends Controller
      * @param  \App\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function edit(Faq $faq)
+    public function edit($id)
     {
-        //
+        $faq = Faq::find($id);
+
+        return view('pages.faq.edit', [
+            'faq' => $faq
+        ]);
     }
 
     /**
@@ -80,9 +83,19 @@ class FaqController extends Controller
      * @param  \App\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Faq $faq)
+    public function update(Request $request, $id)
     {
-        //
+        $faq = Faq::find($id);
+        try {
+            $faq->update([
+                'question' => $request->question,
+                'answer' => $request->answer,
+            ]);
+        } catch (\Throwable $th) {
+            return abort(400, $th);
+        } finally {
+            return redirect(route('faq.index'));
+        }
     }
 
     /**
