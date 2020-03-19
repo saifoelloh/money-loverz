@@ -14,7 +14,10 @@ class FaqController extends Controller
      */
     public function index()
     {
-        //
+        $faqs = Faq::all();
+        return view('pages.faq.index', [
+            'faqs' => $faqs
+        ]);
     }
 
     /**
@@ -24,7 +27,7 @@ class FaqController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.faq.create');
     }
 
     /**
@@ -35,7 +38,17 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $admin = auth()->user();
+        try {
+            $admin->faqs()->create([
+                'question' => $request->question,
+                'answer' => $request->answer,
+            ]);
+        } catch (\Throwable $th) {
+            return abort(400, $th);
+        } finally {
+            return redirect(route('faq.index'));
+        }
     }
 
     /**
@@ -78,8 +91,14 @@ class FaqController extends Controller
      * @param  \App\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Faq $faq)
+    public function destroy($id)
     {
-        //
+        try {
+            Faq::find($id)->delete();
+        } catch (\Throwable $th) {
+            return abort(404, $th);
+        } finally {
+            return redirect(route('faq.index'));
+        }
     }
 }
