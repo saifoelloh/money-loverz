@@ -32,7 +32,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="answer">Jawaban</label>
-                                    <input class="form-control" type="number" name="answer" id="answer" value="{{ $faq->answer }}" placeholder="satu pintu adalah ..." />
+                                    <textarea class="form-control" name="answer" id="answer">
+                                    {{$faq->answer}}
+                                    </textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">

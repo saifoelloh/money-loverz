@@ -33,17 +33,13 @@
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    @foreach($faqs as $item)
+                                    @foreach($faqs as $id => $item)
                                     <tr class="text-center">
-                                        <th> {{ $item->id }} </th>
+                                        <th> {{ $id + 1 }} </th>
                                         <td> {{ $item->question }} </td>
                                         <td> {{ $item->answer }} </td>
                                         <td> {{ $item->user->name }} </td>
                                         <td>
-                                            <a class="btn btn-icon btn-success btn-sm" href="{{ route('faq.show', $item->id) }}">
-                                                <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
-                                                <span class="btn-inner--text">detail</span>
-                                            </a>
                                             <a class="btn btn-icon btn-warning btn-sm" href="{{ route('faq.edit', $item->id) }}">
                                                 <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
                                                 <span class="btn-inner--text">edit</span>
