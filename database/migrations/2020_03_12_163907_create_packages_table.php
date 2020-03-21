@@ -17,9 +17,9 @@ class CreatePackagesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->integer('price');
             $table->string('photo');
-            $table->integer('numbers_of_items');
+            $table->unsignedInteger('price');
+            $table->unsignedInteger('total_items');
             $table->softDeletes();
             $table->timestamps();
         });

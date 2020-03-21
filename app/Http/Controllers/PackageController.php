@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PackageController extends Controller
 {
@@ -14,7 +15,10 @@ class PackageController extends Controller
      */
     public function index()
     {
-        //
+        $packages = Package::all();
+        return view('pages.package.index', [
+            'packages' => $packages
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class PackageController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.package.create');
     }
 
     /**
@@ -35,7 +39,22 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $photo = $request->file('photo')->store('public');
+        $url = Storage::url($photo);
+
+        try {
+            Package::create([
+                'name' => $request->name,
+                'photo' => $url,
+                'price' => intval($request->price),
+                'total_items' => intval($request->total_items),
+                'description' => $request->description,
+            ]);
+        } catch (\Throwable $th) {
+            return abort(400, $th);
+        } finally {
+            return redirect(route('package.index'));
+        }
     }
 
     /**
@@ -44,7 +63,7 @@ class PackageController extends Controller
      * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function show(Package $package)
+    public function show($id)
     {
         //
     }
@@ -55,9 +74,12 @@ class PackageController extends Controller
      * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function edit(Package $package)
+    public function edit($id)
     {
-        //
+        $package = Package::find($id);
+        return view('pages.package.edit', [
+            'package' => $package
+        ]);
     }
 
     /**
@@ -67,9 +89,30 @@ class PackageController extends Controller
      * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Package $package)
+    public function update(Request $request, $id)
     {
-        //
+        $package = Package::find($id);
+
+        if ($request->file('photo')) {
+            $photo = $request->file('photo')->store('public');
+            $url = Storage::url($photo);
+        } else {
+            $url = $package->photo;
+        }
+
+        try {
+            $package->update([
+                'name' => $request->name,
+                'photo' => $url,
+                'price' => intval($request->price),
+                'total_items' => intval($request->total_items),
+                'description' => $request->description,
+            ]);
+        } catch (\Throwable $th) {
+            return abort(400, $th);
+        } finally {
+            return redirect(route('package.index'));
+        }
     }
 
     /**
@@ -78,8 +121,14 @@ class PackageController extends Controller
      * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Package $package)
+    public function destroy($id)
     {
-        //
+        try {
+            Package::destroy($id);
+        } catch (\Throwable $th) {
+            return abort(400, $th);
+        } finally {
+            return redirect(route('package.index'));
+        }
     }
 }
