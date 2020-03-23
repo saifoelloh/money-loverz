@@ -39,17 +39,18 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         try {
-            Customer::create([
+            $customer = Customer::create([
                 'name' => $request->name,
                 'phone' => $request->phone,
                 'gender' => $request->gender,
                 'email' => $request->email,
                 'address' => $request->address
             ]);
+            if ($customer) {
+                return redirect(route('customer.index'));
+            }
         } catch (\Throwable $th) {
             return abort(400, $th);
-        } finally {
-            return redirect(route('customer.index'));
         }
     }
 

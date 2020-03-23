@@ -27,26 +27,26 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="name">Nama</label>
-                                    <input class="form-control" type="text" name="name" id="name" placeholder="nama pelanggan" />
+                                    <input class="form-control" type="text" name="name" id="name" placeholder="nama pelanggan" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="gender">Gender</label>
-                                    <select class="form-control" name="gender" id="gender">
+                                    <select class="form-control" name="gender" id="gender" required>
                                         <option value="male">Pria</option>
                                         <option value="female">Wanita</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="email">Email</label>
-                                    <input class="form-control" type="email" name="email" id="email" placeholder="example@mail.co" />
+                                    <input class="form-control" type="email" name="email" id="email" placeholder="example@mail.co" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="phone">No Telp</label>
-                                    <input class="form-control" type="text" name="phone" id="phone" placeholder="08xxx" />
+                                    <input class="form-control" type="text" name="phone" id="phone" placeholder="08xxx" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="address">Alamat</label>
-                                    <textarea class="form-control" name="address" id="address" placeholder="Alamat rumah anda"></textarea>
+                                    <textarea class="form-control" name="address" id="address" placeholder="Alamat rumah anda" required></textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">
