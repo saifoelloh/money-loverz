@@ -41,9 +41,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($users as $id => $user)
                                 <tr class="text-center">
-                                    <td>{{ $user->id }}</td>
+                                    <td>{{ $id + 1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>
                                         <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>

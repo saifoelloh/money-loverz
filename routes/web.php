@@ -21,6 +21,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('admin', 'UserController');
 	Route::resource('menu', 'MenuController');
+	Route::resource('faq', 'FaqController');
+	Route::resource('package', 'PackageController');
+	Route::resource('customer', 'CustomerController');
+	Route::resource('order', 'OrderController');
 	Route::resource('optional-menu', 'OptionalMenuController');
 	Route::group([
 		'as' => 'optional-menu',
