@@ -107,14 +107,34 @@
                 @php
                 $menus = [
                 [
+                'title' => 'Admin',
+                'icon' => 'ni ni-badge text-purple',
+                'url' => route('admin.index'),
+                ],
+                [
                 'title' => 'Menu',
-                'icon' => 'ni ni-cart text-info',
+                'icon' => 'ni ni-cart text-purple',
                 'url' => route('menu.index'),
                 ],
                 [
-                'title' => 'Admin',
-                'icon' => 'ni ni-single-02 text-orange',
-                'url' => route('admin.index'),
+                'title' => 'FAQ',
+                'icon' => 'ni ni-chat-round text-purple',
+                'url' => route('faq.index'),
+                ],
+                [
+                'title' => 'Package',
+                'icon' => 'ni ni-box-2 text-purple',
+                'url' => route('package.index'),
+                ],
+                [
+                'title' => 'Customer',
+                'icon' => 'ni ni-single-02 text-purple',
+                'url' => route('customer.index'),
+                ],
+                [
+                'title' => 'Order',
+                'icon' => 'ni ni-bag-17 text-purple',
+                'url' => route('order.index'),
                 ],
                 ];
                 @endphp
