@@ -17,9 +17,9 @@ class CreateCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->number('total_items');
+            $table->unsignedInteger('total_items');
             $table->string('photo');
-            $table->number('price');
+            $table->unsignedInteger('price');
             $table->softDeletes();
             $table->timestamps();
         });
