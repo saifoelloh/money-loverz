@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Menu;
-use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -125,8 +124,14 @@ class MenuController extends Controller
    * @param  \App\Menu  $menu
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Menu $menu)
+  public function destroy($id)
   {
-    //
+    try {
+      $result = Menu::destroy($id);
+      dd($result);
+    } catch (\Throwable $th) {
+      dd($th);
+      return abort(400, $th);
+    }
   }
 }
