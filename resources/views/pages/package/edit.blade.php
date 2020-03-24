@@ -28,15 +28,15 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="name">Nama</label>
-                                    <input class="form-control" type="text" name="name" id="name" value="{{ $package->name }}" />
+                                    <input class="form-control" type="text" name="name" id="name" value="{{ $package->name }}" required />
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="total_item">Total Item</label>
-                                    <input class="form-control" type="number" name="total_item" id="total_item" value="{{ $package->total_items }}" />
+                                    <label class="form-label" for="total_items">Total Item</label>
+                                    <input class="form-control" type="number" name="total_items" id="total_items" value="{{ $package->total_items }}" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="price">Harga</label>
-                                    <input class="form-control" type="number" name="price" id="price" value="{{ $package->price }}" />
+                                    <input class="form-control" type="number" name="price" id="price" value="{{ $package->price }}" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="photo">Foto</label>
@@ -44,9 +44,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="description">Deskripsi</label>
-                                    <textarea class="form-control" name="description" id="description">
-                                    {{ $package->description }}
-                                    </textarea>
+                                    <textarea class="form-control" name="description" id="description" required>{{ $package->description }}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">

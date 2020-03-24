@@ -27,11 +27,11 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="question">Pertanyaan</label>
-                                    <input class="form-control" type="text" name="question" id="question" placeholder="apa itu satu pintu ?" />
+                                    <input class="form-control" type="text" name="question" id="question" placeholder="apa itu satu pintu ?" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="answer">Jawaban</label>
-                                    <textarea class="form-control" name="answer" id="answer" placeholder="satu pintu adalah ..."></textarea>
+                                    <textarea class="form-control" name="answer" id="answer" placeholder="satu pintu adalah ..." required></textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">

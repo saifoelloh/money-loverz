@@ -27,23 +27,23 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="name">Nama</label>
-                                    <input class="form-control" type="text" name="name" id="name" />
+                                    <input class="form-control" type="text" name="name" id="name" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="total_items">Total Item</label>
-                                    <input class="form-control" type="number" name="total_items" id="total_items" />
+                                    <input class="form-control" type="number" name="total_items" id="total_items" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="price">Harga</label>
-                                    <input class="form-control" type="number" name="price" id="price" />
+                                    <input class="form-control" type="number" name="price" id="price" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="photo">Foto</label>
-                                    <input class="form-control" type="file" name="photo" id="photo" />
+                                    <input class="form-control" type="file" name="photo" id="photo" required />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="description">Deskripsi</label>
-                                    <textarea class="form-control" name="description" id="description"></textarea>
+                                    <textarea class="form-control" name="description" id="description" required></textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">

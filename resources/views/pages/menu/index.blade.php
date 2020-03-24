@@ -33,9 +33,9 @@
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    @foreach($menus as $item)
+                                    @foreach($menus as $id => $item)
                                     <tr class="text-center">
-                                        <th> {{ $item->id }} </th>
+                                        <th> {{ $id + 1 }} </th>
                                         <td> {{ $item->name }} </td>
                                         <td> {{ $item->description }} </td>
                                         <td> {{"Rp. ".number_format($item->price, 0)}} </td>

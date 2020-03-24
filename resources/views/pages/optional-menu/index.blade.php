@@ -26,9 +26,9 @@
                         </tr>
                     </thead>
                     <tbody class="list">
-                        @foreach($options as $item)
+                        @foreach($options as $id => $item)
                         <tr class="text-center">
-                            <th> {{ $item->id }} </th>
+                            <th> {{ $id + 1 }} </th>
                             <td> {{ $item->name }} </td>
                             <td> {{ $item->category }} </td>
                             <td> {{"Rp. ".number_format($item->price, 0)}} </td>
