@@ -15,7 +15,23 @@ class CreateMenuOrdersTable extends Migration
     {
         Schema::create('menu_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsign
+            $table->unsignedInteger('total')->default(1);
+            $table->enum('status', [
+              'order',
+              'cancel',
+              'done'
+            ])->default('order');
+            $table->string('note');
+            $table->unsignedBigInteger('menu_id')
+                ->foreign('menu_id')
+                ->references('id')
+                ->on('menus')
+                ->onDelete('cascade');
+            $table->unsignedBigInteger('order_id')
+                ->foreign('order_id')
+                ->references('id')
+                ->on('orders')
+                ->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
