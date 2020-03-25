@@ -15,6 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code')->unique();
             $table->enum('payment_method', [
                 'cash on delivery',
                 'transfer'
@@ -22,7 +23,6 @@ class CreateOrdersTable extends Migration
             $table->enum('status', [
                 'menunggu konfirmasi',
                 'terkonfirmasi',
-                'menunggu pembayaran',
                 'terbayar',
                 'sedang berjalan',
                 'selesai',
