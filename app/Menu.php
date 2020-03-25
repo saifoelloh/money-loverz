@@ -26,4 +26,14 @@ class Menu extends Model
   {
     return $this->hasMany(OptionalMenu::class);
   }
+
+  public function orders()
+  {
+    return $this->belongsToMany(Order::class)
+      ->withPivot([
+        'total',
+        'status',
+        'note'
+      ]);
+  }
 }
