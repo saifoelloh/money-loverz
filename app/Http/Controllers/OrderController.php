@@ -48,10 +48,13 @@ class OrderController extends Controller
     {
         $admin = auth()->user();
         $customer = Customer::find($request->customer);
-        $clock = date("H", time());
-        if ($clock <= 20) {
+        $orderCount = Order::whereDate('created_at', '=', date('Y-m-d'))->count();
+        $code = "PKG".sprintf('%02d', $request->package)."/".date("d/m/y")."/".sprintf('%04d', $orderCount + 1);
+        $clock = date("H.i", time());
+        if ($clock <= 19.30) {
             try {
                 $order = $customer->orders()->create([
+                    'code' => $code,
                     'payment_method' => $request->payment_method,
                     'kecamatan' => $request->kecamatan,
                     'kelurahan' => $request->kelurahan,
@@ -65,9 +68,7 @@ class OrderController extends Controller
                 return abort(400, $th);
             }
         } else {
-            return redirect(route('order.index', [
-                'error' => "Sorry we're off today"
-            ]));
+          return redirect('order')->with('status', "Sorry we're out today...");
         }
     }
 
