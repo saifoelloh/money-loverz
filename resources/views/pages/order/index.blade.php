@@ -4,20 +4,20 @@
 @include('users.partials.header', ['title' => __('Daftar Pesanan')])
 <div class="container-fluid mt--7">
     <div class="row">
-        @if(session()->get('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-            <span class="alert-text">
-                {{session()->get('error')}}
-            </span>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        @endif
         <div class="col-12">
             <div class="card shadow">
                 <div class="card-body">
+                    @if (session('status'))
+                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <span class="alert-icon"><i class="ni ni-watch-time"></i></span>
+                        <span class="alert-text">
+                          {{ session('status') }}
+                        </span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    @endif
                     <div class="card-title">
                         <div class="row">
                             <div class="col-6">
