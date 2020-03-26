@@ -1,7 +1,7 @@
 <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
     <div class="container px-4">
         <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/white.png" />
+            <img src="{{ asset('argon') }}/img/brand/logo.png" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,32 +24,31 @@
                 </div>
             </div>
             <!-- Navbar items -->
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav align-items-lg-left ml-lg-auto">
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="{{ route('home') }}">
-                        <i class="ni ni-planet"></i>
-                        <span class="nav-link-inner--text">{{ __('Dashboard') }}</span>
+                    <a class="nav-link" href="#paket">
+                        <span class="nav-link-inner--text">{{ __('Paket') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="{{ route('register') }}">
-                        <i class="ni ni-circle-08"></i>
-                        <span class="nav-link-inner--text">{{ __('Register') }}</span>
+                    <a class="nav-link" href="#katalog">
+                        <span class="nav-link-inner--text">{{ __('Katalog Menu') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="{{ route('login') }}">
-                        <i class="ni ni-key-25"></i>
-                        <span class="nav-link-inner--text">{{ __('Login') }}</span>
+                    <a class="nav-link" href="#footer">
+                        <span class="nav-link-inner--text">{{ __('Kontak Kami') }}</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="{{ route('profile.edit') }}">
-                        <i class="ni ni-single-02"></i>
-                        <span class="nav-link-inner--text">{{ __('Profile') }}</span>
+                <li class="nav-item d-none d-lg-block ml-lg-4 pt-1">
+                    <a href="#" class="btn btn-info btn-icon" data-toggle="modal" data-target="#modal-form">
+                    <span class="btn-inner--icon">
+                        <i class="fa fa-shopping-cart"></i>
+                    </span>
+                    <span class="nav-link-inner--text">Buat Pesanan</span>
                     </a>
                 </li>
-            </ul>
+                </ul>
         </div>
     </div>
 </nav>

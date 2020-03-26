@@ -13,14 +13,22 @@
     <link href="{{ asset('argon') }}/img/brand/favicon.png" rel="icon" type="image/png">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <!-- Icons -->
     <link href="{{ asset('argon') }}/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+    <link href="{{ asset('argon') }}/vendor/nucleo/css/nucleo-svg.css" rel="stylesheet">
+    <link href="{{ asset('argon') }}/css/font-awesome.css" rel="stylesheet">
     <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    
     <!-- Argon CSS -->
     <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+    <link type="text/css" href="{{ asset('argon') }}/css/argon-design-system.css" rel="stylesheet">
+    
+    <!-- CUSTOM CSS-->
+    <link type="text/css" href="{{ asset('argon') }}/css/custom.css" rel="stylesheet">
 </head>
 
-<body class="{{ $class ?? '' }}">
+<body class="landing-page">
     @auth()
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
