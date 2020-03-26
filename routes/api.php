@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('/foo', function(Request $request) {
+  $user = App\User::create($request->merge([
+    'password' => Hash::make($request->password)
+  ])->all());
+  return $user;
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
