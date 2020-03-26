@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
@@ -14,9 +16,17 @@ class UserController extends Controller
      * @param  \App\User  $model
      * @return \Illuminate\View\View
      */
-    public function index(User $model)
+    public function index(Request $request)
     {
-        return view('users.index', ['users' => $model->paginate(15)]);
+      /* return view('users.index', ['users' => $model->paginate(15)]); */
+      $data = User::whereIn('role', ['admin', 'admin'])->latest()->get();
+      if ($request->ajax()) {
+        return Datatables::of($data)
+          ->addIndexColumn()
+          ->make(true);
+      }
+
+      return view('pages.user.index');
     }
 
     /**
@@ -26,7 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('pages.user.create');
     }
 
     /**
@@ -49,9 +59,12 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\View\View
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        return view('users.edit', compact('user'));
+        $user = User::find($id);
+        return view('pages.user.edit', [
+          'user' => $user
+        ]);
     }
 
     /**
