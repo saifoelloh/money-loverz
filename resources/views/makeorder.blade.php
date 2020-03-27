@@ -11,7 +11,7 @@
                     <h2 class="display-4 font-weight-normal text-white">Pilih menu sendiri, biar kami yang <br>antar sampai mejamu.</h2>
                     <div class="btn-wrapper mt-4">
                     <a href="#katalog" class="btn btn-outline-white mt-3 mb-sm-0">
-                        Lihat Sekarang
+                        Lihat woekowkeokwk
                     </a>
                     </div>
                 </div>

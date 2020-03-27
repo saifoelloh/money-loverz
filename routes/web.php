@@ -13,6 +13,11 @@
 Route::get('/', function () {
 	return view('welcome');
 });
+
+Route::get('/makeorder', function () {
+	return view('makeorder');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
