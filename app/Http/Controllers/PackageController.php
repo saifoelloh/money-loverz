@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
 
 class PackageController extends Controller
 {
@@ -13,12 +14,15 @@ class PackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $packages = Package::all();
-        return view('pages.package.index', [
-            'packages' => $packages
-        ]);
+        $packages = Package::latest()->get();
+        if ($request->ajax()) {
+          return Datatables::of($packages)
+              ->addIndexColumn()
+              ->make(true);
+        }
+        return view('pages.package.index');
     }
 
     /**
