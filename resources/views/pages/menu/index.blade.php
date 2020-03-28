@@ -22,9 +22,9 @@
                     </div>
                     <div class="table-responsive">
                         <div>
-                            <table class="table align-items-center">
+                            <table id="data-table" class="table align-items-center text-center border-bottom-0">
                                 <thead class="thead-light">
-                                    <tr class="text-center">
+                                    <tr>
                                         <th scope="col" class="sort" data-sort="name">No</th>
                                         <th scope="col" class="sort" data-sort="budget">Nama</th>
                                         <th scope="col" class="sort" data-sort="budget">Deskripsi</th>
@@ -32,34 +32,7 @@
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="list">
-                                    @foreach($menus as $id => $item)
-                                    <tr class="text-center">
-                                        <th> {{ $id + 1 }} </th>
-                                        <td> {{ $item->name }} </td>
-                                        <td> {{ $item->description }} </td>
-                                        <td> {{"Rp. ".number_format($item->price, 0)}} </td>
-                                        <td>
-                                            <a class="btn btn-icon btn-success btn-sm" href="{{ route('menu.show', $item->id) }}">
-                                                <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
-                                                <span class="btn-inner--text">detail</span>
-                                            </a>
-                                            <a class="btn btn-icon btn-warning btn-sm" href="{{ route('menu.edit', $item->id) }}">
-                                                <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
-                                                <span class="btn-inner--text">edit</span>
-                                            </a>
-                                            <form action="{{ route('menu.destroy', $item->id) }}" method="post" class="my-0 d-inline">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-icon btn-danger btn-sm" type="submit">
-                                                    <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
-                                                    <span class="btn-inner--text">delete</span>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -71,3 +44,74 @@
     @include('layouts.footers.auth')
 </div>
 @endsection
+
+@push('js')
+  <script type="text/javascript">
+    $(function () {
+      var table = $('#data-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('menu.index') }}",
+        columns: [
+          {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+          {
+            data: 'name',
+            name: 'name',
+            render: function(data) {
+              return `
+                <div class="media align-items-center">
+                  <span class="avatar avatar-sm rounded-circle align-center">
+                    <img class="h-100" src="${arguments[2].photo}" alt=""/>
+                  </span>
+                  <div class="media-body ml-2 d-none d-lg-block">
+                    <span class="mb-0 text-sm  font-weight-bold">${data}</span>
+                  </div>
+                </div>
+              `
+            }
+          },
+          {data: 'description', name: 'description'},
+          {
+            data: 'price',
+            name: 'price',
+            render: function(data) {
+              return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+              }).format(data)
+            }
+          },
+          {
+            data: 'id',
+            name: 'id',
+            searchable: false,
+            sortable: false,
+            render: function(data) {
+              const detail = `
+                <a class="btn btn-warning btn-sm btn-icon" href="{{ route("menu.index") }}/${data}/edit">
+                  <span class="btn-inner--icon"><i class="fas fa-edit fa-lg"></i></span>
+                  <span class="btn-inner--text">edit</span>
+                </a>`
+              const destroy = `<form action="{{ route("menu.index") }}/${data}" method="POST" class="d-inline">
+                @method("DELETE")
+                @csrf
+                <button class="btn btn-danger btn-sm btn-icon" type="submit">
+                  <span class="btn-inner--icon"><i class="fas fa-trash fa-lg"></i></span>
+                  <span class="btn-inner--text">delete</span>
+                </button>
+              </form>`
+              const buttons = `
+                <div class="d-inline">
+                  ${detail}
+                  ${destroy}
+                </div>
+              `
+              return buttons
+            }
+          }
+        ],
+        pagingType: "numbers"
+      });
+    });
+  </script>
+@endpush

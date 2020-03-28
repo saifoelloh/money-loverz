@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
 
 class MenuController extends Controller
 {
@@ -13,12 +14,16 @@ class MenuController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
-    $menus = Menu::all();
-    return view('pages.menu.index', [
-      'menus' => $menus
-    ]);
+    $menus = Menu::latest()->get();
+    if ($request->ajax()) {
+      return Datatables::of($menus)
+          ->addIndexColumn()
+          ->make(true);
+    }
+
+    return view('pages.menu.index');
   }
 
   /**
@@ -128,9 +133,10 @@ class MenuController extends Controller
   {
     try {
       $result = Menu::destroy($id);
-      dd($result);
+      if ($result) {
+        return redirect('menu.index');
+      }
     } catch (\Throwable $th) {
-      dd($th);
       return abort(400, $th);
     }
   }

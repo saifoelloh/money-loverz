@@ -32,9 +32,7 @@
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="description">Deskripsi</label>
-                  <textarea class="form-control" name="description" id="description" placeholder="description makanan">
-                  {{ $menu->description }}
-                  </textarea>
+                  <textarea class="form-control" name="description" id="description" placeholder="description makanan">{{ $menu->description }}</textarea>
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="price">Harga</label>
@@ -42,7 +40,7 @@
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="photo">foto</label>
-                  <input class="form-control" type="file" name="photo" id="photo" />
+                  <input class="form-control py-auto" type="file" name="photo" id="photo" />
                 </div>
                 <div class="row">
                   <div class="col text-right">
@@ -78,9 +76,7 @@
                   <input type="text" class="form-control form-control-muted" value="{{ $menu->name }}">
                 </div>
                 <div class="form-group">
-                  <textarea class="form-control form-control-muted">
-                  {{ $menu->description}}
-                  </textarea>
+                  <textarea class="form-control form-control-muted">{{ $menu->description}}</textarea>
                 </div>
                 <div class="form-group">
                   <input type="number" class="form-control form-control-muted" value="{{ $menu->price }}">
