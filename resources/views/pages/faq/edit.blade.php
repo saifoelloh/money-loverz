@@ -32,9 +32,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="answer">Jawaban</label>
-                                    <textarea class="form-control" name="answer" id="answer">
-                                    {{$faq->answer}}
-                                    </textarea>
+                                    <textarea class="form-control" name="answer" id="answer">{{$faq->answer}}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">

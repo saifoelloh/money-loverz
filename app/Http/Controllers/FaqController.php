@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Faq;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class FaqController extends Controller
 {
@@ -12,12 +13,15 @@ class FaqController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $faqs = Faq::all();
-        return view('pages.faq.index', [
-            'faqs' => $faqs
-        ]);
+        $faqs = Faq::with('user:id,name')->latest()->get();
+        if ($request->ajax()) {
+          return Datatables::of($faqs)
+            ->addIndexColumn()
+            ->make(true);
+        }
+        return view('pages.faq.index');
     }
 
     /**
