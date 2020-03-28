@@ -29,6 +29,18 @@
                           <input class="form-control" type="text" name="name" id="name" value="{{ $user->name }}" required />
                         </div>
                         <div class="form-group">
+                          <label class="form-label" for="gender">Gender</label>
+                          <select class="form-control" name="gender" id="gender">
+                            @if ($user->gender == 'male')
+                              <option selected value="male">Pria</option>
+                              <option value="female">Wanita</option>
+                            @else
+                              <option value="male">Pria</option>
+                              <option selected value="female">Wanita</option>
+                            @endif
+                          </select>
+                        </div>
+                        <div class="form-group">
                           <label class="form-label" for="phone">No Telepon</label>
                           <input class="form-control" type="text" name="phone" id="phone" value="{{ $user->phone }}" required />
                         </div>

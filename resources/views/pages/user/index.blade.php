@@ -71,14 +71,14 @@
             render: function(data) {
               const detail = `
                 <a class="btn btn-warning btn-sm btn-icon" href="{{ route("user.index") }}/${data}/edit">
-                  <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
+                  <span class="btn-inner--icon"><i class="fas fa-edit fa-lg"></i></span>
                   <span class="btn-inner--text">edit</span>
                 </a>`
               const destroy = `<form action="{{ route("user.index") }}/${data}" method="POST" class="d-inline">
                 @method("DELETE")
                 @csrf
                 <button class="btn btn-danger btn-sm btn-icon" type="submit">
-                  <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
+                  <span class="btn-inner--icon"><i class="fas fa-trash fa-lg"></i></span>
                   <span class="btn-inner--text">delete</span>
                 </button>
               </form>`
