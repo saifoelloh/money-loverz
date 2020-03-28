@@ -45,6 +45,7 @@
         @yield('content')
     </div>
 
+
     @guest()
     @include('layouts.footers.guest')
     @endguest
