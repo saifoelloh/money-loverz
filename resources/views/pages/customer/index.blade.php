@@ -4,6 +4,16 @@
 @include('users.partials.header', ['title' => __('Daftar Pelanggan')])
 <div class="container-fluid mt--7">
     <div class="row">
+      <div class="col-12">
+        @if (session('status'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
+      </div>
         <div class="col-12">
             <div class="card shadow">
                 <div class="card-body">
@@ -22,46 +32,18 @@
                     </div>
                     <div class="table-responsive">
                         <div>
-                            <table class="table align-items-center">
+                            <table id="data-table" class="table align-items-center text-center border-bottom-0">
                                 <thead class="thead-light">
-                                    <tr class="text-center">
-                                        <th scope="col" class="sort" data-sort="no">No</th>
-                                        <th scope="col" class="sort" data-sort="name">Nama</th>
-                                        <th scope="col" class="sort" data-sort="gender">Gender</th>
-                                        <th scope="col" class="sort" data-sort="phone">Telephone</th>
-                                        <th scope="col" class="sort" data-sort="address">Alamat</th>
-                                        <th scope="col">Actions</th>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Gender</th>
+                                        <th>Telephone</th>
+                                        <th>Alamat</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="list">
-                                    @foreach($customers as $id => $item)
-                                    <tr class="text-center">
-                                        <th> {{ $id + 1 }} </th>
-                                        <td> {{ $item->name }} </td>
-                                        <td> {{ $item->gender=="male" ? "Pria" : "Wanita" }} </td>
-                                        <td>{{ $item->phone }}</td>
-                                        <td>{{ $item->address }}</td>
-                                        <td>
-                                            <a class="btn btn-icon btn-success btn-sm" href="{{ route('customer.show', $item->id) }}">
-                                                <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
-                                                <span class="btn-inner--text">detail</span>
-                                            </a>
-                                            <a class="btn btn-icon btn-warning btn-sm" href="{{ route('customer.edit', $item->id) }}">
-                                                <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
-                                                <span class="btn-inner--text">edit</span>
-                                            </a>
-                                            <form action="{{ route('customer.destroy', $item->id) }}" method="post" class="my-0 d-inline">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-icon btn-danger btn-sm" type="submit">
-                                                    <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
-                                                    <span class="btn-inner--text">delete</span>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -73,3 +55,55 @@
     @include('layouts.footers.auth')
 </div>
 @endsection
+
+@push('js')
+  <script type="text/javascript">
+    $(function () {
+      var table = $('#data-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('customer.index') }}",
+        columns: [
+          {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+          {data: 'name', name: 'name'},
+          {
+            data: 'gender',
+            name: 'name',
+            render: data => data == 'male' ? 'Pria' : 'Wanita'
+          },
+          {data: 'phone', name: 'phone'},
+          {data: 'address', name: 'address'},
+          {
+            data: 'id',
+            name: 'id',
+            searchable: false,
+            sortable: false,
+            render: function(data) {
+              const detail = `
+                <a class="btn btn-warning btn-sm btn-icon" href="{{ route("customer.index") }}/${data}/edit">
+                  <span class="btn-inner--icon"><i class="fas fa-edit fa-lg"></i></span>
+                  <span class="btn-inner--text">edit</span>
+                </a>`
+              const destroy = `<form action="{{ route("customer.index") }}/${data}" method="POST" class="d-inline">
+                @method("DELETE")
+                @csrf
+                <button class="btn btn-danger btn-sm btn-icon" type="submit">
+                  <span class="btn-inner--icon"><i class="fas fa-trash fa-lg"></i></span>
+                  <span class="btn-inner--text">delete</span>
+                </button>
+              </form>`
+              const buttons = `
+                <div class="d-inline">
+                  ${detail}
+                  ${destroy}
+                </div>
+              `
+              return buttons
+            }
+          }
+        ],
+        pagingType: "numbers"
+      });
+    });
+  </script>
+@endpush

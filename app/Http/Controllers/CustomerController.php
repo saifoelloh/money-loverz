@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Customer;
+use App\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class CustomerController extends Controller
 {
@@ -12,12 +13,16 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::all();
-        return view('pages.customer.index', [
-            'customers' => $customers
-        ]);
+        $data = User::where('role', 'user')->latest()->get();
+        if ($request->ajax()) {
+          return Datatables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        }
+
+        return view('pages.customer.index');
     }
 
     /**
@@ -39,13 +44,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         try {
-            $customer = Customer::create([
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'gender' => $request->gender,
-                'email' => $request->email,
-                'address' => $request->address
-            ]);
+            $customer = User::create($request->all());
             if ($customer) {
                 return redirect(route('customer.index'));
             }
@@ -62,7 +61,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $customer = Customer::find($id);
+        $customer = User::find($id);
         return view('pages.customer.show', [
             'customer' => $customer,
             'orders' => $customer->orders()
@@ -77,7 +76,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = Customer::find($id);
+        $customer = User::find($id);
         return view('pages.customer.edit', [
             'customer' => $customer,
         ]);
@@ -92,19 +91,16 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::find($id);
+        $customer = User::find($id);
         try {
-            $customer->update([
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'gender' => $request->gender,
-                'email' => $request->email,
-                'address' => $request->address
-            ]);
+          $result = $customer->update($request->all());
+          if ($result) {
+            return redirect('customer')->with('status', 'Sukses memperbarui data pelanggan');
+          } else {
+            return redirect('customer')->with('status', 'Gagal memperbarui data pelanggan');
+          }
         } catch (\Throwable $th) {
             return abort(400, $th);
-        } finally {
-            return redirect(route('customer.index'));
         }
     }
 
@@ -117,11 +113,14 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         try {
-            Customer::destroy($id);
+          $result = User::destroy($id);
+          if ($result) {
+            return redirect('customer')->with('status', 'Sukses menghapus data pelanggan');
+          } else {
+            return redirect('customer')->with('status', 'Gagal menghapus data pelanggan');
+          }
         } catch (\Throwable $th) {
             return abort(400, $th);
-        } finally {
-            return redirect(route('customer.index'));
         }
     }
 }
