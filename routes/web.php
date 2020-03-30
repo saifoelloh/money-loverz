@@ -12,10 +12,17 @@
 */
 Route::get('/', function () {
 	return view('welcome');
-});
+})->name('landing-page');
 
-Route::get('/makeorder', function () {
-	return view('makeorder');
+Route::group([
+  'as' => 'make-order',
+  'prefix' => 'make-order'
+], function() {
+  Route::get('/', function () {
+    return view('makeorder');
+  });
+  Route::get('/{code}', 'MenuOrderController@show')->name('.cart');
+  Route::post('/{code}/cart', 'MenuOrderController@store')->name('.store');
 });
 
 Auth::routes();
@@ -23,13 +30,23 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'check-role']], function () {
 	Route::resource('admin', 'UserController');
 	Route::resource('menu', 'MenuController');
 	Route::resource('faq', 'FaqController');
 	Route::resource('package', 'PackageController');
 	Route::resource('customer', 'CustomerController');
 	Route::resource('order', 'OrderController');
+  Route::group([
+    'as' => 'detail-order',
+    'prefix' => 'detail-order',
+  ], function() {
+    Route::get('/{code}', 'MenuOrderController@show')->name('.create');
+    Route::post('/{code}', 'MenuOrderController@store')->name('.store');
+    Route::get('/{code}/edit/{menu}', 'MenuOrderController@edit')->name('.edit');
+    Route::put('/{code}/edit/{menu}', 'MenuOrderController@update')->name('.update');
+    Route::delete('/{code}/edit/{menu}', 'MenuOrderController@destroy')->name('.destroy');
+  });
 	Route::resource('optional-menu', 'OptionalMenuController');
 	Route::group([
 		'as' => 'optional-menu',

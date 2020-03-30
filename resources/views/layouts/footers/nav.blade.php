@@ -1,3 +1,4 @@
+@guest
 <div class="row row-grid align-items-center mb-5">
     <div class="col-lg-6">
     <h3 class="text-primary font-weight-light mb-2">Ada pertanyaan?</h3>
@@ -38,3 +39,4 @@
         </ul>
     </div>
 </div>
+@endguest
