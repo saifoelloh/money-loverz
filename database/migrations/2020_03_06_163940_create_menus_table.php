@@ -17,6 +17,7 @@ class CreateMenusTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
+            $table->text('category');
             $table->unsignedInteger('price');
             $table->string('photo');
             $table->unsignedBigInteger('user_id');

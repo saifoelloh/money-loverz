@@ -34,6 +34,10 @@
                   <input class="form-control" type="number" name="price" id="price" placeholder="harga makanan" required />
                 </div>
                 <div class="form-group">
+                  <label class="form-label" for="category">Kategori</label>
+                  <input id="category" name="category" class="form-control" type="text" />
+                </div>
+                <div class="form-group">
                   <label class="form-label" for="photo">foto</label>
                   <input class="form-control" type="file" name="photo" id="photo" required />
                 </div>
@@ -64,3 +68,16 @@
   @include('layouts.footers.auth')
 </div>
 @endsection
+
+@push('js')
+  <script charset="utf-8">
+    $(document).ready(function() {
+      const categories = {!! json_encode($categories) !!}
+      $('#category')
+      .autocomplete({
+        minLength: 0,
+        source: categories,
+      })
+    })
+  </script>
+@endpush

@@ -25,11 +25,12 @@
                             <table id="data-table" class="table align-items-center text-center border-bottom-0">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col" class="sort" data-sort="name">No</th>
-                                        <th scope="col" class="sort" data-sort="budget">Nama</th>
-                                        <th scope="col" class="sort" data-sort="budget">Deskripsi</th>
-                                        <th scope="col" class="sort" data-sort="status">Harga</th>
-                                        <th scope="col">Actions</th>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Deskripsi</th>
+                                        <th>Harga</th>
+                                        <th>Kategori</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -81,6 +82,7 @@
               }).format(data)
             }
           },
+          {data: 'category', name: 'category'},
           {
             data: 'id',
             name: 'id',

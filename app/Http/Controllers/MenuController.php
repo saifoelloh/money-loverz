@@ -33,7 +33,12 @@ class MenuController extends Controller
    */
   public function create()
   {
-    return view('pages.menu.create');
+    $categories = explode(',', Menu::all('category')->implode('category', ','));
+    $temp = collect($categories)->countBy();
+    $foo = json_decode(json_encode($temp), true);
+    return view('pages.menu.create', [
+      'categories' => array_keys($foo)
+    ]);
   }
 
   /**
@@ -51,13 +56,17 @@ class MenuController extends Controller
       $temp = $account->menus()->create([
         'name' => $request->name,
         'description' => $request->description,
+        'category' => $request->category,
         'price' => intval($request->price),
         'photo' => $url,
       ]);
+      if ($temp) {
+        return redirect('menu')->with('status', 'Berhasil membuat menu baru');
+      } else {
+        return redirect('menu')->with('status', 'Maaf anda gagal membuat menu baru');
+      }
     } catch (\Throwable $th) {
       return abort(400, $th);
-    } finally {
-      return redirect(route('menu.index'));
     }
   }
 
@@ -85,9 +94,13 @@ class MenuController extends Controller
   public function edit($id)
   {
     $menu = Menu::find($id);
+    $categories = explode(',', Menu::all('category')->implode('category', ','));
+    $temp = collect($categories)->countBy();
+    $foo = json_decode(json_encode($temp), true);
 
     return view('pages.menu.edit', [
-      'menu' => $menu
+      'menu' => $menu,
+      'categories' => array_keys($foo)
     ]);
   }
 

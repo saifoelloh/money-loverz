@@ -31,16 +31,20 @@
                   <input class="form-control" type="text" name="name" id="name" value="{{ $menu->name }}" placeholder="nama makanan" />
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="description">Deskripsi</label>
-                  <textarea class="form-control" name="description" id="description" placeholder="description makanan">{{ $menu->description }}</textarea>
-                </div>
-                <div class="form-group">
                   <label class="form-label" for="price">Harga</label>
                   <input class="form-control" type="number" name="price" id="price" value="{{ $menu->price }}" placeholder="harga makanan" />
                 </div>
                 <div class="form-group">
+                  <label class="form-label" for="category">Kategori</label>
+                  <input id="category" name="category" class="form-control" type="text" value="{{ $menu->category }}" />
+                </div>
+                <div class="form-group">
                   <label class="form-label" for="photo">foto</label>
                   <input class="form-control py-auto" type="file" name="photo" id="photo" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="description">Deskripsi</label>
+                  <textarea class="form-control" name="description" id="description" placeholder="description makanan">{{ $menu->description }}</textarea>
                 </div>
                 <div class="row">
                   <div class="col text-right">
@@ -66,7 +70,7 @@
           <div class="card-title">
             Detail Menu
           </div>
-          <div class="row">
+          <div class="row align-items-stretch">
             <div class="col-6">
               <img class="w-100" src="{{ $menu->photo }}" alt="" />
             </div>
@@ -76,10 +80,13 @@
                   <input type="text" class="form-control form-control-muted" value="{{ $menu->name }}">
                 </div>
                 <div class="form-group">
-                  <textarea class="form-control form-control-muted">{{ $menu->description}}</textarea>
+                  <input type="number" class="form-control form-control-muted" value="{{ $menu->price }}">
                 </div>
                 <div class="form-group">
-                  <input type="number" class="form-control form-control-muted" value="{{ $menu->price }}">
+                  <input type="text" class="form-control form-control-muted" value="{{ $menu->category }}">
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control form-control-muted">{{ $menu->description}}</textarea>
                 </div>
               </form>
             </div>
@@ -92,3 +99,16 @@
   @include('layouts.footers.auth')
 </div>
 @endsection
+
+@push('js')
+  <script charset="utf-8">
+    $(document).ready(function() {
+      const categories = {!! json_encode($categories) !!}
+      $('#category')
+      .autocomplete({
+        minLength: 0,
+        source: categories,
+      })
+    })
+  </script>
+@endpush
