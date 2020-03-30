@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Customer;
 use App\Package;
+use App\User;
 use App\Order;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
@@ -14,12 +15,16 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with(['user:id,name', 'customer:id,name', 'package'])->get();
-        return view('pages.order.index', [
-            'orders' => $orders
-        ]);
+        $orders = Order::with(['user:id,name', 'customer:id,name', 'package', 'menus'])->latest()->get();
+        if ($request->ajax()) {
+          return Datatables::of($orders)
+              ->addIndexColumn()
+              ->make(true);
+        }
+
+        return view('pages.order.index');
     }
 
     /**
@@ -29,7 +34,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $customers = Customer::all();
+        $customers = User::where('role', 'user')->get();
         $packages = Package::all();
         return view('pages.order.create', [
             'customers' => $customers,
@@ -47,13 +52,13 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $admin = auth()->user();
-        $customer = Customer::find($request->customer);
+        $customer = User::find($request->customer);
         $orderCount = Order::whereDate('created_at', '=', date('Y-m-d'))->count();
-        $code = "PKG".sprintf('%02d', $request->package)."/".date("d/m/y")."/".sprintf('%04d', $orderCount + 1);
+        $code = "PKG".sprintf('%02d', $request->package).date("dmy").sprintf('%04d', $orderCount + 1);
         $clock = date("H.i", time());
         if ($clock <= 19.30) {
             try {
-                $order = $customer->orders()->create([
+                $order = Order::create([
                     'code' => $code,
                     'payment_method' => $request->payment_method,
                     'kecamatan' => $request->kecamatan,
@@ -61,7 +66,8 @@ class OrderController extends Controller
                     'jalan' => $request->jalan,
                     'address_notes' => $request->address_notes,
                     'package_id' => $request->package,
-                    'user_id' => $admin->id
+                    'user_id' => $admin->id,
+                    'customer_id' => $customer->id,
                 ]);
                 return redirect(route('order.index'));
             } catch (\Throwable $th) {
@@ -80,11 +86,12 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
+        $order = Order::with(['menus', 'package:id,name', 'customer:id,name'])->find($id);
         return view('pages.order.show', [
             'order' => $order,
-            'items' => $order->items(),
-            'customer' => $order->customer()
+            'items' => $order->menus,
+            'customer' => $order->customer,
+            'package' => $order->package
         ]);
     }
 
@@ -94,9 +101,19 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
-        //
+        $order = Order::find($id);
+        $customers = User::where('role', 'user')->get();
+        $packages = Package::all();
+
+        return view('pages.order.edit', [
+            'order' => $order,
+            'customers' => $customers,
+            'packages' => $packages,
+            'staus' => $order->daftarStatus,
+            'error' => false
+        ]);
     }
 
     /**
@@ -106,9 +123,28 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        $admin = auth()->user();
+        $order = Order::find($id);
+
+        try {
+          $result = $order->update([
+              'payment_method' => $request->payment_method,
+              'kecamatan' => $request->kecamatan,
+              'kelurahan' => $request->kelurahan,
+              'status' => $request->status,
+              'jalan' => $request->jalan,
+              'address_notes' => $request->address_notes,
+              'package_id' => $request->package,
+              'user_id' => $admin->id,
+          ]);
+          if ($result) {
+            return redirect(route('order.index'));
+          }
+        } catch (\Throwable $th) {
+          return abort(400, $th);
+        }
     }
 
     /**

@@ -40,7 +40,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('customer_id')
                 ->foreign()
                 ->references('id')
-                ->on('customers')
+                ->on('users')
                 ->onDelete('cascade');
             $table->unsignedBigInteger('package_id')
                 ->foreign()

@@ -33,9 +33,9 @@
                     </div>
                     <div class="table-responsive">
                         <div>
-                            <table class="table align-items-center">
+                            <table id="data-table" class="table align-items-center text-center border-bottom-0">
                                 <thead class="thead-light">
-                                    <tr class="text-center">
+                                    <tr>
                                         <th>No</th>
                                         <th>Nama Pemesan</th>
                                         <th>Paket Pesanan</th>
@@ -45,36 +45,7 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="list">
-                                    @foreach($orders as $id => $item)
-                                    <tr class="text-center">
-                                        <th>{{ $id + 1 }}</th>
-                                        <td>{{ $item['customer']->name }}</td>
-                                        <td>{{ $item['package']->name }}</td>
-                                        <td>{{ $item->payment_method }}</td>
-                                        <td>{{"Rp. ".number_format($item['package']->price, 0)}}</td>
-                                        <td>{{ $item->status }}</td>
-                                        <td>
-                                            <a class="btn btn-icon btn-success btn-sm" href="{{ route('order.show', $item->id) }}">
-                                                <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
-                                                <span class="btn-inner--text">detail</span>
-                                            </a>
-                                            <a class="btn btn-icon btn-warning btn-sm" href="{{ route('order.edit', $item->id) }}">
-                                                <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
-                                                <span class="btn-inner--text">edit</span>
-                                            </a>
-                                            <form action="{{ route('order.destroy', $item->id) }}" method="post" class="my-0 d-inline">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-icon btn-danger btn-sm" type="submit">
-                                                    <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
-                                                    <span class="btn-inner--text">delete</span>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -86,3 +57,75 @@
     @include('layouts.footers.auth')
 </div>
 @endsection
+
+@push('js')
+  <script type="text/javascript">
+    $(function () {
+      var table = $('#data-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('order.index') }}",
+        columns: [
+          {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+          {data: 'customer.name', name: 'customer'},
+          {data: 'package.name', name: 'package'},
+          {data: 'payment_method', name: 'payment_method'},
+          {
+            data: 'menus',
+            name: 'menus',
+            render: function(data) {
+              let price = 0
+              const package = arguments[2].package
+              if (package.price === 0) {
+                const prices = data.map(menu => menu.price * menu.pivot.total)
+                price = prices.length > 0 ? prices.reduce((acc, cur) => acc + cur) : 0
+              } else {
+                price = package.price
+              }
+              return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+              }).format(price)
+            }
+          },
+          {data: 'status', name: 'status'},
+          {
+            data: 'id',
+            name: 'id',
+            searchable: false,
+            sortable: false,
+            render: function(data) {
+              const detail = `
+                <a class="btn btn-success btn-sm btn-icon" href="{{ route("order.index") }}/${data}">
+                  <span class="btn-inner--icon"><i class="fas fa-eye fa-lg"></i></span>
+                  <span class="btn-inner--text">detail</span>
+                </a>`
+              const edit = `
+                <a class="btn btn-warning btn-sm btn-icon" href="{{ route("order.index") }}/${data}/edit">
+                  <span class="btn-inner--icon"><i class="fas fa-edit fa-lg"></i></span>
+                  <span class="btn-inner--text">edit</span>
+                </a>`
+              const destroy = `<form action="{{ route("order.index") }}/${data}" method="POST" class="d-inline">
+                @method("DELETE")
+                @csrf
+                <button class="btn btn-danger btn-sm btn-icon" type="submit">
+                  <span class="btn-inner--icon"><i class="fas fa-trash fa-lg"></i></span>
+                  <span class="btn-inner--text">delete</span>
+                </button>
+              </form>`
+              const buttons = `
+                <div class="d-inline">
+                  ${detail}
+                  ${edit}
+                  ${destroy}
+                </div>
+              `
+              return buttons
+            }
+          }
+        ],
+        pagingType: "numbers"
+      });
+    });
+  </script>
+@endpush

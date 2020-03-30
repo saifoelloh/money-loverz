@@ -16,6 +16,7 @@ class CreateMenuOrdersTable extends Migration
         Schema::create('menu_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('total')->default(1);
+            $table->date('antar');
             $table->enum('status', [
               'order',
               'cancel',

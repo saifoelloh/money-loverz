@@ -10,6 +10,7 @@ class Order extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'code',
         'payment_method',
         'status',
         'kabupaten',
@@ -19,7 +20,17 @@ class Order extends Model
         'cart_notes',
         'address_notes',
         'user_id',
+        'customer_id',
         'package_id'
+    ];
+
+    public $daftarStatus = [
+        'menunggu konfirmasi',
+        'terkonfirmasi',
+        'terbayar',
+        'sedang berjalan',
+        'selesai',
+        'batal'
     ];
 
     public function user()
@@ -29,7 +40,7 @@ class Order extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class);
     }
 
     public function package()
@@ -43,7 +54,8 @@ class Order extends Model
             ->withPivot([
                 'total',
                 'status',
-                'note'
+                'note',
+                'antar'
             ]);
     }
 }
