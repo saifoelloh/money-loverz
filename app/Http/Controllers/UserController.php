@@ -18,7 +18,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-      /* return view('users.index', ['users' => $model->paginate(15)]); */
       $data = User::whereIn('role', ['admin', 'admin'])->latest()->get();
       if ($request->ajax()) {
         return Datatables::of($data)
