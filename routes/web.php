@@ -10,19 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-	return view('welcome');
-})->name('landing-page');
+Route::get('/', 'MakeOrderController@index')->name('landing-page');
 
 Route::group([
   'as' => 'make-order',
   'prefix' => 'make-order'
 ], function() {
-  Route::get('/', function () {
-    return view('makeorder');
-  });
   Route::get('/{code}', 'MenuOrderController@show')->name('.cart');
-  Route::post('/{code}/cart', 'MenuOrderController@store')->name('.store');
+  Route::post('/', 'MenuOrderController@store')->name('.store');
 });
 
 Auth::routes();
