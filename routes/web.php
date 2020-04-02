@@ -16,6 +16,9 @@ Route::group([
   'as' => 'make-order',
   'prefix' => 'make-order'
 ], function() {
+  Route::get('/', function() {
+    return view('makeorder');
+  });
   Route::get('/{code}', 'MenuOrderController@show')->name('.cart');
   Route::post('/', 'MenuOrderController@store')->name('.store');
 });
