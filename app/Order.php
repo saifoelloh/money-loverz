@@ -13,10 +13,8 @@ class Order extends Model
         'code',
         'payment_method',
         'status',
-        'kabupaten',
         'kecamatan',
-        'kelurahan',
-        'jalan',
+        'alamat',
         'cart_notes',
         'address_notes',
         'user_id',
@@ -24,13 +22,33 @@ class Order extends Model
         'package_id'
     ];
 
-    public $daftarStatus = [
-        'menunggu konfirmasi',
-        'terkonfirmasi',
-        'terbayar',
-        'sedang berjalan',
-        'selesai',
-        'batal'
+    public $daftar = [
+        'payment_method' => [
+            'cash on delivery',
+            'transfer'
+        ],
+        'status' => [
+            'created',
+            'confirmed',
+            'proceed',
+            'completed',
+            'canceled',
+        ],
+        'kecamatan' => [
+            'banyumanik',
+            'candhisari',
+            'gajahmungkur',
+            'gayamsari',
+            'genuk',
+            'pedurungan',
+            'semarang kulon',
+            'semarang kidul',
+            'semarang tengah',
+            'semarang wetan',
+            'semarang lor',
+            'tembalang',
+            'tugu'
+        ]
     ];
 
     public function user()
