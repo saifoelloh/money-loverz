@@ -45,9 +45,9 @@
               </div>
               <select id="package" class="form-control" name="package">
                 @foreach ($packages as $package)
-                  <option value="{{ $package['id'] }}">
+                <option value="{{ $package['id'] }}">
                   {{ $package['name'] }}
-                  </option>
+                </option>
                 @endforeach
               </select>
             </div>
@@ -56,7 +56,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link text-white">Input Kode Pesanan</button>
-        <a href="" type="button" class="btn btn-white ml-auto">Buat pesanan</a>
+        <a href="/make-order" type="button" class="btn btn-white ml-auto">Buat pesanan</a>
       </div>
     </div>
   </div>
@@ -87,10 +87,10 @@
               </div>
             </div>
             <div class="text-center">
-              <a href="/makeorder" type="button" class="btn btn-block btn-info my-4">Lanjut buat pesanan</a>                    
+              <a href="/makeorder" type="button" class="btn btn-block btn-info my-4">Lanjut buat pesanan</a>
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-block btn-info my-4">Sudah pernah daftar?</button>                    
+              <button type="button" class="btn btn-block btn-info my-4">Sudah pernah daftar?</button>
             </div>
           </form>
         </div>

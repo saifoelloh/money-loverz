@@ -47,12 +47,11 @@
                                 <div class="form-group">
                                     <label class="form-label" for="payment_method">Opsi Pembayaran</label>
                                     <select name="payment_method" id="payment_method" class="form-control" required>
-                                        <option {{ $order->payment_method == "transfer" ? 'selected' : '' }} value="transfer">
-                                            Transfer
-                                        </option>
-                                        <option {{ $order->payment_method == "cash on delivery" ? 'selected' : '' }} value="cash on delivery">
-                                            Cash on Delivery
-                                        </option>
+                                        @foreach ($payments as $payment)
+                                          <option value="{{ $payment }}" {{ $order->payment_method == $payment ? 'selected' : '' }}>
+                                            {{ ucwords($payment) }}
+                                          </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -68,17 +67,11 @@
                                 <div class="form-group">
                                     <label class="form-label" for="kecamatan">Kecamatan</label>
                                     <select name="kecamatan" id="kecamatan" class="form-control" required>
-                                        <option value="pedurungan">Pedurungan</option>
-                                        <option value="tlogosari">Tlogosari</option>
-                                        <option value="kimar">Kimar</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="kelurahan">Kelurahan</label>
-                                    <select name="kelurahan" id="kelurahan" class="form-control" required>
-                                        <option value="pedurungan">Pedurungan</option>
-                                        <option value="tlogosari">Tlogosari</option>
-                                        <option value="kimar">Kimar</option>
+                                        @foreach ($kecamatans as $kecamatan)
+                                          <option value="{{ $kecamatan }}" {{ $order->kecamatan === $kecamatan ? 'selected' : '' }}>
+                                              {{ ucwords($kecamatan) }}
+                                          </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
