@@ -30,10 +30,16 @@
                         <span class="nav-link-inner--text">{{ __('Paket') }}</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#katalog">
-                        <span class="nav-link-inner--text">{{ __('Katalog Menu') }}</span>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link" data-toggle="dropdown" role="button">
+                        <span class="nav-link-inner--text">{{ __('Katalog') }}</span>
                     </a>
+                    <div class="dropdown-menu">
+                        <a href="#katalog" class="dropdown-item">{{ __('Lunch & Dinner') }}</a>
+                        <a href="#snack" class="dropdown-item">{{ __('Snack & Beverage') }}</a>
+                        <a href="#readytocook" class="dropdown-item">{{ __('Ready To Cook') }}</a>
+                        <a href="#event" class="dropdown-item">{{ __('Event') }}</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#footer">
