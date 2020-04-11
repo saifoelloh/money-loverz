@@ -1,6 +1,7 @@
 @extends('layouts.app', ['class' => 'bg-default'])
 
 @section('content')
+    <!--
     <div class="header bg-gradient-dark py-7 py-lg-8">
         <div class="page-header">
             <div class="container shape-container d-flex align-items-center">
@@ -25,6 +26,32 @@
             </svg>
         </div>
     </div>
+    -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="{{ asset('argon') }}/img/sliders/1.png" alt="First slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="{{ asset('argon') }}/img/sliders/2.png" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="{{ asset('argon') }}/img/sliders/3.png" alt="Third slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="{{ asset('argon') }}/img/sliders/4.png" alt="Third slide">
+            </div>
+        </div>
+
+    </div>
+      
+      
     
     <div id="paket" class="section features-1">
       <div class="container">
@@ -105,7 +132,10 @@
         <div class="row">
           <div class="col-md-8 mx-auto text-center">
             <h3 class="display-3">Katalog Menu</h3>
-            <p class="lead pb-4">Semua menu ready setiap hari kerja<br> (Senin - Jumat 08:30-19:30 WIB).</p>
+            <p class="lead pb-4">
+                Semua menu ready setiap hari kerja<br>
+                <span class="text-danger">(Senin - Jumat 08:30-19:30 WIB).</span>
+            </p>
           </div>
         </div>
 
@@ -194,173 +224,297 @@
         </div>
 
         
-        <div class="row">
-          <div class="col-md-12 mx-auto text-center">
-            <h5 class="display-5">Spesial Ayam</h5>
-            <hr>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                        <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
+    
+    <div id="snack" class="section features-1">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+              <h3 class="display-3">Snack & Beverage</h3>
+              <p class="lead pb-4">
+                  Jajan gak perlu keluar kantor.<br>
+                  <span class="text-danger">(Senin - Jumat 08:30-19:30 WIB).</span>
+              </p>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
+  
+  
+          <div class="row">
+  
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                          <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                        <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                          <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
             </div>
+            <div class="col-md-4">
+              <div class="card" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+  
           </div>
-
-        </div>
-
+  
+          
         
-        <div class="row">
-          <div class="col-md-12 mx-auto text-center">
-            <h5 class="display-5">Spesial Ayam</h5>
-            <hr>
-          </div>
+      </div>
+    </div>
 
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                        <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                        <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card" style="min-height: 20em;">
-                <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
-                <div class="card-body">
-                    <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
-                    <div class="card-info">
-                        <span class="badge badge-primary">Rp. 20.000,-</span>
-                    </div>
-                    <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
-                </div>
-            </div>
-          </div>
 
-        </div>
+    <div id="readytocook" class="section features-1">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+              <h3 class="display-3">Ready to cook</h3>
+              <p class="lead pb-4">
+                  Mau masak?, kita yang atur untuk anda.<br>
+                  <span class="text-danger">(Senin - Jumat 08:30-19:30 WIB).</span>
+              </p>
+            </div>
+          </div>
+  
+  
+          <div class="row">
+  
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                          <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                          <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+  
+          </div>
+  
+          
+        
+      </div>
+    </div>
 
+
+    
+    <div id="event" class="section features-1">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+                <h3 class="display-3">Event</h3>
+                <p class="lead pb-4">
+                  Mau adain acara?, biar kami yang atur makanan untuk acara anda.<br>
+                  <span class="text-danger">(Setiap hari, Max Pesanan 15:00 WIB).</span>
+              </p>
+            </div>
+          </div>
+  
+  
+          <div class="row">
+  
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                          <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Chicken Nut Pucket</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                          <span class="badge badge-secondary">Nasi merah / Kentang rebus</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu1.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card" style="min-height: 20em;">
+                  <img class="card-img-top" src="{{ asset('argon') }}/img/dumpmenu2.jpg" alt="Menu satu pintu">
+                  <div class="card-body">
+                      <h5 class="card-title mb-1">Ayam Crispy Asam Manis</h5>
+                      <div class="card-info">
+                          <span class="badge badge-primary">Rp. 20.000,-</span>
+                      </div>
+                      <p class="card-text mt-2">Nasi putih, Ayam pucket, Tumis tempe kacang, Perkedel</p>
+                  </div>
+              </div>
+            </div>
+  
+          </div>
+  
+          
         
       </div>
     </div>
