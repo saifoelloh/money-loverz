@@ -83,60 +83,44 @@
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Laravel Examples') }}</span>
-                    </a>
-
-                    <div class="collapse show" id="navbar-examples">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('User profile') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('User Management') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
                 @php
-                $menus = [
-                [
-                'title' => 'Admin',
-                'icon' => 'ni ni-badge text-purple',
-                'url' => route('admin.index'),
-                ],
-                [
-                'title' => 'Menu',
-                'icon' => 'ni ni-cart text-purple',
-                'url' => route('menu.index'),
-                ],
-                [
-                'title' => 'FAQ',
-                'icon' => 'ni ni-chat-round text-purple',
-                'url' => route('faq.index'),
-                ],
-                [
-                'title' => 'Package',
-                'icon' => 'ni ni-box-2 text-purple',
-                'url' => route('package.index'),
-                ],
-                [
-                'title' => 'Customer',
-                'icon' => 'ni ni-single-02 text-purple',
-                'url' => route('customer.index'),
-                ],
-                [
-                'title' => 'Order',
-                'icon' => 'ni ni-bag-17 text-purple',
-                'url' => route('order.index'),
-                ],
-                ];
+                    $menus = [
+                        [
+                            'title' => 'Admin',
+                            'icon' => 'ni ni-badge text-purple',
+                            'url' => route('admin.index'),
+                        ],
+                        [
+                            'title' => 'Menu',
+                            'icon' => 'ni ni-cart text-purple',
+                            'url' => route('menu.index'),
+                        ],
+                        [
+                            'title' => 'FAQ',
+                            'icon' => 'ni ni-chat-round text-purple',
+                            'url' => route('faq.index'),
+                        ],
+                        [
+                            'title' => 'Paket',
+                            'icon' => 'ni ni-box-2 text-purple',
+                            'url' => route('package.index'),
+                        ],
+                        [
+                            'title' => 'Customer',
+                            'icon' => 'ni ni-single-02 text-purple',
+                            'url' => route('customer.index'),
+                        ],
+                        [
+                            'title' => 'Order',
+                            'icon' => 'ni ni-bag-17 text-purple',
+                            'url' => route('order.index'),
+                        ],
+                        [
+                            'title' => 'Order Hari Ini',
+                            'icon' => 'ni ni-delivery-fast text-purple',
+                            'url' => route('order.today')
+                        ]
+                    ];
                 @endphp
                 @foreach ($menus as $menu)
                 <li class="nav-item">
