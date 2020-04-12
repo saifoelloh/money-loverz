@@ -30,7 +30,7 @@ class MenuOrderController extends Controller
 
         return view('pages.detail-order.edit', [
           'menus' => $menus,
-          'code' => $code
+          'code' => $code,
         ]);
     }
 
@@ -48,6 +48,7 @@ class MenuOrderController extends Controller
           try {
             $detailOrder = $order->menus()->attach($menu->id, [
               'antar' => $request->antar,
+              'optional' => $request->optional,
               'note' => $request->note
             ]);
 
@@ -76,12 +77,14 @@ class MenuOrderController extends Controller
     {
         $menus = Menu::latest()->get();
         $order = Order::with('package:id,total_items')->where('code', $code)->first();
+        $menuOrder = new MenuOrder();
 
         return view('pages.detail-order.create', [
           'menus' => $menus,
           'code' => $code,
           'order' => $order->id,
-          'package' => $order->package
+          'package' => $order->package,
+          'options' => $menuOrder->daftar['optional']
         ]);
     }
 
@@ -91,9 +94,22 @@ class MenuOrderController extends Controller
      * @param  \App\MenuOrder  $menuOrder
      * @return \Illuminate\Http\Response
      */
-    public function edit(MenuOrder $menuOrder)
+    public function edit($code, $menu, $antar)
     {
-        //
+      $order = Order::where('code', $code)->first();
+      $menus = Menu::all(['name', 'price']);
+      $pivot = MenuOrder::where([
+        'order_id' => $order->id,
+        'menu_id' => $menu,
+        'antar' => $antar
+      ])->first();
+
+      return view('pages.detail-order.edit', [
+        'order' => $order->id,
+        'pivot' => $pivot,
+        'menus' => $menus,
+        'options' => $pivot->daftar['optional']
+      ]);
     }
 
     /**
@@ -103,9 +119,35 @@ class MenuOrderController extends Controller
      * @param  \App\MenuOrder  $menuOrder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MenuOrder $menuOrder)
+    public function update(Request $request, $code, $menu, $antar)
     {
-        //
+      $order = Order::where('code', $code)->first();
+      $pivot = MenuOrder::where([
+        'order_id' => $order->id,
+        'menu_id' => $menu,
+        'antar' => $antar
+      ])->first();
+
+      try {
+        $result = $pivot->update([
+          'total' => $request->total,
+          'status' => $request->status,
+          'optional' => $request->optional,
+          'antar' => $request->antar,
+        ]);
+        if ($result) {
+          return redirect(route('order.show', $order->id))->with([
+            'status' => 'Berhasil mengubah order',
+            'success' => true
+          ]);
+        }
+      } catch (Exception $e) {
+        return redirect(route('order.show', $order->id))->with([
+          'status' => 'Order gagal dirubah',
+          'success' => false
+        ]);
+      }
+
     }
 
     /**

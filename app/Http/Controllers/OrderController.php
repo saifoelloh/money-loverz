@@ -86,7 +86,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::with(['menus', 'package:id,name', 'customer:id,name'])->find($id);
+        $order = Order::with(['menus', 'package:id,name,total_items', 'customer:id,name'])->find($id);
         return view('pages.order.show', [
             'order' => $order,
             'items' => $order->menus,
@@ -111,8 +111,11 @@ class OrderController extends Controller
             'order' => $order,
             'customers' => $customers,
             'packages' => $packages,
-            'staus' => $order->daftarStatus,
-            'error' => false
+            'status' => $order->daftar['status'],
+            'error' => false,
+            'payments' => $order->daftar['payment_method'],
+            'kecamatans' => $order->daftar['kecamatan'],
+            'statusPemesanan' => $order->status == 'created' || $order->status == 'confirmed'
         ]);
     }
 
@@ -153,8 +156,40 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
-        //
+      $order = Order::find($id);
+
+      try {
+        $result = $order->delete();
+        if ($result) {
+          return redirect(route('order.index'))->with([
+            'status' => 'Pesanan Berhasil dihapus',
+            'success' => true
+          ]);
+        }
+      } catch (Exception $e) {
+          return redirect(route('order.index'))->with([
+            'status' => 'Gagal Menghapus Pesanan',
+            'success' => false
+          ]);
+      }
+    }
+
+    /**
+     * Show order of the day
+     *
+     * @return Response
+     */
+    public function today(Request $request)
+    {
+      $orders = Order::with(['user:id,name', 'customer:id,name', 'package', 'menus'])->latest()->get();
+      if ($request->ajax()) {
+        return Datatables::of($orders)
+          ->addIndexColumn()
+          ->make(true);
+      }
+
+      return view('pages.order.today');
     }
 }
