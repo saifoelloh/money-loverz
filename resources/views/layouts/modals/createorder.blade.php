@@ -5,7 +5,7 @@
       <!-- START Form -->
       <form action="{{ route('make-order.store') }}" method="POST">
         @csrf
-        <div class="modal-header">
+        <div class="modal-header pb-0">
           <h6 class="modal-title" id="modal-title-notification">Daftar untuk buat pesanan baru.</h6>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
@@ -87,7 +87,7 @@
           </div>
         </div><!-- END Modal-Body -->
 
-        <div class="modal-footer">
+        <div class="modal-footer pt-0">
           <button type="button" class="btn btn-link text-white">Input Kode Pesanan</button>
           <button type="submit" class="btn btn-white ml-auto">
             Buat Pesanan

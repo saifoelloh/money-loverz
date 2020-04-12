@@ -14,9 +14,10 @@
         @endif
         <div class="card w-75 mx-auto">
           <div class="card-body">
-            <h2 class="text-center">Pilih Menu</h2>
+            <h2 class="text-center">Pesanan : <span class="badge badge-info">{{ $order->code }}</span></h2>
             <div class="row justify-content-between">
               <div class="col-sm-6">
+                <h6 class="ml-3">Informasi Pelanggan</h6>
                 <ul class="fa-ul">
                   <li>
                     <span class="fa-li">
@@ -30,19 +31,14 @@
                     </span>
                     {{ $order->user->phone }}
                   </li>
-                  <li>
-                    <span class="fa-li">
-                      <i class="fas fa-map-marker-alt"></i>
-                    </span>
-                    {{ ucwords($order->kecamatan) }}
-                  </li>
                 </ul>
               </div>
               <div class="col-sm-6 text-right">
+                <h6 class="">Informasi Pesanan</h6>
                 <ul class="list-unstyled">
                   <li>
-                    {{ $order->code }}
-                    <i class="fas fa-box ml-2"></i>
+                    Status : {{ $order->status }}
+                    <i class="fas fa-check ml-2"></i>
                   </li>
                   <li>
                     Paket Coba | {{ $order->package->total_items }} Item
@@ -51,6 +47,8 @@
                 </ul>
               </div>
             </div>
+            <h5 class="text-center">Pilih Menu</h5>
+            <hr>
 
             <table class="table table-borderless table-hover text-center">
               <thead>
@@ -146,7 +144,6 @@
                 <!-- END Form -->
 
                 <tr>
-                  <td colspan="5"></td>
                   <td colspan="2">
                     <form action="{{ route('make-order.purchase', [
                       'code' => $code,
@@ -154,18 +151,22 @@
                     ])}}" method="POST">
                     @method("PUT")
                     @csrf
-                      <button type="submit" class="btn btn-outline-warning btn-sm btn-block mb-2">
-                        Cancel
+                      <button type="submit" class="btn btn-outline-warning btn-block mb-2">
+                        Batalkan
                       </button>
                     </form>
+
+                  </td>
+                  <td colspan="3"></td>
+                  <td colspan="2">
                     <form action="{{ route('make-order.purchase', [
                       'code' => $code,
                       'status' => 'confirmed'
                     ]) }}" method="POST">
                     @method("PUT")
                     @csrf
-                      <button type="submit" class="btn btn-outline-primary btn-sm btn-block">
-                        Lanjut
+                      <button type="submit" class="btn btn-primary btn-block">
+                        Lanjutkan Pesanan
                       </button>
                     </form>
                   </td>
@@ -173,6 +174,64 @@
 
               </tbody>
             </table>
+
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+
+                <h6 class="ml-3">Metode Pembayaran</h6>
+                <div class="form-group">
+                  <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-money"></i></span>
+                    </div>
+                    <select class="form-control" name="pembayaran">
+                      <option>Pilih metode pembayaran</option>
+                      <option>(Transfer) Bank BRI</option>
+                      <option>(Transfer) Bank BCA</option>
+                      <option>(Transfer) Bank Mandiri</option>
+                      <option>(Transfer) Bank Jateng</option>
+                      <option>COD</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <h5>(Transfer) Bank BRI</h5>
+                  <p>
+                    3033-01-000000-30-9<br>
+                    A/N LUTTER ARIESTINO
+                  </p>  
+                </div>
+                
+              </div>
+
+              <div class="col-md-6">
+
+                <h6 class="ml-3">Alamat Gedung / Rumah</h6>
+                <div class="form-group">
+                  <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                    </div>
+                    <input class="form-control text-disabled" type="text" name="kecamatan" disabled value="Kecamatan {{ ucwords($order->kecamatan) }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" name="pembayaran"></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-12"><hr></div>
+
+              <div class="col-md-6">
+                <button class="btn btn-outline-warning">Batalkan Pesanan</button>
+              </div>
+
+              <div class="col-md-6">
+                <button class="btn btn-primary float-right">Konfirmasi Pesanan</button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
