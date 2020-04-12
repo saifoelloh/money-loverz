@@ -57,4 +57,10 @@ Route::group(['middleware' => ['auth', 'check-role']], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+  Route::group([
+    'as' => 'pdf',
+    'prefix' => 'pdf'
+  ], function() {
+    Route::get('/order/{code}', 'PdfController@order')->name('.order');
+  });
 });
