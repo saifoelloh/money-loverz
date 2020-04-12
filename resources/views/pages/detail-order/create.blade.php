@@ -27,13 +27,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="menu">Menu</label>
-                                    <select name="menu" id="menu" class="form-control" required>
-                                        @foreach($menus as $menu)
-                                        <option value="{{$menu->id}}">
-                                          {{ $menu->name." | ".$menu->price }}
-                                        </option>
-                                        @endforeach
-                                    </select>
+                                    <input class="form-control" type="text" name="menu" id="menu">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="total">Jumlah</label>
@@ -44,8 +38,15 @@
                                     <input type="date" name="antar" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="note">Catatan</label>
-                                    <textarea id="note" class="form-control" name="note" required></textarea>
+                                    <label class="form-label" for="optional">Menu Pengganti</label>
+                                    <select id="optional" class="form-control" name="optional">
+                                      <option>-</option>
+                                      @foreach ($options as $option)
+                                        <option value="{{ $option }}">
+                                        {{ ucwords($option) }}
+                                        </option>
+                                      @endforeach
+                                    </select>
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">
@@ -71,3 +72,30 @@
 </div>
 @endsection
 
+@push('js')
+  <script charset="utf-8">
+    $(document).ready(function() {
+      const temp = {!! json_encode($menus) !!}
+      $('#menu')
+      .autocomplete({
+        minLength: 0,
+        source: temp,
+        focus: function(e, ui) {
+          $('#menu').val(ui.item.name)
+          $('#price').val(`Rp ${ui.item.price.toLocaleString('id')}`)
+          return false
+        },
+        select: function(e, ui) {
+          $('#menu').val(ui.item.name)
+          $('#price').val(`Rp ${ui.item.price.toLocaleString('id')}`)
+          return false
+        }
+      })
+      .autocomplete('instance')._renderItem = function(ul, item) {
+        return $("<li>")
+          .append(`${item.name} | Rp ${item.price.toLocaleString('id')}`)
+          .appendTo(ul)
+      }
+    })
+  </script>
+@endpush
