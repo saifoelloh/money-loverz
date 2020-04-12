@@ -29,7 +29,8 @@ class Menu extends Model
       ->withPivot([
         'total',
         'status',
-        'note'
+        'antar',
+        'optional'
       ]);
   }
 }

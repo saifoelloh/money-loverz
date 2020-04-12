@@ -72,8 +72,8 @@ class Order extends Model
             ->withPivot([
                 'total',
                 'status',
-                'note',
-                'antar'
+                'antar',
+                'optional'
             ]);
     }
 }

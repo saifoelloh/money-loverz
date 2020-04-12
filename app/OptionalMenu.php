@@ -11,12 +11,7 @@ class OptionalMenu extends Model
 
   protected $fillable = [
     'name',
-    'category',
-    'price'
+    'price',
   ];
 
-  public function menu()
-  {
-    return $this->belongsTo(Menu::class);
-  }
 }

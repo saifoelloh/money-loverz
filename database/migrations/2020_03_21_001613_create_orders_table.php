@@ -19,33 +19,31 @@ class CreateOrdersTable extends Migration
             $table->enum('payment_method', [
                 'cash on delivery',
                 'transfer'
-            ]);
+            ])->default('transfer');
             $table->enum('status', [
-                'menunggu konfirmasi',
-                'terkonfirmasi',
-                'terbayar',
-                'sedang berjalan',
-                'selesai',
-                'batal'
-            ])->default('menunggu konfirmasi');
+                'created',
+                'confirmed',
+                'proceed',
+                'complete',
+                'cancel',
+            ])->default('created');
             $table->string('kecamatan');
-            $table->string('kelurahan');
-            $table->string('jalan');
-            $table->string('address_notes');
-            $table->unsignedBigInteger('user_id')
-                ->foreign()
+            $table->string('alamat')->default('');
+            $table->string('address_notes')->default('');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('customer_id')
-                ->foreign()
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('package_id')
-                ->foreign()
+            $table->unsignedBigInteger('package_id');
+            $table->foreign('package_id')
                 ->references('id')
-                ->on('package')
+                ->on('packages')
                 ->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

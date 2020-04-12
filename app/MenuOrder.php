@@ -9,7 +9,21 @@ class MenuOrder extends Pivot
     protected $fillable = [
         'total',
         'status',
-        'note',
+        'optional',
+        'antar'
+    ];
+
+    public $daftar = [
+        'optional' => [
+            'kentang rebus',
+            'nasi merah',
+            'nasi kuning'
+        ],
+        'status' => [
+            'order',
+            'cancel',
+            'done'
+        ]
     ];
 
     public function menu()

@@ -17,8 +17,8 @@ class CreateFaqsTable extends Migration
             $table->bigIncrements('id');
             $table->string('question');
             $table->string('answer');
-            $table->unsignedBigInteger('user_id')
-                ->foreign()
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');

@@ -13,7 +13,7 @@ class CreateMenuOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu_orders', function (Blueprint $table) {
+        Schema::create('menu_order', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('total')->default(1);
             $table->date('antar');
@@ -22,16 +22,18 @@ class CreateMenuOrdersTable extends Migration
               'cancel',
               'done'
             ])->default('order');
-            $table->string('note');
-            $table->unsignedBigInteger('menu_id')
-                ->foreign('menu_id')
+            $table->string('optional')->nullable();
+            $table->unsignedBigInteger('menu_id');
+            $table->foreign('menu_id')
                 ->references('id')
                 ->on('menus')
+                ->constrained()
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('order_id')
-                ->foreign('order_id')
+            $table->unsignedBigInteger('order_id');
+            $table->foreign('order_id')
                 ->references('id')
                 ->on('orders')
+                ->constrained()
                 ->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
