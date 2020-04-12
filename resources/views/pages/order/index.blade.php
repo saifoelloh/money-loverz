@@ -1,61 +1,55 @@
 @extends('layouts.app', ['title' => 'Pesanan'])
 
 @section('content')
-@include('users.partials.header', ['title' => __('Daftar Pesanan')])
-<div class="container-fluid mt--7">
+  @include('users.partials.header', ['title' => __('Daftar Pesanan')])
+  <div class="container-fluid mt--7">
     <div class="row">
-        <div class="col-12">
-            <div class="card shadow">
-                <div class="card-body">
-                    @if (session('status'))
-                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <span class="alert-icon"><i class="ni ni-watch-time"></i></span>
-                        <span class="alert-text">
-                          {{ session('status') }}
-                        </span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                    @endif
-                    <div class="card-title">
-                        <div class="row">
-                            <div class="col-6">
-                                Daftar Pesanan
-                            </div>
-                            <div class="col-6 text-right">
-                                <a class="btn btn-icon btn-primary btn-sm" href="{{ route('order.create') }}">
-                                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-                                    <span class="btn-inner--text">tambah</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <div>
-                            <table id="data-table" class="table align-items-center text-center border-bottom-0">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Pemesan</th>
-                                        <th>Paket Pesanan</th>
-                                        <th>Pembayaran Via</th>
-                                        <th>Harga</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-body">
+            @if (session('status'))
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="ni ni-watch-time"></i></span>
+                <span class="alert-text">
+                  {{ session('status') }}
+                </span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            @endif
+            <div class="card-title">
+              <div class="row">
+                <div class="col-6">
+                  Daftar Pesanan
                 </div>
+              </div>
             </div>
+            <div class="table-responsive">
+              <div>
+                <table id="data-table" class="table align-items-center text-center border-bottom-0">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>No</th>
+                      <th>Nama Pemesan</th>
+                      <th>Paket Pesanan</th>
+                      <th>Pembayaran Via</th>
+                      <th>Harga</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     @include('layouts.footers.auth')
-</div>
+  </div>
 @endsection
 
 @push('js')
@@ -97,20 +91,20 @@
             render: function(data) {
               const detail = `
                 <a class="btn btn-success btn-sm btn-icon" href="{{ route("order.index") }}/${data}">
-                  <span class="btn-inner--icon"><i class="fas fa-eye fa-lg"></i></span>
-                  <span class="btn-inner--text">detail</span>
+                  <i class="fas fa-eye fa-lg"></i>
+                  detail
                 </a>`
               const edit = `
                 <a class="btn btn-warning btn-sm btn-icon" href="{{ route("order.index") }}/${data}/edit">
-                  <span class="btn-inner--icon"><i class="fas fa-edit fa-lg"></i></span>
-                  <span class="btn-inner--text">edit</span>
+                  <i class="fas fa-edit fa-lg"></i>
+                  edit
                 </a>`
               const destroy = `<form action="{{ route("order.index") }}/${data}" method="POST" class="d-inline">
                 @method("DELETE")
                 @csrf
                 <button class="btn btn-danger btn-sm btn-icon" type="submit">
-                  <span class="btn-inner--icon"><i class="fas fa-trash fa-lg"></i></span>
-                  <span class="btn-inner--text">delete</span>
+                  <i class="fas fa-trash fa-lg"></i>
+                  delete
                 </button>
               </form>`
               const buttons = `

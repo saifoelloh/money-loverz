@@ -11,57 +11,36 @@
                   <form action="">
                     <div class="form-group">
                       <label class="form-label" for="customer">Nama Pelanggan</label>
-                      <select name="customer" id="customer" class="form-control" disabled required>
-                        <option value="{{$customer->id}}">
-                          {{ $customer->name." | ".$customer->phone }}
-                        </option>
-                      </select>
+                      <input class="form-control" type="text" value="{{ $customer->name }}" disabled>
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="package">Pilih Paket</label>
                       <select name="package" id="package" class="form-control" disabled required>
-                        <option value="{{ $package->id }}">
-                        {{ $package->name }}
-                        </option>
+                        <option>{{ $package->name }}</option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="payment_method">Opsi Pembayaran</label>
-                      <select name="payment_method" id="payment_method" class="form-control" {{ $order->status == "terbayar" ? 'disabled' : ''}} disabled required>
-                          <option value="transfer" {{ $order->payment_method == "transfer" ? 'selected' : '' }}>
-                              Transfer
-                          </option>
-                          <option value="cash on delivery" {{ $order->payment_method == "cash on delivery" ? 'selected' : '' }}>
-                              Cash on Delivery
-                          </option>
+                      <select name="payment_method" id="payment_method" class="form-control" disabled required>
+                        <option>{{ ucwords($order->payment_method) }}</option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="kecamatan">Kecamatan</label>
                       <select name="kecamatan" id="kecamatan" class="form-control" disabled required>
-                          <option {{ $order->kecamatan == 'pedurungan' ? 'selected' : '' }} value="pedurungan">Pedurungan</option>
-                          <option {{ $order->kecamatan == 'tlogosari' ? 'selected' : '' }} value="tlogosari">Tlogosari</option>
-                          <option {{ $order->kecamatan == 'kimar' ? 'selected' : '' }} value="kimar">Kimar</option>
+                        <option>{{ ucwords($order->kecamatan) }}</option>
                       </select>
                     </div>
                     <div class="form-group">
-                      <label class="form-label" for="kelurahan">Kelurahan</label>
-                      <select name="kelurahan" id="kelurahan" class="form-control" disabled required>
-                          <option {{ $order->kelurahan == 'pedurungan' ? 'selected' : '' }} value="pedurungan">Pedurungan</option>
-                          <option {{ $order->kelurahan == 'tlogosari' ? 'selected' : '' }} value="tlogosari">Tlogosari</option>
-                          <option {{ $order->kelurahan == 'kimar' ? 'selected' : '' }} value="kimar">Kimar</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" for="jalan">Jalan</label>
-                      <input type="text" name="jalan" class="form-control" value="{{ $order->jalan }}" disabled required>
+                      <label class="form-label" for="alamat">Alamt</label>
+                      <textarea id="alamat" class="form-control" name="alamat" disabled>{{ $order->alamat }}</textarea>
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="address_notes">Catatan Alamat</label>
                       <textarea class="form-control" name="address_notes" id="address_note" disabled required>{{ $order->address_notes }}</textarea>
                     </div>
                   </form>
-                    <a class="btn btn-icon btn-primary btn-block" href="{{ route('menu.index') }}">
+                    <a class="btn btn-icon btn-primary btn-block" href="{{ route('order.index') }}">
                         <span class="btn-inner--text">kembali</span>
                         <span class="btn-inner--icon"><i class="fas fa-reply"></i></span>
                     </a>
@@ -78,7 +57,7 @@
                 </button>
               </div>
             @endif
-            @include('pages.detail-order.index', [ 'options' => $items, 'order_code' => $order->code ])
+            @include('pages.detail-order.index', [ 'options' => $items, 'order_code' => $order->code, 'totalItems' => $package->total_items ])
         </div><!-- END of Optionals List -->
     </div>
     @include('layouts.footers.auth')

@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="package">Pilih Paket</label>
-                                    <select name="package" id="package" class="form-control" required>
+                                    <select name="package" id="package" class="form-control" {{ $statusPemesanan ? '' : 'disabled' }} required>
                                         @foreach($packages as $package)
                                         <option value="{{ $package->id }}" {{ $order->package->id == $package->id ? 'selected' : '' }}>
                                             {{ $package->name }}
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="payment_method">Opsi Pembayaran</label>
-                                    <select name="payment_method" id="payment_method" class="form-control" required>
+                                    <select name="payment_method" id="payment_method" class="form-control" {{ $statusPemesanan ? '' : 'disabled'}} required>
                                         @foreach ($payments as $payment)
                                           <option value="{{ $payment }}" {{ $order->payment_method == $payment ? 'selected' : '' }}>
                                             {{ ucwords($payment) }}
@@ -57,7 +57,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="status">Status</label>
                                     <select name="status" id="status" class="form-control" required>
-                                        @foreach ($staus as $stat)
+                                        @foreach ($status as $stat)
                                           <option value="{{ $stat }}" {{ $order->status == $stat ? 'selected' : '' }}>
                                               {{ ucwords($stat) }}
                                           </option>
@@ -75,8 +75,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="jalan">Jalan</label>
-                                    <input type="text" name="jalan" class="form-control" value="{{ $order->jalan }}" required>
+                                    <label class="form-label" for="alamat">Alamat</label>
+                                    <textarea id="alamat" class="form-control" name="alamat" value="{{ $order->alamat }}"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="address_notes">Catatan Alamat</label>
