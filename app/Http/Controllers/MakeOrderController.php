@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\User;
 use App\Menu;
-use App\Package;
+use App\MenuOrder;
 use Illuminate\Http\Request;
 
 class MakeOrderController extends Controller
@@ -15,11 +15,18 @@ class MakeOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $packages = Package::latest()->get();
-        return view('welcome', [
-            'packages' => $packages
+    public function index($code) {
+        $order = Order::with(['user:id,name,phone', 'package:id,name,total_items', 'menus'])->where('code', $code)->first();
+        $menuOrder = new MenuOrder();
+        $menus = Menu::all(['name', 'price']);
+
+        return view('pages.make-order.index', [
+          'tambahan' => $menuOrder->daftar['optional'],
+          'menus' => $menus,
+          'order' => $order,
+          'orders' => $order->menus,
+          'code' => $code,
+          'limit' => $order->package->total_items - $order->menus()->count()
         ]);
     }
 
@@ -41,45 +48,38 @@ class MakeOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $orderCount = Order::whereDate('created_at', '=', date('Y-m-d'))->count();
-        $code = "PKG".sprintf('%02d', $request->package).date("dmy").sprintf('%04d', $orderCount + 1);
-        $clock = date("H.i", time());
-        if ($clock <= 19.30) {
-            if ($request->checked) {
-              $customer = User::where('phone', $request->phone)->first();
-            } else {
-              $customer = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'gender' => $request->gender,
-                'address' => $request->jalan,
-                'phone' => $request->phone,
-              ]);
-            }
-          try {
-            $order = Order::create([
-              'code' => $code,
-              'payment_method' => $request->payment_method,
-              'kecamatan' => $request->kecamatan,
-              'kelurahan' => $request->kelurahan,
-              'jalan' => $request->jalan,
-              'address_notes' => $request->address_notes,
-              'package_id' => $request->package,
-              'customer_id' => $customer->id,
-            ]);
-            if ($order) {
-              return redirect(route('order.index'));
-            }
-          } catch (\Throwable $th) {
-            return abort(400, $th);
-          }
-        } else {
-          return redirect('order')->with('status', "Sorry we're out today...");
+      $orderCount = Order::whereDate('created_at', '=', date('Y-m-d'))->count();
+      $code = "PKG".sprintf('%02d', $request->package).date("dmy").sprintf('%04d', $orderCount + 1);
+      $clock = date("H.i", time());
+
+      if ($clock <= 17.00) {
+        $customer = User::where('phone', $request->phone)->first();
+        if ($customer==null) {
+          $customer = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'gender' => $request->gender,
+            'phone' => $request->phone,
+          ]);
         }
+
         try {
-        } catch (Exception $e) {
-            
+          $order = $customer->orders()->create([
+            'code' => $code,
+            'kecamatan' => $request->kecamatan,
+            'package_id' => $request->package,
+            'customer_id' => $customer->id,
+          ]);
+          if ($order) {
+            return redirect(route('make-order.index', $code));
+          }
+        } catch (\Throwable $th) {
+          return abort(400, $th);
         }
+      } else {
+        return redirect('landing-page')->with('status', "Sorry we're out today...");
+      }
+
     }
 
     /**
@@ -99,9 +99,25 @@ class MakeOrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($code, $status)
     {
-        //
+      $order = Order::where('code', $code)->first();
+      try {
+        $result = $order->update([
+          'status' => $status
+        ]);
+        if ($result) {
+          return redirect(route('landing-page'))->with([
+            'status' => 'Silahkan tunggu konfirmasi dari admin via WA',
+            'success' => true
+          ]);
+        }
+      } catch (Exception $e) {
+        return redirect(route('landing-page'))->with([
+          'status' => 'Pesanan gagal di lanjutkan',
+          'success' => true
+        ]);
+      }
     }
 
     /**
@@ -111,9 +127,36 @@ class MakeOrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function add(Request $request, $code)
     {
-        //
+      $order = Order::where('code', $code)->first();
+      $menu = Menu::where('name', $request->menu)->first();
+      $clock = date("H.i", time());
+
+      if ($clock < 17) {
+        if ($order->menus()->count() < $order->package->total_items) {
+          try {
+            $order->menus()->attach($menu->id, [
+              'antar' => $request->antar,
+              'optional' => $request->optional,
+            ]);
+            return redirect(route('make-order.index', $code))->with([
+              'status' => 'Pesanan berhasil ditambahkan',
+              'success' => true
+            ]);
+          } catch (Exception $e) {
+            return redirect(route('make-order.index', $code))->with([
+              'status' => 'Gagal menambah pesanan',
+              'success' => false
+            ]);
+          }
+        }
+      } else {
+        return redirect(route('make-order.index', $code))->with([
+          'status' => 'Maaf kami sudah tutup untuk hari ini',
+          'success' => false
+        ]);
+      }
     }
 
     /**
@@ -122,8 +165,27 @@ class MakeOrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($code, $menuId, $antar)
     {
-        //
+      $order = Order::where('code', $code)->first();
+      $menuOrder = MenuOrder::where([
+        'order_id' => $order->id,
+        'menu_id' => $menuId,
+        'antar' => $antar
+      ])->first();
+      try {
+        $result = $menuOrder->delete();
+        if ($result) {
+          return redirect(route('make-order.index', $code))->with([
+            'status' => 'Berhasil menghapus barang',
+            'success' => true
+          ]);
+        }
+      } catch (Exception $e) {
+        return redirect(route('make-order.index', $code))->with([
+          'status' => 'Gagal menghapus barang',
+          'success' => false
+        ]);
+      }
     }
 }
