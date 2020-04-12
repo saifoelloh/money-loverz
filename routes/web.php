@@ -10,17 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'MakeOrderController@index')->name('landing-page');
+Route::get('/', 'LandingPageController@index')->name('landing-page');
 
 Route::group([
   'as' => 'make-order',
   'prefix' => 'make-order'
 ], function() {
-  Route::get('/', function() {
-    return view('makeorder');
-  });
-  Route::get('/{code}', 'MenuOrderController@show')->name('.cart');
-  Route::post('/', 'MenuOrderController@store')->name('.store');
+  Route::post('/', 'MakeOrderController@store')->name('.store');
+  Route::get('/{code}', 'MakeOrderController@index')->name('.index');
+  Route::put('/{code}/{status}', 'MakeOrderController@edit')->name('.purchase');
+  Route::post('/{code}', 'MakeOrderController@add')->name('.add');
+  Route::delete('/{code}/{menuId}/{antar}', 'MakeOrderController@destroy')->name('.destroy');
 });
 
 Auth::routes();
@@ -35,15 +35,16 @@ Route::group(['middleware' => ['auth', 'check-role']], function () {
 	Route::resource('package', 'PackageController');
 	Route::resource('customer', 'CustomerController');
 	Route::resource('order', 'OrderController');
+  Route::get('today-order', 'OrderController@today')->name('order.today');
   Route::group([
     'as' => 'detail-order',
     'prefix' => 'detail-order',
   ], function() {
     Route::get('/{code}', 'MenuOrderController@show')->name('.create');
     Route::post('/{code}', 'MenuOrderController@store')->name('.store');
-    Route::get('/{code}/edit/{menu}', 'MenuOrderController@edit')->name('.edit');
-    Route::put('/{code}/edit/{menu}', 'MenuOrderController@update')->name('.update');
-    Route::delete('/{code}/edit/{menu}', 'MenuOrderController@destroy')->name('.destroy');
+    Route::get('/{code}/edit/{menu}/{antar}', 'MenuOrderController@edit')->name('.edit');
+    Route::put('/{code}/edit/{menu}/{antar}', 'MenuOrderController@update')->name('.update');
+    Route::delete('/{code}/edit/{menu}/{antar}', 'MenuOrderController@destroy')->name('.destroy');
   });
 	Route::resource('optional-menu', 'OptionalMenuController');
 	Route::group([
