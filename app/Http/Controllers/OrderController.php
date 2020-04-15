@@ -199,4 +199,10 @@ class OrderController extends Controller
 
       return view('pages.order.today');
     }
+
+
+    public function invoice(Request $request)
+    {
+      return view('pages.order.invoice');
+    }
 }

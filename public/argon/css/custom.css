@@ -29,3 +29,12 @@ html {
     font-variant: normal;
     text-transform: none;
 }
+
+.logo-invoice{
+    width: 170px;
+    height: auto;
+}
+
+.table-invoice th, .table-invoice td{
+    padding: 5px;
+}
