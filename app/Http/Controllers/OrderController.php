@@ -7,6 +7,7 @@ use App\User;
 use App\Order;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -128,26 +129,32 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $admin = auth()->user();
-        $order = Order::find($id);
+      $admin = auth()->user();
+      $order = Order::find($id);
+      if ($request->photo == null) {
+        $photo = $order->photo;
+      } else {
+        $temp = $request->photo()->store('public');
+        $photo = Storage::url($temp);
+      }
 
-        try {
-          $result = $order->update([
-              'payment_method' => $request->payment_method,
-              'kecamatan' => $request->kecamatan,
-              'kelurahan' => $request->kelurahan,
-              'status' => $request->status,
-              'jalan' => $request->jalan,
-              'address_notes' => $request->address_notes,
-              'package_id' => $request->package,
-              'user_id' => $admin->id,
-          ]);
-          if ($result) {
-            return redirect(route('order.index'));
-          }
-        } catch (\Throwable $th) {
-          return abort(400, $th);
+      try {
+        $result = $order->update([
+          'payment_method' => $request->payment_method,
+          'kecamatan' => $request->kecamatan,
+          'kelurahan' => $request->kelurahan,
+          'status' => $request->status,
+          'jalan' => $request->jalan,
+          'bukti' => $photo,
+          'package_id' => $request->package,
+          'user_id' => $admin->id,
+        ]);
+        if ($result) {
+          return redirect(route('order.index'));
         }
+      } catch (\Throwable $th) {
+        return abort(400, $th);
+      }
     }
 
     /**

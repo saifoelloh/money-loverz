@@ -29,7 +29,6 @@ class CreateOrdersTable extends Migration
             ])->default('created');
             $table->string('kecamatan');
             $table->string('alamat')->default('');
-            $table->string('address_notes')->default('');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
@@ -45,6 +44,7 @@ class CreateOrdersTable extends Migration
                 ->references('id')
                 ->on('packages')
                 ->onDelete('cascade');
+            $table->string('bukti')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

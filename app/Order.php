@@ -15,8 +15,7 @@ class Order extends Model
         'status',
         'kecamatan',
         'alamat',
-        'cart_notes',
-        'address_notes',
+        'bukti',
         'user_id',
         'customer_id',
         'package_id'
