@@ -9,9 +9,9 @@
             <div class="card bg-secondary shadow border-0">
                 <div class="card-body px-lg-5 py-lg-5">
                     <div class="text-center text-muted mb-4">
-                        <small>
+                        <!--<small>
                             <a href="{{ route('register') }}">{{ __('Create new account') }}</a>
-                        </small>
+                        </small>-->
                     </div>
                     <form role="form" method="POST" action="{{ route('login') }}">
                         @csrf
@@ -54,7 +54,7 @@
                     </form>
                 </div>
             </div>
-            <div class="row mt-3">
+            <!--<div class="row mt-3 hidden">
                 <div class="col-6">
                     @if (Route::has('password.request'))
                     <a href="{{ route('password.request') }}" class="text-light">
@@ -67,7 +67,7 @@
                         <small>{{ __('Create new account') }}</small>
                     </a>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
