@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Package;
 use App\User;
 use App\Order;
+use App\MenuOrder;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
@@ -131,10 +132,11 @@ class OrderController extends Controller
     {
       $admin = auth()->user();
       $order = Order::find($id);
-      if ($request->photo == null) {
+
+      if ($request->bukti == null) {
         $photo = $order->photo;
       } else {
-        $temp = $request->photo()->store('public');
+        $temp = $request->bukti->store('public');
         $photo = Storage::url($temp);
       }
 
@@ -190,7 +192,8 @@ class OrderController extends Controller
      */
     public function today(Request $request)
     {
-      $orders = Order::with(['user:id,name', 'customer:id,name', 'package', 'menus'])->latest()->get();
+      $orders = MenuOrder::with(['order.menus', 'order.customer', 'order.package'])->where('antar', date("Y-m-d", strtotime("2020-04-21")))->get();
+
       if ($request->ajax()) {
         return Datatables::of($orders)
           ->addIndexColumn()
@@ -204,5 +207,37 @@ class OrderController extends Controller
     public function invoice(Request $request)
     {
       return view('pages.order.invoice');
+    }
+
+    public function ubah(Request $request, $id) {
+      $admin = auth()->user();
+      $order = Order::find($id);
+
+      dd($request->files->bukti, $request->package);
+
+      if (sizeof($request->files) < 1) {
+        $photo = $order->photo;
+      } else {
+        $temp = $request->file('bukti')->store('public');
+        $photo = Storage::url($temp);
+      }
+
+      try {
+        $result = $order->update([
+          'payment_method' => $request->payment_method,
+          'kecamatan' => $request->kecamatan,
+          'kelurahan' => $request->kelurahan,
+          'status' => $request->status,
+          'jalan' => $request->jalan,
+          'bukti' => $photo,
+          'package_id' => $request->package,
+          'user_id' => $admin->id,
+        ]);
+        if ($result) {
+          return redirect(route('order.index'));
+        }
+      } catch (\Throwable $th) {
+        return abort(400, $th);
+      }
     }
 }
