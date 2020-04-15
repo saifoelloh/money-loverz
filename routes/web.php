@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth', 'check-role']], function () {
 	Route::resource('customer', 'CustomerController');
 	Route::resource('order', 'OrderController');
   Route::get('today-order', 'OrderController@today')->name('order.today');
+  Route::get('invoice', 'OrderController@invoice')->name('order.invoice'); //ROUTE SALAH INVOICE
   Route::group([
     'as' => 'detail-order',
     'prefix' => 'detail-order',
