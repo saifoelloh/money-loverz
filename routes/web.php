@@ -18,7 +18,7 @@ Route::group([
 ], function() {
   Route::post('/', 'MakeOrderController@store')->name('.store');
   Route::get('/{code}', 'MakeOrderController@index')->name('.index');
-  Route::put('/{code}/{status}', 'MakeOrderController@edit')->name('.purchase');
+  Route::put('/{code}', 'MakeOrderController@edit')->name('.checkout');
   Route::post('/{code}', 'MakeOrderController@add')->name('.add');
   Route::delete('/{code}/{menuId}/{antar}', 'MakeOrderController@destroy')->name('.destroy');
 });
