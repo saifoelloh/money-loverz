@@ -7,6 +7,7 @@
         <!-- Detail Order -->
         <div class="col-xs-12 col-md-4">
             <div class="card shadow">
+                <img src="{{ $order->bukti }}" alt="" class="card-img-top">
                 <div class="card-body">
                   <form action="">
                     <div class="form-group">
