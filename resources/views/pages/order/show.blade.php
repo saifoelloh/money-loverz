@@ -7,6 +7,7 @@
         <!-- Detail Order -->
         <div class="col-xs-12 col-md-4">
             <div class="card shadow">
+                <img src="{{ $order->bukti }}" alt="" class="card-img-top">
                 <div class="card-body">
                   <form action="">
                     <div class="form-group">
@@ -34,10 +35,6 @@
                     <div class="form-group">
                       <label class="form-label" for="alamat">Alamt</label>
                       <textarea id="alamat" class="form-control" name="alamat" disabled>{{ $order->alamat }}</textarea>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" for="address_notes">Catatan Alamat</label>
-                      <textarea class="form-control" name="address_notes" id="address_note" disabled required>{{ $order->address_notes }}</textarea>
                     </div>
                   </form>
                     <a class="btn btn-icon btn-primary btn-block" href="{{ route('order.index') }}">

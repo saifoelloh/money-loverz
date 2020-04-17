@@ -22,7 +22,7 @@
               </div>
             </div>
             <form action="{{ route('order.update', $order->id) }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-              @method('PUT')
+              @method("PUT")
               @csrf
               <div class="row">
                 <div class="col">
@@ -69,18 +69,18 @@
                     <select name="kecamatan" id="kecamatan" class="form-control" required>
                       @foreach ($kecamatans as $kecamatan)
                         <option value="{{ $kecamatan }}" {{ $order->kecamatan === $kecamatan ? 'selected' : '' }}>
-                                              {{ ucwords($kecamatan) }}
+                          {{ ucwords($kecamatan) }}
                         </option>
                       @endforeach
                     </select>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="alamat">Alamat</label>
-                    <textarea id="alamat" class="form-control" name="alamat" value="{{ $order->alamat }}"></textarea>
+                    <textarea id="alamat" class="form-control" name="alamat">{{ $order->alamat }}</textarea>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="bukti">Bukti Transfer</label>
-                    <input class="form-control" type="file" name="photo" id="bukti" />
+                    <input class="form-control" type="file" name="bukti" id="bukti">
                   </div>
                   <div class="row">
                     <div class="col text-right">

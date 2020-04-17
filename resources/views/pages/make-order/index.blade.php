@@ -142,95 +142,65 @@
                   </form>
                 @endif
                 <!-- END Form -->
-
-                <tr>
-                  <td colspan="2">
-                    <form action="{{ route('make-order.purchase', [
-                      'code' => $code,
-                      'status' => 'canceled'
-                    ])}}" method="POST">
-                    @method("PUT")
-                    @csrf
-                      <button type="submit" class="btn btn-outline-warning btn-block mb-2">
-                        Batalkan
-                      </button>
-                    </form>
-
-                  </td>
-                  <td colspan="3"></td>
-                  <td colspan="2">
-                    <form action="{{ route('make-order.purchase', [
-                      'code' => $code,
-                      'status' => 'confirmed'
-                    ]) }}" method="POST">
-                    @method("PUT")
-                    @csrf
-                      <button type="submit" class="btn btn-primary btn-block">
-                        Lanjutkan Pesanan
-                      </button>
-                    </form>
-                  </td>
-                </tr>
-
               </tbody>
             </table>
 
             <hr>
-            <div class="row">
-              <div class="col-md-6">
 
-                <h6 class="ml-3">Metode Pembayaran</h6>
-                <div class="form-group">
-                  <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-money"></i></span>
+            <form action="{{ route('make-order.checkout', $code)}}" method="POST" accept-charset="utf-8">
+              @method("PUT")
+              @csrf
+              <div class="row">
+                <div class="col-md-6">
+
+                  <h6 class="ml-3">Metode Pembayaran</h6>
+                  <div class="form-group">
+                    <div class="input-group mb-4">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-money"></i></span>
+                      </div>
+                      <select class="form-control" name="pembayaran">
+                        <option value="transfer">(Transfer) Bank BRI</option>
+                        <option value="transfer">(Transfer) Bank BCA</option>
+                        <option value="transfer">(Transfer) Bank Mandiri</option>
+                        <option value="transfer">(Transfer) Bank Jateng</option>
+                        <option value="cash on delivery">COD</option>
+                      </select>
                     </div>
-                    <select class="form-control" name="pembayaran">
-                      <option>Pilih metode pembayaran</option>
-                      <option>(Transfer) Bank BRI</option>
-                      <option>(Transfer) Bank BCA</option>
-                      <option>(Transfer) Bank Mandiri</option>
-                      <option>(Transfer) Bank Jateng</option>
-                      <option>COD</option>
-                    </select>
+                  </div>
+                  <div class="text-center">
+                    <h5>(Transfer) Bank BRI</h5>
+                    <p>
+                      3033-01-000000-30-9<br>
+                      A/N LUTTER ARIESTINO
+                    </p>  
                   </div>
                 </div>
-                <div class="text-center">
-                  <h5>(Transfer) Bank BRI</h5>
-                  <p>
-                    3033-01-000000-30-9<br>
-                    A/N LUTTER ARIESTINO
-                  </p>  
-                </div>
-                
-              </div>
 
-              <div class="col-md-6">
-
-                <h6 class="ml-3">Alamat Gedung / Rumah</h6>
-                <div class="form-group">
-                  <div class="input-group mb-4">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                <div class="col-md-6">
+                  <h6 class="ml-3">Alamat Gedung / Rumah</h6>
+                  <div class="form-group">
+                    <div class="input-group mb-4">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                      </div>
+                      <input class="form-control text-disabled" type="text" name="kecamatan" disabled value="Kecamatan {{ ucwords($order->kecamatan) }}">
                     </div>
-                    <input class="form-control text-disabled" type="text" name="kecamatan" disabled value="Kecamatan {{ ucwords($order->kecamatan) }}">
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" name="alamat"></textarea>
                   </div>
                 </div>
-                <div class="form-group">
-                  <textarea class="form-control" name="pembayaran"></textarea>
+
+                <div class="col-md-12"><hr></div>
+                <div class="col-md-6">
+                  <button class="btn btn-outline-warning">Batalkan Pesanan</button>
+                </div>
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-primary float-right">Konfirmasi Pesanan</button>
                 </div>
               </div>
-
-              <div class="col-md-12"><hr></div>
-
-              <div class="col-md-6">
-                <button class="btn btn-outline-warning">Batalkan Pesanan</button>
-              </div>
-
-              <div class="col-md-6">
-                <button class="btn btn-primary float-right">Konfirmasi Pesanan</button>
-              </div>
-            </div>
+            </form>
 
           </div>
         </div>

@@ -18,23 +18,24 @@ Route::group([
 ], function() {
   Route::post('/', 'MakeOrderController@store')->name('.store');
   Route::get('/{code}', 'MakeOrderController@index')->name('.index');
-  Route::put('/{code}/{status}', 'MakeOrderController@edit')->name('.purchase');
+  Route::put('/{code}', 'MakeOrderController@edit')->name('.checkout');
   Route::post('/{code}', 'MakeOrderController@add')->name('.add');
   Route::delete('/{code}/{menuId}/{antar}', 'MakeOrderController@destroy')->name('.destroy');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group(['middleware' => ['auth', 'check-role']], function () {
+  Route::get('/home', 'LandingPageController@dashboard')->name('home');
 	Route::resource('admin', 'UserController');
 	Route::resource('menu', 'MenuController');
 	Route::resource('faq', 'FaqController');
 	Route::resource('package', 'PackageController');
 	Route::resource('customer', 'CustomerController');
 	Route::resource('order', 'OrderController');
+  Route::post('/order/{id}', 'OrderController@ubah')->name('order.ubah');
   Route::get('today-order', 'OrderController@today')->name('order.today');
   Route::get('invoice', 'OrderController@invoice')->name('order.invoice'); //ROUTE SALAH INVOICE
   Route::group([

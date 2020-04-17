@@ -25,8 +25,9 @@
                     <tr>
                       <th>No</th>
                       <th>Nama Pemesan</th>
+                      <th>Lokasi Pemesan</th>
                       <th>Paket Pesanan</th>
-                      <th>Pembayaran Via</th>
+                      <th>Pesanan</th>
                       <th>Harga</th>
                       <th>Status</th>
                       <th>Actions</th>
@@ -51,18 +52,19 @@
       var table = $('#data-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('order.index') }}",
+        ajax: "{{ route('order.today') }}",
         columns: [
           {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-          {data: 'customer.name', name: 'customer'},
-          {data: 'package.name', name: 'package'},
-          {data: 'payment_method', name: 'payment_method'},
+          {data: 'order.customer.name', name: 'customer'},
+          {data: 'order.kecamatan', name: 'kecamatan'},
+          {data: 'order.package.name', name: 'package'},
+          {data: 'menu.name', name: 'payment_method'},
           {
-            data: 'menus',
+            data: 'order.menus',
             name: 'menus',
             render: function(data) {
               let price = 0
-              const package = arguments[2].package
+              const package = arguments[2].order.package
               if (package.price === 0) {
                 const prices = data.map(menu => menu.price * menu.pivot.total)
                 price = prices.length > 0 ? prices.reduce((acc, cur) => acc + cur) : 0
@@ -75,13 +77,18 @@
               }).format(price)
             }
           },
-          {data: 'status', name: 'status'},
+          {data: 'order.status', name: 'status'},
           {
-            data: 'id',
+            data: 'order.id',
             name: 'id',
             searchable: false,
             sortable: false,
             render: function(data) {
+              const cetak = `
+              <a class="btn btn-success btn-sm btn-icon" target="__blank" href="/pdf/order/${arguments[2].order.code}">
+                <i class="fas fa-print fa-lg"></i>
+                cetak
+              </a>`
               const detail = `
                 <a class="btn btn-success btn-sm btn-icon" href="{{ route("order.index") }}/${data}">
                   <i class="fas fa-eye fa-lg"></i>
@@ -102,6 +109,7 @@
               </form>`
               const buttons = `
                 <div class="d-inline">
+                  ${cetak}
                   ${detail}
                   ${edit}
                   ${destroy}

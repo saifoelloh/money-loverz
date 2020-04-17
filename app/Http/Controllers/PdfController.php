@@ -19,7 +19,7 @@ class PdfController extends Controller
     $pdf = PDF::loadView('pages.pdf.order', [
       'order' => $order,
       'title' => 'Hello Guys'
-    ]);
+    ])->setPaper('a4', 'landscape');
 
     return $pdf->stream();
   }

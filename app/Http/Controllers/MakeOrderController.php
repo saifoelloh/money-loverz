@@ -99,12 +99,14 @@ class MakeOrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit($code, $status)
+    public function edit(Request $request, $code)
     {
       $order = Order::where('code', $code)->first();
       try {
         $result = $order->update([
-          'status' => $status
+          'status' => 'confirmed',
+          'alamat' => $request->alamat,
+          'payment_method' => $request->pembayaran
         ]);
         if ($result) {
           return redirect(route('landing-page'))->with([
