@@ -7,24 +7,33 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
+
+  public function index()
+  {
+    return view('pages.coba.index');
+  }
+  
   /**
    * send Whatsapp Message w/ twillio
    *
    * @return bool
    */
-  public function sendMessage($number)
+  public function store(Request $request)
   {
-    $to = "whatsapp:+62".$number;
+    $message = $request->message;
+    $to = "whatsapp:+62".$request->phone;
     $from =  "whatsapp:+14155238886";
     $twilio = new Client(env('TWILIO_AUTH_SID'), env('TWILIO_AUTH_TOKEN'));
 
     try {
       $message = $twilio->messages->create($to, [
         "from" => $from,
-        "body" => "Hello"
+        "body" => $message
       ]);
 
-      return $message->sid;
+      if ($message) {
+        return redirect(route('send-message.index'));
+      }
     } catch (Exception $e) {
       dd($e);
     }

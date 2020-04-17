@@ -11,7 +11,8 @@
 |
 */
 Route::get('/', 'LandingPageController@index')->name('landing-page');
-Route::get('/send-message/{number}', 'ChatController@sendMessage')->name('send-message');
+Route::get('/send-message', 'ChatController@index')->name('send-message.index');
+Route::post('/send-message', 'ChatController@store')->name('send-message.store');
 
 Route::group([
   'as' => 'make-order',
@@ -25,8 +26,6 @@ Route::group([
 });
 
 Auth::routes();
-
-
 
 Route::group(['middleware' => ['auth', 'check-role']], function () {
   Route::get('/home', 'LandingPageController@dashboard')->name('home');
