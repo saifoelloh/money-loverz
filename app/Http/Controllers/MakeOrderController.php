@@ -77,7 +77,10 @@ class MakeOrderController extends Controller
           return abort(400, $th);
         }
       } else {
-        return redirect('landing-page')->with('status', "Sorry we're out today...");
+        return redirect(route('landing-page'))->with([
+          "status" => "Sorry we're out today...",
+          "success" => false
+        ]);
       }
 
     }
