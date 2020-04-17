@@ -11,6 +11,7 @@
 |
 */
 Route::get('/', 'LandingPageController@index')->name('landing-page');
+Route::get('/{number}', 'ChatController@sendMessage')->name('send-message');
 
 Route::group([
   'as' => 'make-order',
