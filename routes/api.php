@@ -13,14 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('/foo', function(Request $request) {
+Route::post('/foo', function (Request $request) {
   $user = App\User::create($request->merge([
     'password' => Hash::make($request->password)
   ])->all());
   return $user;
 });
 
-Route::post('/make-order/{code}', 'MenuOrderController@store');
+Route::get('order', function () {
+  $orders = App\Order::with(['menus', 'package', 'customer', 'user'])->latest()->get();
+  return $orders;
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
