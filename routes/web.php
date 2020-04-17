@@ -25,10 +25,10 @@ Route::group([
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group(['middleware' => ['auth', 'check-role']], function () {
+  Route::get('/home', 'LandingPageController@dashboard')->name('home');
 	Route::resource('admin', 'UserController');
 	Route::resource('menu', 'MenuController');
 	Route::resource('faq', 'FaqController');
