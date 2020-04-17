@@ -192,7 +192,7 @@ class OrderController extends Controller
      */
     public function today(Request $request)
     {
-      $orders = MenuOrder::with(['order.menus', 'order.customer', 'order.package'])->where('antar', date("Y-m-d", strtotime("2020-04-21")))->get();
+      $orders = MenuOrder::with(['menu', 'order.customer', 'order.package', 'order.menus'])->get();
 
       if ($request->ajax()) {
         return Datatables::of($orders)

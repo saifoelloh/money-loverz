@@ -25,8 +25,9 @@
                     <tr>
                       <th>No</th>
                       <th>Nama Pemesan</th>
+                      <th>Lokasi Pemesan</th>
                       <th>Paket Pesanan</th>
-                      <th>Pembayaran Via</th>
+                      <th>Pesanan</th>
                       <th>Harga</th>
                       <th>Status</th>
                       <th>Actions</th>
@@ -55,8 +56,9 @@
         columns: [
           {data: 'DT_RowIndex', name: 'DT_RowIndex'},
           {data: 'order.customer.name', name: 'customer'},
+          {data: 'order.kecamatan', name: 'kecamatan'},
           {data: 'order.package.name', name: 'package'},
-          {data: 'order.payment_method', name: 'payment_method'},
+          {data: 'menu.name', name: 'payment_method'},
           {
             data: 'order.menus',
             name: 'menus',
@@ -82,6 +84,11 @@
             searchable: false,
             sortable: false,
             render: function(data) {
+              const cetak = `
+              <a class="btn btn-success btn-sm btn-icon" target="__blank" href="/pdf/order/${arguments[2].order.code}">
+                <i class="fas fa-print fa-lg"></i>
+                cetak
+              </a>`
               const detail = `
                 <a class="btn btn-success btn-sm btn-icon" href="{{ route("order.index") }}/${data}">
                   <i class="fas fa-eye fa-lg"></i>
@@ -102,6 +109,7 @@
               </form>`
               const buttons = `
                 <div class="d-inline">
+                  ${cetak}
                   ${detail}
                   ${edit}
                   ${destroy}
