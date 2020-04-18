@@ -6,9 +6,11 @@ use App\Package;
 use App\User;
 use App\Order;
 use App\MenuOrder;
+use App\Exports\OrdersExport;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
@@ -192,7 +194,8 @@ class OrderController extends Controller
      */
     public function today(Request $request)
     {
-      $orders = MenuOrder::with(['menu', 'order.customer', 'order.package', 'order.menus'])->get();
+      $currentDate = date("Y-m-d");
+      $orders = MenuOrder::where('antar', $currentDate)->with(['menu', 'order.customer', 'order.package', 'order.menus'])->get();
 
       if ($request->ajax()) {
         return Datatables::of($orders)
@@ -239,5 +242,11 @@ class OrderController extends Controller
       } catch (\Throwable $th) {
         return abort(400, $th);
       }
+    }
+
+    public function export() {
+      $currentDate = date("d-m-Y");
+      $nameFormat = "Rekap $currentDate.xlsx";
+      return Excel::download(new OrdersExport, $nameFormat);
     }
 }

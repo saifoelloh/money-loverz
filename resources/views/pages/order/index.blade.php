@@ -23,6 +23,23 @@
                 <div class="col-6">
                   Daftar Pesanan
                 </div>
+                <div class="col-6">
+                  <form class="form-inline" action="{{ route('order.export') }}">
+                    <div class="form-group-sm ml-auto">
+                      <select name="sort" class="custom-select custom-select-sm">
+                        <option value="mar-20">Maret 2020</option>
+                        <option value="apr-20">April 2020</option>
+                        <option value="may-20">Mie 2020</option>
+                      </select>
+                    </div>
+                    <div class="form-group mx-2">
+                      <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-file-excel fa-lg"></i>
+                        export
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
             <div class="table-responsive">
