@@ -59,22 +59,33 @@
                   <th>Jumlah</th>
                   <th>Tanggal Pengiriman</th>
                   <th>Tambahan</th>
+                  <th>Total</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                @php($i = 1)
+                @php
+                  $i = 1;
+                  $total = 0;
+                @endphp
                 @foreach ($orders as $key => $item)
-                  @php($tanggal = date_format(date_create($item->pivot->antar), "D, d-M-Y"))
+                  @php
+                    $tambahan = 0;
+                    if ($item->pivot->optional!='') {
+                      $tambahan = 1000;
+                    }
+                    $tanggal = date_format(date_create($item->pivot->antar), "D, d-M-Y");
+                    $subTotal = ($item->pivot->total * $item->price) + $tambahan;
+                    $total += $subTotal;
+                  @endphp
                   <tr>
                     <td>{{ $key+1 }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->price }}</td>
+                    <td>{{ "Rp ".number_format($item->price, 0) }}</td>
                     <td>{{ $item->pivot->total }}</td>
-                    <td>
-                      {{ $tanggal }}
-                    </td>
+                    <td>{{ $tanggal }}</td>
                     <td>{{ $item->pivot->optional }}</td>
+                    <td>{{ "Rp ".number_format($subTotal, 0) }}</td>
                     <td>
                       @if ($tanggal != date("D, d-M-Y"))
                         <form action="{{route('make-order.destroy', [
@@ -93,6 +104,13 @@
                   </tr>
                   @php($i++)
                 @endforeach
+
+                <tr>
+                  <th class="text-left" colspan="6">Total</th>
+                  <td>
+                    {{ "Rp ".number_format($total, 0) }}
+                  </td>
+                </tr>
 
                 <!-- START Form -->
                 @if ($limit > 0)

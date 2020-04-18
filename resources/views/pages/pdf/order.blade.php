@@ -97,8 +97,9 @@
                 if ($item->pivot->optional!='') {
                   $tambahan = 1000;
                 }
-                $total += ($item->pivot->total * $item->price + $tambahan);
-                $tanggal = date_format(date_create($item->pivot->antar), "D, d-M-Y")
+                $subTotal = ($item->price * $item->pivot->total) + $tambahan;
+                $total += $subTotal;
+                $tanggal = date_format(date_create($item->pivot->antar), "D, d-M-Y");
               @endphp
               <tr>
                 <td>{{ $key+1 }}</td>
@@ -106,7 +107,7 @@
                 <td>{{ $item->pivot->optional }}</td>
                 <td>{{ $tanggal }}</td>
                 <td>{{ $item->pivot->total }}</td>
-                <td>{{ "Rp ".number_format($item->price) }}</td>
+                <td>{{ "Rp ".number_format($subTotal) }}</td>
               </tr>
             @endforeach
             <tr>
