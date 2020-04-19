@@ -246,7 +246,10 @@ class OrderController extends Controller
 
     public function export() {
       $currentDate = date("d-m-Y");
+      $orders = Order::whereMonth("created_at", date("m"))->whereYear("created_at", date("Y"))->get();
       $nameFormat = "Rekap $currentDate.xlsx";
-      return Excel::download(new OrdersExport, $nameFormat);
+      $collection = new OrdersExport($orders);
+
+      return Excel::download($collection, $nameFormat);
     }
 }
