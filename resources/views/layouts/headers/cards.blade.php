@@ -9,7 +9,9 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Order Today</h5>
-                                    <span class="h2 font-weight-bold mb-0">45</span>
+                                    <span class="h2 font-weight-bold mb-0">
+                                      {{ $orderHarian }}
+                                    </span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-info text-white rounded-circle shadow">
@@ -25,8 +27,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Order April</h5>
-                                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Order {{ $month }}</h5>
+                                    <span class="h2 font-weight-bold mb-0">
+                                      {{ $orderBulanan }}
+                                    </span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -43,7 +47,9 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">On Progress</h5>
-                                    <span class="h2 font-weight-bold mb-0">924</span>
+                                    <span class="h2 font-weight-bold mb-0">
+                                      {{ $jumlahOrderTerkonfirmasi }}
+                                    </span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -60,7 +66,9 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Finished</h5>
-                                    <span class="h2 font-weight-bold mb-0">1,031</span>
+                                    <span class="h2 font-weight-bold mb-0">
+                                      {{ $orderSelesai }}
+                                    </span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-success text-white rounded-circle shadow">

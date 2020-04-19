@@ -20,17 +20,20 @@ class LandingPageController extends Controller
     }
 
     public function dashboard() {
-      $now = Carbon::today()->format("Y-m-d");
-      $orders = Order::where('created_at', '>=', $now)->count();
-      $customers = User::where([
-        'role' => 'user',
-        [
-          'created_at',
-          '>=',
-          $now
-        ]
-      ])->count();
+      $today = date("Y-m-d");
+      $orderHarian = Order::whereDate('created_at', $today)->get()->count();
+      $orderBulanan = Order::whereMonth('created_at', date("m"))->get()->count();
+      $orderTerkonfirmasi = Order::with(['menus', 'package:id,name', 'customer:id,name'])->where('status', 'confirmed')->simplePaginate(15);
+      $jumlahOrderTerkonfirmasi = Order::where('status', 'confirmed')->get()->count();
+      $orderSelesai = Order::where('status', 'completed')->get()->count();
 
-      return view('dashboard');
+      return view('dashboard', [
+        'orderHarian' => $orderHarian,
+        'orderBulanan' => $orderBulanan,
+        'orderTerkonfirmasi' => $orderTerkonfirmasi,
+        'jumlahOrderTerkonfirmasi' => $jumlahOrderTerkonfirmasi,
+        'orderSelesai' => $orderSelesai,
+        'month' => date("F")
+      ]);
     }
 }
