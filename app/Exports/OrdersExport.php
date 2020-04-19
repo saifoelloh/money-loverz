@@ -3,15 +3,24 @@
 namespace App\Exports;
 
 use App\Order;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class OrdersExport implements FromCollection
+class OrdersExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
-    {
-      return Order::all();
-    }
+  protected $orders;
+
+  /**
+   * @param object $orders
+   */
+  public function __construct(object $orders) {
+    $this->orders = $orders;
+  }
+
+
+  public function view() : View {
+    return view('pages.export.excel.orders', [
+      'orders' => $this->orders,
+    ]);
+  }
 }
