@@ -38,3 +38,16 @@ html {
 .table-invoice th, .table-invoice td{
     padding: 5px;
 }
+
+.card-stats{
+    min-height: 90px;
+    max-height: 90px;
+}
+
+.card-stats .card-title{
+    font-size: 12px;
+}
+
+.card-stats .h2{
+    font-size: 24px;
+}
