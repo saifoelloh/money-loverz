@@ -45,11 +45,17 @@ class UserController extends Controller
      * @param  \App\User  $model
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(UserRequest $request, User $model)
-    {
-        $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
-
-        return redirect()->route('user.index')->withStatus(__('User successfully created.'));
+    public function store(Request $request) {
+      try {
+        $result = User::create($request->merge([
+          'password' => Hash::make($request->password)
+        ])->all());
+        if ($result) {
+          return redirect()->route('admin.index')->withStatus(__('Admin berhasil dibuat'));
+        }
+      } catch (Exception $e) {
+          return redirect()->route('admin.index')->withStatus(__('Gagal membuat admin'));
+      }
     }
 
     /**
@@ -73,14 +79,24 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UserRequest $request, User  $user)
-    {
-        $user->update(
-            $request->merge(['password' => Hash::make($request->get('password'))])
-                ->except([$request->get('password') ? '' : 'password']
-        ));
+    public function update(Request $request, $id) {
+      $user = User::find($id);
+      $password = $user->password;
+      if ($request->password!="") {
+        $password = Hash::make($request->password);
+      }
 
-        return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
+      try {
+        $result = $user->update($request->merge([
+          'password' => $password
+        ])->all());
+
+        if ($result) {
+          return redirect()->route('admin.index')->withStatus(__('Admin berhasil diupdate'));
+        }
+      } catch (Exception $e) {
+          return redirect()->route('admin.index')->withStatus(__('Edit admin gagal'));
+      }
     }
 
     /**
