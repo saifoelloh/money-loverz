@@ -1,49 +1,50 @@
 @extends('layouts.app', ['title' => 'Paket'])
 
 @section('content')
-@include('users.partials.header', ['title' => __('Daftar Paket')])
-<div class="container-fluid mt--7">
+  @include('users.partials.header', ['title' => __('Daftar Paket')])
+  <div class="container-fluid mt--7">
     <div class="row">
-        <div class="col-12">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="card-title">
-                        <div class="row">
-                            <div class="col-6">
-                                Daftar Paket
-                            </div>
-                            <div class="col-6 text-right">
-                                <a class="btn btn-icon btn-primary btn-sm" href="{{ route('package.create') }}">
-                                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-                                    <span class="btn-inner--text">tambah</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <div>
-                            <table id="data-table" class="table align-items-center text-center border-bottom-0">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Deskripsi</th>
-                                        <th>Harga</th>
-                                        <th>Total Item</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="card-title">
+              <div class="row">
+                <div class="col-6">
+                  Daftar Paket
                 </div>
+                <div class="col-6 text-right">
+                  <a class="btn btn-icon btn-primary btn-sm" href="{{ route('package.create') }}">
+                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                    <span class="btn-inner--text">tambah</span>
+                  </a>
+                </div>
+              </div>
             </div>
+            <div class="table-responsive">
+              <div>
+                <table id="data-table" class="table align-items-center text-center border-bottom-0">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>No</th>
+                      <th>Nama</th>
+                      <th>Tipe</th>
+                      <th>Deskripsi</th>
+                      <th>Harga</th>
+                      <th>Total Item</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     @include('layouts.footers.auth')
-</div>
+  </div>
 @endsection
 
 @push('js')
@@ -69,6 +70,7 @@
               </div>`
             }
           },
+          {data: 'type', name: 'type'},
           {data: 'description', name: 'description'},
           {
             data: 'price',

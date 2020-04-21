@@ -20,6 +20,11 @@ class CreatePackagesTable extends Migration
             $table->string('photo');
             $table->unsignedInteger('price');
             $table->unsignedInteger('total_items');
+            $table->enum('type', [
+              'reguler',
+              'ready to cook',
+              'snack & beverage'
+            ])->default('reguler');
             $table->softDeletes();
             $table->timestamps();
         });

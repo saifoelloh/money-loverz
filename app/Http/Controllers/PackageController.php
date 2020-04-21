@@ -32,7 +32,10 @@ class PackageController extends Controller
      */
     public function create()
     {
-        return view('pages.package.create');
+      $package = new Package();
+      return view('pages.package.create', [
+        'types' => $package->daftar['type']
+      ]);
     }
 
     /**
@@ -51,6 +54,7 @@ class PackageController extends Controller
                 'name' => $request->name,
                 'photo' => $url,
                 'price' => intval($request->price),
+                'type' => $request->type,
                 'total_items' => intval($request->total_items),
                 'description' => $request->description,
             ]);
@@ -82,7 +86,8 @@ class PackageController extends Controller
     {
         $package = Package::find($id);
         return view('pages.package.edit', [
-            'package' => $package
+          'package' => $package,
+          'types' => $package->daftar['type']
         ]);
     }
 
@@ -109,6 +114,7 @@ class PackageController extends Controller
                 'name' => $request->name,
                 'photo' => $url,
                 'price' => intval($request->price),
+                'type' => $request->type,
                 'total_items' => intval($request->total_items),
                 'description' => $request->description,
             ]);

@@ -15,6 +15,15 @@ class Package extends Model
     'price',
     'photo',
     'total_items',
+    'type',
+  ];
+
+  public $daftar = [
+    'type' => [
+      'reguler',
+      'ready to cook',
+      'snack & beverage'
+    ],
   ];
 
   public function orders()
