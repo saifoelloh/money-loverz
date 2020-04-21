@@ -49,7 +49,6 @@ class MenuOrderController extends Controller
             $detailOrder = $order->menus()->attach($menu->id, [
               'antar' => $request->antar,
               'optional' => $request->optional,
-              'note' => $request->note
             ]);
 
             return redirect(route('order.show', $order->id))->with([
@@ -97,7 +96,7 @@ class MenuOrderController extends Controller
     public function edit($code, $menu, $antar)
     {
       $order = Order::where('code', $code)->first();
-      $menus = Menu::all(['name', 'price']);
+      $menus = Menu::all(['id', 'name', 'price']);
       $pivot = MenuOrder::where([
         'order_id' => $order->id,
         'menu_id' => $menu,
