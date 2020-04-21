@@ -14,8 +14,16 @@ class Menu extends Model
     'name',
     'description',
     'price',
-    'category',
     'photo',
+    'type',
+  ];
+
+  public $daftar = [
+    'type' => [
+      'reguler',
+      'ready to cook',
+      'snack & beverage'
+    ],
   ];
 
   public function user()

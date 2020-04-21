@@ -14,9 +14,9 @@
                 Tambah Menu
               </div>
               <div class="col-6 text-right">
-                <a class="btn btn-icon btn-primary btn-sm" href="{{ route('menu.index') }}">
+                <a class="btn btn-primary btn-sm" href="{{ route('menu.index') }}">
                   <span class="btn-inner--text">kembali</span>
-                  <span class="btn-inner--icon"><i class="fas fa-reply"></i></span>
+                  <i class="fas fa-reply"></i>
                 </a>
               </div>
             </div>
@@ -34,8 +34,14 @@
                   <input class="form-control" type="number" name="price" id="price" placeholder="harga makanan" required />
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="category">Kategori</label>
-                  <input id="category" name="category" class="form-control" type="text" />
+                  <label class="form-label" for="type">Tipe</label>
+                  <select class="form-control" name="type">
+                    @foreach ($types as $type)
+                      <option value="{{$type}}">
+                      {{ucwords($type)}}
+                      </option>
+                    @endforeach
+                  </select>
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="photo">foto</label>
@@ -47,10 +53,10 @@
                 </div>
                 <div class="row">
                   <div class="col text-right">
-                    <button class="btn btn-icon btn-warning" type="cancel">
-                      <span class="btn-inner--icon"><i class="fas fa-times"></i></span>
+                    <a class="btn btn-warning" href="{{route('menu.index')}}">
+                      <i class="fas fa-times"></i>
                       <span class="btn-inner--text">cancel</span>
-                    </button>
+                    </a>
                     <button class="btn btn-icon btn-success" type="submit">
                       <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
                       <span class="btn-inner--text">submit</span>
@@ -68,16 +74,3 @@
   @include('layouts.footers.auth')
 </div>
 @endsection
-
-@push('js')
-  <script charset="utf-8">
-    $(document).ready(function() {
-      const categories = {!! json_encode($categories) !!}
-      $('#category')
-      .autocomplete({
-        minLength: 0,
-        source: categories,
-      })
-    })
-  </script>
-@endpush

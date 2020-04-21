@@ -17,9 +17,13 @@ class CreateMenusTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
-            $table->text('category');
             $table->unsignedInteger('price');
             $table->string('photo');
+            $table->enum('type', [
+              'reguler',
+              'ready to cook',
+              'snack & beverage'
+            ])->default('reguler');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
