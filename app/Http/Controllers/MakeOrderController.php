@@ -19,9 +19,10 @@ class MakeOrderController extends Controller
         $order = Order::with(['user:id,name,phone', 'package:id,name,total_items', 'menus'])->where('code', $code)->first();
         $menuOrder = new MenuOrder();
         $menus = Menu::all(['name', 'price']);
+        $tambahans = $menuOrder->daftar['optional'];
 
         return view('pages.make-order.index', [
-          'tambahan' => $menuOrder->daftar['optional'],
+          'tambahans' => $tambahans,
           'menus' => $menus,
           'order' => $order,
           'orders' => $order->menus,

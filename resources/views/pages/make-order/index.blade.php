@@ -120,7 +120,13 @@
                       <td>{{ $i }}</td>
                       <td>
                         <div class="form-group">
-                          <input class="form-control" placeholder="Pilih Menu" type="text" id="menu" name="menu">
+                          <select class="form-control js-example-basic-single" name="menu">
+                            @foreach ($menus as $menu)
+                              <option value="{{ $menu->id }}">
+                              {{ ucwords($menu->name) }}
+                              </option>
+                            @endforeach
+                          </select>
                         </div>
                       </td>
                       <td>
@@ -142,9 +148,9 @@
                         <div class="form-group">
                           <select id="optional" name="optional" class="form-control">
                             <option value="">-</option>
-                            @foreach ($tambahan as $item)
-                              <option value="{{ $item }}">
-                              {{ ucwords($item) }}
+                            @foreach ($tambahans as $tambahan)
+                              <option value="{{ $tambahan }}">
+                              {{ ucwords($tambahan) }}
                               </option>
                             @endforeach
                           </select>
@@ -231,27 +237,7 @@
 @push('js')
   <script charset="utf-8">
     $(document).ready(function() {
-      const temp = {!! json_encode($menus) !!}
-      $('#menu')
-      .autocomplete({
-        minLength: 0,
-        source: temp,
-        focus: function(e, ui) {
-          $('#menu').val(ui.item.name)
-          $('#price').val(`Rp ${ui.item.price.toLocaleString('id')}`)
-          return false
-        },
-        select: function(e, ui) {
-          $('#menu').val(ui.item.name)
-          $('#price').val(`Rp ${ui.item.price.toLocaleString('id')}`)
-          return false
-        }
-      })
-      .autocomplete('instance')._renderItem = function(ul, item) {
-        return $("<li>")
-          .append(item.name)
-          .appendTo(ul)
-      }
+      $('.js-example-basic-single').select2()
     })
   </script>
 @endpush
