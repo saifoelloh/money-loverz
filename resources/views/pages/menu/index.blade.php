@@ -90,7 +90,7 @@
             sortable: false,
             render: function(data) {
               const detail = `
-                <a class="btn btn-warning btn-sm btn-icon" href="{{ route("menu.index") }}/${data}/edit">
+                <a class="btn btn-warning btn-sm btn-icon" href="{{ route('menu.index') }}/${data}/edit">
                   <span class="btn-inner--icon"><i class="fas fa-edit fa-lg"></i></span>
                   <span class="btn-inner--text">edit</span>
                 </a>`
