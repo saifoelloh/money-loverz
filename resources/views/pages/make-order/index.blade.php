@@ -41,7 +41,7 @@
                     <i class="fas fa-check ml-2"></i>
                   </li>
                   <li>
-                    Paket Coba | {{ $order->package->total_items }} Item
+                    Paket {{ ucwords($order->package->name) }} | {{ $order->package->total_items }} Item
                     <i class="fas fa-box ml-2"></i>
                   </li>
                 </ul>
