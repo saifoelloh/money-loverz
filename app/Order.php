@@ -16,6 +16,7 @@ class Order extends Model
         'kecamatan',
         'alamat',
         'bukti',
+        'waktu',
         'user_id',
         'customer_id',
         'package_id'
@@ -47,6 +48,11 @@ class Order extends Model
             'semarang lor',
             'tembalang',
             'tugu'
+        ],
+        'waktu' => [
+          'dinner',
+          'lunch',
+          'custom'
         ]
     ];
 

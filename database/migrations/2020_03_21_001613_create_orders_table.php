@@ -29,6 +29,11 @@ class CreateOrdersTable extends Migration
             ])->default('created');
             $table->string('kecamatan');
             $table->string('alamat')->default('');
+            $table->enum('waktu', [
+              'dinner',
+              'lunch',
+              'custom'
+            ])->default('lunch');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
