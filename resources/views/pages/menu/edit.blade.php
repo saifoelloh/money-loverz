@@ -21,7 +21,7 @@
                 </div>
               </div>
             </div>
-            <form action="{{ route('menu.update', $menu->id) }}" method="POST" accept-charset="utf-8">
+            <form action="{{ route('menu.update', $menu->id) }}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
               @method('PUT')
               @csrf
               <div class="row">

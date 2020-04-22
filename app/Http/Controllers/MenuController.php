@@ -114,7 +114,7 @@ class MenuController extends Controller
     if ($request->photo == null) {
       $photo = $menu->photo;
     } else {
-      $temp = $request->photo()->store('public');
+      $temp = $request->photo->store('public');
       $photo = Storage::url($temp);
     }
 

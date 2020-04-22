@@ -16,9 +16,9 @@ class MakeOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($code) {
-        $order = Order::with(['user:id,name,phone', 'package:id,name,total_items', 'menus'])->where('code', $code)->first();
+        $order = Order::with(['user:id,name,phone', 'package:id,name,type,total_items', 'menus'])->where('code', $code)->first();
         $menuOrder = new MenuOrder();
-        $menus = Menu::all(['name', 'price']);
+        $menus = Menu::where('type', $order->package->type)->get(['name', 'price']);
         $tambahans = $menuOrder->daftar['optional'];
 
         return view('pages.make-order.index', [
