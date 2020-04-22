@@ -62,7 +62,7 @@
                 <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
               </div>
               <select id="kecamatan" class="form-control" name="kecamatan">
-                @foreach ($kecamatan as $item)
+                @foreach ($order->daftar['kecamatan'] as $item)
                   <option value="{{ $item }}">
                   {{ ucwords($item) }}
                   </option>
@@ -70,19 +70,40 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label for="name" class="form-label">Paket</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-box-open"></i></span>
+          <div class="form-group row">
+            <div class="col">
+              <div class="form-group">
+                <label for="name" class="form-label">Paket</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-box-open"></i></span>
+                  </div>
+                  <select id="package" class="form-control" name="package">
+                    @foreach ($packages as $package)
+                      <option value="{{ $package['id'] }}">
+                      {{ ucwords($package['name']) }}
+                      </option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
-              <select id="package" class="form-control" name="package">
-                @foreach ($packages as $package)
-                  <option value="{{ $package['id'] }}">
-                  {{ $package['name'] }}
-                  </option>
-                @endforeach
-              </select>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="name" class="form-label">Waktu</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-box-open"></i></span>
+                  </div>
+                  <select class="form-control" name="waktu">
+                    @foreach ($order->daftar['waktu'] as $time)
+                      <option value="{{ $time }}">
+                      {{ ucwords($time) }}
+                      </option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div><!-- END Modal-Body -->

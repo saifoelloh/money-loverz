@@ -15,7 +15,7 @@ class LandingPageController extends Controller
         $order = new Order();
         return view('welcome', [
           'packages' => $packages,
-          'kecamatan' => $order->daftar['kecamatan'],
+          'order' => $order,
         ]);
     }
 
