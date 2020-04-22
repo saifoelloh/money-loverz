@@ -113,7 +113,7 @@
                 </tr>
 
                 <!-- START Form -->
-                @if ($limit > 0)
+                @if ($limit > 0 || $isEvent)
                   <form action="{{ route('make-order.add', $code) }}" method="POST">
                     @csrf
                     <tr>

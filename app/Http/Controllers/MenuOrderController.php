@@ -133,6 +133,7 @@ class MenuOrderController extends Controller
           'status' => $request->status,
           'optional' => $request->optional,
           'antar' => $request->antar,
+          'waktu' => $request->waktu,
         ]);
         if ($result) {
           return redirect(route('order.show', $order->id))->with([

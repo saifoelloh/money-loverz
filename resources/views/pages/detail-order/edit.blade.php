@@ -54,9 +54,25 @@
                   <label class="form-label" for="total">Jumlah</label>
                   <input class="form-control" type="number" name="total" id="total" value="1" {{ $pivot->order->package->total_items > 0 ? 'readonly' : '' }} required>
                 </div>
-                <div class="form-group">
-                  <label class="form-label" for="antar">Tanggal Antar</label>
-                  <input type="date" name="antar" class="form-control" value="{{ $pivot->antar }}" required>
+                <div class="form-group row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label class="form-label" for="antar">Tanggal Antar</label>
+                      <input type="date" name="antar" class="form-control" value="{{ $pivot->antar }}" required>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label class="form-label" for="waktu">Waktu Antar</label>
+                      <select class="form-control" name="waktu">
+                        @foreach ($$pivot->order->daftar['waktu'] as $waktu)
+                          <option value="{{$waktu}}">
+                          {{ucwords($waktu)}}
+                          </option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="optional">Menu Pengganti</label>

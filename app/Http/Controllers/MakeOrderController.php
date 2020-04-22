@@ -27,7 +27,8 @@ class MakeOrderController extends Controller
           'order' => $order,
           'orders' => $order->menus,
           'code' => $code,
-          'limit' => $order->package->total_items - $order->menus()->count()
+          'limit' => $order->package->total_items - $order->menus()->count(),
+          'isEvent' => $order->package->total_items == 0
         ]);
     }
 
@@ -53,37 +54,30 @@ class MakeOrderController extends Controller
       $code = "PKG".sprintf('%02d', $request->package).date("dmy").sprintf('%04d', $orderCount + 1);
       $clock = date("H.i", time());
 
-      if ($clock <= 17.00) {
-        $customer = User::where('phone', $request->phone)->first();
-        if ($customer==null) {
-          $customer = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'gender' => $request->gender,
-            'phone' => $request->phone,
-          ]);
-        }
-
-        try {
-          $order = $customer->orders()->create([
-            'code' => $code,
-            'kecamatan' => $request->kecamatan,
-            'package_id' => $request->package,
-            'customer_id' => $customer->id,
-          ]);
-          if ($order) {
-            return redirect(route('make-order.index', $code));
-          }
-        } catch (\Throwable $th) {
-          return abort(400, $th);
-        }
-      } else {
-        return redirect(route('landing-page'))->with([
-          "status" => "Sorry we're out today...",
-          "success" => false
+      $customer = User::where('phone', $request->phone)->first();
+      if ($customer==null) {
+        $customer = User::create([
+          'name' => $request->name,
+          'email' => $request->email,
+          'gender' => $request->gender,
+          'phone' => $request->phone,
         ]);
       }
 
+      try {
+        $order = $customer->orders()->create([
+          'code' => $code,
+          'kecamatan' => $request->kecamatan,
+          'package_id' => $request->package,
+          'customer_id' => $customer->id,
+          'waktu' => $request->waktu
+        ]);
+        if ($order) {
+          return redirect(route('make-order.index', $code));
+        }
+      } catch (\Throwable $th) {
+        return abort(400, $th);
+      }
     }
 
     /**
