@@ -22,8 +22,26 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = Order::with(['user:id,name', 'customer:id,name', 'package', 'menus'])->latest()->get();
+        $result = $orders->map(function ($order, $key) {
+          $total = 0;
+          if (sizeof($order->menus)) {
+            $total = collect($order->menus())->reduce(function ($carry, $item) {
+              return $carry + ($item->price * $item->pivot->total);
+            });
+          }
+          return [
+            'id' => $order->id,
+            'code' => $order->code,
+            'customer' => $order->customer->name,
+            'package' => $order->package->name,
+            'payment_method' => $order->payment_method,
+            'total' => $total,
+            'status' => $order->status,
+          ];
+        });
+
         if ($request->ajax()) {
-          return Datatables::of($orders)
+          return Datatables::of($result)
               ->addIndexColumn()
               ->make(true);
         }
@@ -195,10 +213,22 @@ class OrderController extends Controller
     public function today(Request $request)
     {
       $currentDate = date("Y-m-d");
-      $orders = MenuOrder::where('antar', $currentDate)->with(['menu', 'order.customer', 'order.package', 'order.menus'])->get();
+      $orders = MenuOrder::whereDate('antar', $currentDate)->with(['menu', 'order.customer', 'order.package', 'order.menus'])->get();
+      $result = $orders->map(function ($item, $key) {
+        return [
+          'id' => $item->order->id,
+          'code' => $item->order->code,
+          'customer' => $item->order->customer->name,
+          'location' => $item->order->kecamatan,
+          'package' => $item->order->package->name,
+          'menu' => $item->menu->name,
+          'price' => $item->menu->price,
+          'status' => $item->status,
+        ];
+      });
 
       if ($request->ajax()) {
-        return Datatables::of($orders)
+        return Datatables::of($result)
           ->addIndexColumn()
           ->make(true);
       }
