@@ -24,6 +24,7 @@
                   <thead class="thead-light">
                     <tr>
                       <th>No</th>
+                      <th>Kode Pemesanan</th>
                       <th>Nama Pemesan</th>
                       <th>Lokasi Pemesan</th>
                       <th>Paket Pesanan</th>
@@ -55,31 +56,24 @@
         ajax: "{{ route('order.today') }}",
         columns: [
           {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-          {data: 'order.customer.name', name: 'customer'},
-          {data: 'order.kecamatan', name: 'kecamatan'},
-          {data: 'order.package.name', name: 'package'},
-          {data: 'menu.name', name: 'payment_method'},
+          {data: 'code', name: 'code'},
+          {data: 'customer', name: 'customer'},
+          {data: 'kecamatan', name: 'kecamatan'},
+          {data: 'package', name: 'package'},
+          {data: 'menu', name: 'menu'},
           {
-            data: 'order.menus',
-            name: 'menus',
+            data: 'price',
+            name: 'price',
             render: function(data) {
-              let price = 0
-              const package = arguments[2].order.package
-              if (package.price === 0) {
-                const prices = data.map(menu => menu.price * menu.pivot.total)
-                price = prices.length > 0 ? prices.reduce((acc, cur) => acc + cur) : 0
-              } else {
-                price = package.price
-              }
               return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR'
-              }).format(price)
+              }).format(data)
             }
           },
-          {data: 'order.status', name: 'status'},
+          {data: 'status', name: 'status'},
           {
-            data: 'order.id',
+            data: 'id',
             name: 'id',
             searchable: false,
             sortable: false,

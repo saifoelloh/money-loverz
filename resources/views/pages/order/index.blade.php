@@ -48,6 +48,7 @@
                   <thead class="thead-light">
                     <tr>
                       <th>No</th>
+                      <th>Kode Pemesanan</th>
                       <th>Nama Pemesan</th>
                       <th>Paket Pesanan</th>
                       <th>Pembayaran Via</th>
@@ -78,25 +79,18 @@
         ajax: "{{ route('order.index') }}",
         columns: [
           {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-          {data: 'customer.name', name: 'customer'},
-          {data: 'package.name', name: 'package'},
+          {data: 'code', name: 'code'},
+          {data: 'customer', name: 'customer'},
+          {data: 'package', name: 'package'},
           {data: 'payment_method', name: 'payment_method'},
           {
-            data: 'menus',
-            name: 'menus',
+            data: 'total',
+            name: 'total',
             render: function(data) {
-              let price = 0
-              const package = arguments[2].package
-              if (package.price === 0) {
-                const prices = data.map(menu => menu.price * menu.pivot.total)
-                price = prices.length > 0 ? prices.reduce((acc, cur) => acc + cur) : 0
-              } else {
-                price = package.price
-              }
               return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR'
-              }).format(price)
+              }).format(data)
             }
           },
           {data: 'status', name: 'status'},
