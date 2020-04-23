@@ -37,7 +37,7 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="total">Jumlah</label>
-                    <input class="form-control" type="number" name="total" id="total" value="1" {{ $package->total_items == 3 ? 'disabled' : '' }} required>
+                    <input class="form-control" type="number" name="total" id="total" value="1" {{ $package->total_items > 0 ? 'readonly' : '' }} required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="antar">Tanggal Antar</label>
