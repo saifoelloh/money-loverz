@@ -1,20 +1,34 @@
 <div class="card shadow">
-  <div class="card-body">
-    <div class="card-title">
-      <div class="row">
-        <div class="col-6">
-          Daftar Pesanan
-        </div>
-        @if (sizeof($options) < $totalItems)
-          <div class="col-6 text-right">
-            <a class="btn btn-icon btn-success btn-sm" href="{{ route('detail-order.create', $order_code) }}">
-              <i class="fas fa-plus"></i>
-              tambah
-            </a>
-          </div>
-        @endif
+  <div class="card-header pb-0 bg-transparent border-0">
+    <div class="row">
+      <div class="col-6">
+        Daftar Pesanan
       </div>
+      @if (sizeof($options) < $totalItems)
+        <div class="col-6 text-right">
+          <a class="btn btn-icon btn-success btn-sm" href="{{ route('detail-order.create', $order_code) }}">
+            <i class="fas fa-plus"></i>
+            tambah
+          </a>
+        </div>
+      @endif
     </div>
+  </div>
+  <div class="card-body">
+    <table class="table-borderless mb-3">
+      <tr>
+        <td>Kode Pemesanan -</td>
+        <td>{{$order->code}}</td>
+      </tr>
+      <tr>
+        <td>Paket Pemesanan -</td>
+        <td>{{ucwords($order->package->name)}}</td>
+      </tr>
+      <tr>
+        <td>Total Pemesanan -</td>
+        <td>{{$order->package->total_items." Menu"}}</td>
+      </tr>
+    </table>
     <div class="table-responsive">
       <div>
         <table class="table table-hover align-items-center">
@@ -33,7 +47,7 @@
             @foreach($options as $id => $item)
               <tr class="text-center">
                 <th> {{ $id + 1 }} </th>
-                <td> {{ $item->name }} </td>
+                <td class="text-left"> {{ ucwords($item->name) }} </td>
                 <td> {{"Rp. ".number_format($item->price, 0)}} </td>
                 <td> {{ $item->pivot->total }} </td>
                 <td> {{ date("D, d-m-Y", strtotime($item->pivot->antar)) }} </td>
