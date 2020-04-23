@@ -25,7 +25,7 @@ class OrderController extends Controller
         $result = $orders->map(function ($order, $key) {
           $total = 0;
           if (sizeof($order->menus)) {
-            $total = collect($order->menus())->reduce(function ($carry, $item) {
+            $total = collect($order->menus)->reduce(function ($carry, $item) {
               return $carry + ($item->price * $item->pivot->total);
             });
           }

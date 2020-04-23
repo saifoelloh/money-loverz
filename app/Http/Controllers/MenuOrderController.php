@@ -27,10 +27,12 @@ class MenuOrderController extends Controller
     public function create($code)
     {
         $menus = Menu::latest()->get();
+        $order = Order::where('code', $code)->first();
 
         return view('pages.detail-order.edit', [
           'menus' => $menus,
           'code' => $code,
+          'times' => $order->daftar['waktu']
         ]);
     }
 
@@ -46,8 +48,9 @@ class MenuOrderController extends Controller
         $menu = Menu::find($request->menu);
         if ($order->menus()->count() < $order->package->total_items) {
           try {
-            $detailOrder = $order->menus()->attach($menu->id, [
+            $order->menus()->attach($menu->id, [
               'antar' => $request->antar,
+              'total' => $order->package->total_items > 0 ? 1 : $request->total,
               'optional' => $request->optional,
             ]);
 
@@ -83,7 +86,8 @@ class MenuOrderController extends Controller
           'code' => $code,
           'order' => $order->id,
           'package' => $order->package,
-          'options' => $menuOrder->daftar['optional']
+          'options' => $menuOrder->daftar['optional'],
+          'times' => $order->daftar['waktu']
         ]);
     }
 
