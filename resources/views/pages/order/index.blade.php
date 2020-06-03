@@ -27,9 +27,11 @@
                   <form class="form-inline" action="{{ route('order.export') }}">
                     <div class="form-group-sm ml-auto">
                       <select name="sort" class="custom-select custom-select-sm">
-                        <option value="mar-20">Maret 2020</option>
-                        <option value="apr-20">April 2020</option>
-                        <option value="may-20">Mie 2020</option>
+                        @foreach ($tanggals as $tgl)
+                          <option value="{{$tgl->tanggal}}">
+                          {{$tgl->tanggal}}
+                          </option>
+                        @endforeach
                       </select>
                     </div>
                     <div class="form-group mx-2">

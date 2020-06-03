@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -22,8 +23,14 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = Order::with(['user:id,name', 'customer:id,name', 'package', 'menus'])->latest()->get();
+        $tanggals = DB::table('orders')
+                        ->selectRaw("DISTINCT DATE_FORMAT(created_at, '%b %Y') as tanggal")
+                        ->get();
         $result = $orders->map(function ($order, $key) {
           $total = 0;
+          $tanggals = DB::table('orders')
+                          ->selectRaw("DISTINCT DATE_FORMAT(created_at, '%b %Y') as tanggal")
+                          ->get();
           if (sizeof($order->menus)) {
             $total = collect($order->menus)->reduce(function ($carry, $item) {
               return $carry + ($item->price * $item->pivot->total);
@@ -37,6 +44,7 @@ class OrderController extends Controller
             'payment_method' => $order->payment_method,
             'total' => $total,
             'status' => $order->status,
+            'tanggals' => $tanggals
           ];
         });
 
@@ -46,7 +54,7 @@ class OrderController extends Controller
               ->make(true);
         }
 
-        return view('pages.order.index');
+        return view('pages.order.index', ['tanggals' => $tanggals]);
     }
 
     /**
@@ -274,9 +282,13 @@ class OrderController extends Controller
       }
     }
 
-    public function export() {
+    public function export(Request $request) {
+      $bulan = explode(" ", $request->sort)[0];
+      $tahun = explode(" ", $request->sort)[1];
       $currentDate = date("d-m-Y");
-      $orders = Order::whereMonth("created_at", date("m"))->whereYear("created_at", date("Y"))->get();
+      $orders = Order::whereYear("created_at", $tahun)
+        ->whereMonth("created_at", $bulan)
+        ->get();
       $nameFormat = "Rekap $currentDate.xlsx";
       $collection = new OrdersExport($orders);
 
