@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Order;
 use App\Package;
+use App\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -13,9 +14,11 @@ class LandingPageController extends Controller
     public function index(Request $request) {
         $packages = Package::all(['id', 'name']);
         $order = new Order();
+        $menus = Menu::all()->groupBy('type');
         return view('welcome', [
           'packages' => $packages,
           'order' => $order,
+          'menus' => $menus
         ]);
     }
 
