@@ -17,15 +17,15 @@
   <div class="card-body">
     <table class="table-borderless mb-3">
       <tr>
-        <td>Kode Pemesanan -</td>
+        <td>Kode -</td>
         <td>{{$order->code}}</td>
       </tr>
       <tr>
-        <td>Paket Pemesanan -</td>
+        <td>Paket -</td>
         <td>{{ucwords($order->package->name)}}</td>
       </tr>
       <tr>
-        <td>Total Pemesanan -</td>
+        <td>Total -</td>
         <td>{{$order->package->total_items." Menu"}}</td>
       </tr>
     </table>
