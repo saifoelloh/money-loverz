@@ -169,5 +169,6 @@
 
     <!-- Modal -->
     @include('layouts.modals.createorder')
+    @include('layouts.modals.checkorder')
 
 @endsection

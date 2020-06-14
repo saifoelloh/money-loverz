@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png">
+                            <img src="{{ asset('argon') }}/img/brand/logo-black.png">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <!-- Navbar items -->
-            <ul class="navbar-nav align-items-lg-left ml-lg-auto">
+            <ul class="navbar-nav align-items-lg-center text-center ml-lg-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#paket">
                         <span class="nav-link-inner--text">{{ __('Paket') }}</span>
@@ -46,8 +46,8 @@
                         <span class="nav-link-inner--text">{{ __('Kontak Kami') }}</span>
                     </a>
                 </li>
-                <li class="nav-item d-none d-lg-block ml-lg-4 pt-1">
-                    <a href="#" class="btn btn-info btn-icon" data-toggle="modal" data-target="#modal-form">
+                <li class="nav-item ml-lg-4 pt-1">
+                    <a href="#" class="btn btn-block btn-info btn-icon" data-toggle="modal" data-target="#modal-form">
                     <span class="btn-inner--icon">
                         <i class="fa fa-shopping-cart"></i>
                     </span>
