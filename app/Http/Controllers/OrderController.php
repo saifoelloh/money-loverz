@@ -22,7 +22,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::with(['user:id,name', 'customer:id,name', 'package', 'menus'])->latest()->get();
+        $orders = Order::with(['user:id,name', 'customer:id,name,phone', 'package', 'menus'])->latest()->get();
         $tanggals = DB::table('orders')
                         ->selectRaw("DISTINCT DATE_FORMAT(created_at, '%b %Y') as tanggal")
                         ->get();
@@ -40,6 +40,7 @@ class OrderController extends Controller
             'id' => $order->id,
             'code' => $order->code,
             'customer' => $order->customer->name,
+            'phone' => $order->customer->phone,
             'package' => $order->package->name,
             'payment_method' => $order->payment_method,
             'total' => $total,

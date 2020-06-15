@@ -52,9 +52,9 @@
                       <th>No</th>
                       <th>Kode Pemesanan</th>
                       <th>Nama Pemesan</th>
+                      <th>Whatsapp</th>
                       <th>Paket Pesanan</th>
                       <th>Pembayaran Via</th>
-                      <th>Harga</th>
                       <th>Status</th>
                       <th>Actions</th>
                     </tr>
@@ -83,18 +83,9 @@
           {data: 'DT_RowIndex', name: 'DT_RowIndex'},
           {data: 'code', name: 'code'},
           {data: 'customer', name: 'customer'},
+          { data: 'phone', name: 'phone' },
           {data: 'package', name: 'package'},
           {data: 'payment_method', name: 'payment_method'},
-          {
-            data: 'total',
-            name: 'total',
-            render: function(data) {
-              return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR'
-              }).format(data)
-            }
-          },
           {data: 'status', name: 'status'},
           {
             data: 'id',
