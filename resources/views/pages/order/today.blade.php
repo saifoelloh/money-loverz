@@ -26,10 +26,10 @@
                       <th>No</th>
                       <th>Kode Pemesanan</th>
                       <th>Nama Pemesan</th>
+                      <th>No Whatsapp</th>
                       <th>Lokasi Pemesan</th>
                       <th>Paket Pesanan</th>
                       <th>Pesanan</th>
-                      <th>Harga</th>
                       <th>Status</th>
                       <th>Actions</th>
                     </tr>
@@ -58,19 +58,10 @@
           {data: 'DT_RowIndex', name: 'DT_RowIndex'},
           {data: 'code', name: 'code'},
           {data: 'customer', name: 'customer'},
+          {data: 'phone', name: 'phone'},
           {data: 'kecamatan', name: 'kecamatan'},
           {data: 'package', name: 'package'},
           {data: 'menu', name: 'menu'},
-          {
-            data: 'price',
-            name: 'price',
-            render: function(data) {
-              return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR'
-              }).format(data)
-            }
-          },
           {data: 'status', name: 'status'},
           {
             data: 'id',
