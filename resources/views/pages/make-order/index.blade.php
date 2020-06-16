@@ -12,7 +12,7 @@
             </button>
           </div>
         @endif
-        <div class="card w-75 mx-auto">
+        <div class="card mx-auto">
           <div class="card-body">
             <h2 class="text-center">Pesanan : <span class="badge badge-info">{{ $order->code }}</span></h2>
             <div class="row justify-content-between">
@@ -41,13 +41,15 @@
                     <i class="fas fa-check ml-2"></i>
                   </li>
                   <li>
-                    Paket {{ ucwords($order->package->name) }} | {{ $order->package->total_items }} Item
+                    Paket {{ ucwords($order->package->name) }}
                     <i class="fas fa-box ml-2"></i>
                   </li>
                 </ul>
               </div>
             </div>
-            <h5 class="text-center">Pilih Menu</h5>
+            <h5 class="text-center">
+              Pilih Menu | {{ sizeof($orders)."/".$order->package->total_items }} Item
+            </h5>
             <hr>
 
             <table class="table table-borderless table-hover text-center">
@@ -106,7 +108,7 @@
                 @endforeach
 
                 <tr>
-                  <th class="text-left" colspan="6">Total</th>
+                  <th class="text-left bg-primary" colspan="6"></th>
                   <td>
                     {{ "Rp ".number_format($total, 0) }}
                   </td>
@@ -117,7 +119,7 @@
                   <form action="{{ route('make-order.add', $code) }}" method="POST">
                     @csrf
                     <tr>
-                      <td>{{ $i }}</td>
+                      <td></td>
                       <td>
                         <div class="form-group">
                           <select class="form-control js-example-basic-single" name="menu">
@@ -156,6 +158,7 @@
                           </select>
                         </div>
                       </td>
+                      <td></td>
                       <td>
                         <button type="submit" class="btn btn-success">
                           <div class="fas fa-plus"></div>
@@ -171,60 +174,64 @@
 
             <hr>
 
-            <form action="{{ route('make-order.checkout', $code)}}" method="POST" accept-charset="utf-8">
-              @method("PUT")
-              @csrf
-              <div class="row">
-                <div class="col-md-6">
+            <!-- Konfirmasi Pembelian -->
+            @if ($limit == 0)
+              <form action="{{ route('make-order.checkout', $code)}}" method="POST" accept-charset="utf-8">
+                @method("PUT")
+                @csrf
+                <div class="row">
+                  <div class="col-md-6">
 
-                  <h6 class="ml-3">Metode Pembayaran</h6>
-                  <div class="form-group">
-                    <div class="input-group mb-4">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-money"></i></span>
+                    <h6 class="ml-3">Metode Pembayaran</h6>
+                    <div class="form-group">
+                      <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-money"></i></span>
+                        </div>
+                        <select class="form-control" name="pembayaran">
+                          <option value="transfer">(Transfer) Bank BRI</option>
+                          <option value="transfer">(Transfer) Bank BCA</option>
+                          <option value="transfer">(Transfer) Bank Mandiri</option>
+                          <option value="transfer">(Transfer) Bank Jateng</option>
+                          <option value="cash on delivery">COD</option>
+                        </select>
                       </div>
-                      <select class="form-control" name="pembayaran">
-                        <option value="transfer">(Transfer) Bank BRI</option>
-                        <option value="transfer">(Transfer) Bank BCA</option>
-                        <option value="transfer">(Transfer) Bank Mandiri</option>
-                        <option value="transfer">(Transfer) Bank Jateng</option>
-                        <option value="cash on delivery">COD</option>
-                      </select>
+                    </div>
+                    <div class="text-center">
+                      <h5>(Transfer) Bank BRI</h5>
+                      <p>
+                        3033-01-000000-30-9<br>
+                        A/N LUTTER ARIESTINO
+                      </p>  
                     </div>
                   </div>
-                  <div class="text-center">
-                    <h5>(Transfer) Bank BRI</h5>
-                    <p>
-                      3033-01-000000-30-9<br>
-                      A/N LUTTER ARIESTINO
-                    </p>  
-                  </div>
-                </div>
 
-                <div class="col-md-6">
-                  <h6 class="ml-3">Alamat Gedung / Rumah</h6>
-                  <div class="form-group">
-                    <div class="input-group mb-4">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                  <div class="col-md-6">
+                    <h6 class="ml-3">Alamat Gedung / Rumah</h6>
+                    <div class="form-group">
+                      <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                        </div>
+                        <input class="form-control text-disabled" type="text" name="kecamatan" disabled value="Kecamatan {{ ucwords($order->kecamatan) }}">
                       </div>
-                      <input class="form-control text-disabled" type="text" name="kecamatan" disabled value="Kecamatan {{ ucwords($order->kecamatan) }}">
+                    </div>
+                    <div class="form-group">
+                      <textarea class="form-control" name="alamat"></textarea>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <textarea class="form-control" name="alamat"></textarea>
+
+                  <div class="col-md-12"><hr></div>
+                  <div class="col-md-6">
+                    <button class="btn btn-outline-warning">Batalkan Pesanan</button>
+                  </div>
+                  <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary float-right">Konfirmasi Pesanan</button>
                   </div>
                 </div>
-
-                <div class="col-md-12"><hr></div>
-                <div class="col-md-6">
-                  <button class="btn btn-outline-warning">Batalkan Pesanan</button>
-                </div>
-                <div class="col-md-6">
-                  <button type="submit" class="btn btn-primary float-right">Konfirmasi Pesanan</button>
-                </div>
-              </div>
-            </form>
+              </form>
+            @endif
+            <!-- END Konfirmasi Pembelian -->
 
           </div>
         </div>
