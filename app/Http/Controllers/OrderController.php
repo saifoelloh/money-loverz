@@ -228,6 +228,7 @@ class OrderController extends Controller
           'id' => $item->order->id,
           'code' => $item->order->code,
           'customer' => $item->order->customer->name,
+          'phone' => $item->order->customer->phone,
           'location' => $item->order->kecamatan,
           'package' => $item->order->package->name,
           'menu' => $item->menu->name,
@@ -254,8 +255,6 @@ class OrderController extends Controller
     public function ubah(Request $request, $id) {
       $admin = auth()->user();
       $order = Order::find($id);
-
-      dd($request->files->bukti, $request->package);
 
       if (sizeof($request->files) < 1) {
         $photo = $order->photo;
@@ -288,7 +287,6 @@ class OrderController extends Controller
       $tahun = explode(" ", $request->sort)[1];
       $currentDate = date("d-m-Y");
       $orders = Order::whereYear("created_at", $tahun)
-        ->whereMonth("created_at", $bulan)
         ->get();
       $nameFormat = "Rekap $currentDate.xlsx";
       $collection = new OrdersExport($orders);
