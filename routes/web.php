@@ -25,6 +25,15 @@ Route::group([
   Route::delete('/{code}/{menuId}/{antar}', 'MakeOrderController@destroy')->name('.destroy');
 });
 
+// Ubah ini
+Route::group([
+  'as' => 'list-order',
+  'prefix' => 'list-order'
+], function() {
+  Route::get('/', 'ListOrderController@index')->name('.index');
+});
+
+
 Auth::routes();
 
 Route::group(['middleware' => ['auth', 'check-role']], function () {
