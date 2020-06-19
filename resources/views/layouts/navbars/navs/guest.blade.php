@@ -47,11 +47,11 @@
                     </a>
                 </li>
                 <li class="nav-item ml-lg-4 pt-1">
-                    <a href="#" class="btn btn-block btn-info btn-icon" data-toggle="modal" data-target="#modal-form">
+                    <a href="#" class="btn btn-block btn-info btn-icon" data-toggle="modal" data-target="#modal-check">
                     <span class="btn-inner--icon">
                         <i class="fa fa-shopping-cart"></i>
                     </span>
-                    <span class="nav-link-inner--text">Buat Pesanan</span>
+                    <span class="nav-link-inner--text">Order Sekarang</span>
                     </a>
                 </li>
                 </ul>
