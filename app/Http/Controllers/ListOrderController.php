@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Package;
 use App\User;
 use App\Menu;
 use App\MenuOrder;
@@ -13,10 +14,15 @@ class ListOrderController extends Controller
     public function find(Request $request)
     {
       $customer = User::where('phone', $request->phone)->first();
+      $packages = Package::all(['id', 'name']);
+      $order = new Order();
+
       return view('listorder', [
         'customer' => $customer,
         'orders' => $customer->orders,
-        'count' => sizeof($customer->orders)
+        'count' => sizeof($customer->orders),
+        'packages' => $packages,
+        'order' => $order,
       ]);
     }
 
