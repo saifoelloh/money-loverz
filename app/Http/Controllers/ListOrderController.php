@@ -10,24 +10,14 @@ use Illuminate\Http\Request;
 
 class ListOrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        
-        return view('listorder');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function find(Request $request)
     {
-        //
+      $customer = User::where('phone', $request->phone)->first();
+      return view('listorder', [
+        'customer' => $customer,
+        'orders' => $customer->orders,
+        'count' => sizeof($customer->orders)
+      ]);
     }
 
 
