@@ -12,12 +12,12 @@
                         <tr>
                             <th width="20%">No Telp.</th>
                             <td width="10">:</td>
-                            <td>0812 345 678</td>
+                            <td>{{ $customer->phone }}</td>
                         </tr>
                         <tr>
                             <th>Email</th>
                             <td>:</td>
-                            <td>AhmadSubagyo@gmail.com</td>
+                            <td>{{ $customer->email }}</td>
                         </tr>
                     </table>
                 </div>
@@ -44,28 +44,26 @@
                 </tr>
               </thead>
               <tbody>
+                @foreach ($orders as $id => $order)
+                  @php
+                    $tanggal = date_format(date_create($order->created_at), "d F Y");
+                  @endphp
                   <tr>
-                      <td>1.</td>
-                      <td>09012323</td>
-                      <td>12 Mar 2020</td>
-                      <td>
-                          <span class="badge badge-primary">Created</span>
-                      </td>
-                      <td>
-                          <button class="btn btn-sm btn-warning">Detail</button>
-                      </td>
+                    <td>{{ $id+1 }}</td>
+                    <td>{{ $order->code }}</td>
+                    <td>{{ $tanggal }}</td>
+                    <td>
+                      <span class="badge badge-primary">
+                        {{ $order->status }}
+                      </span>
+                    </td>
+                    <td>
+                      <a href="{{ route('make-order.index', $order->code )}}" class="btn btn-sm btn-warning">
+                        Detail 
+                      </a>
+                    </td>
                   </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>03112427</td>
-                    <td>24 Feb 2020</td>
-                    <td>
-                        <span class="badge badge-success">Finish</span>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-warning">Detail</button>
-                    </td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
@@ -79,5 +77,6 @@
 <!-- Modal -->
 
 @include('layouts.modals.checkorder') 
+@include('layouts.modals.createorder')
 
 @endsection
