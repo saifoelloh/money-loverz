@@ -30,7 +30,7 @@ Route::group([
   'as' => 'list-order',
   'prefix' => 'list-order'
 ], function() {
-  Route::get('/', 'ListOrderController@index')->name('.index');
+  Route::post('/search', 'ListOrderController@find')->name('.find');
 });
 
 
