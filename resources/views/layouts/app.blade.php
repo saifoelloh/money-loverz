@@ -64,6 +64,16 @@
     @include('layouts.footers.guest')
     @endguest
 
+    <script src="{{ asset('js/app.js') }}" charset="utf-8"></script>
+    <script>
+      const lagu = new Audio("{{ asset('js/success_notification.mp3') }}")
+      Echo
+        .channel('home')
+        .listen('NewOrder', (e) => {
+          console.log(e)
+          lagu.play()
+        })
+    </script>
     <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
