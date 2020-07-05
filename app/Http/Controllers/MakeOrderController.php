@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewOrder;
 use App\Order;
 use App\User;
 use App\Menu;
@@ -73,6 +74,7 @@ class MakeOrderController extends Controller
           'waktu' => $request->waktu
         ]);
         if ($order) {
+          event(new NewOrder($order));
           return redirect(route('make-order.index', $code));
         }
       } catch (\Throwable $th) {
@@ -188,4 +190,17 @@ class MakeOrderController extends Controller
         ]);
       }
     }
+
+  /**
+   * undocumented function
+   *
+   * @return void
+   */
+  public function list($phone)
+  {
+    $customer = User::where('phone', $phone)->first();
+    dd($customer);
+    return $customer->orders;
+  }
+  
 }
