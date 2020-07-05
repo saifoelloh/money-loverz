@@ -60,7 +60,7 @@ class MakeOrderController extends Controller
         $customer = User::create([
           'name' => $request->name,
           'email' => $request->email,
-          'gender' => $request->gender,
+          'gender' => 'male',
           'phone' => $request->phone,
         ]);
       }

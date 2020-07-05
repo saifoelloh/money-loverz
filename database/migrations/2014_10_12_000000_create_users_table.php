@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->enum('gender', [
               'male',
               'female'
-            ]);
+            ])->default('male');
             $table->enum('role', [
               'user',
               'admin',
