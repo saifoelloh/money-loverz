@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\NewOrder;
 use Illuminate\Http\Request;
 
 /*
@@ -12,6 +13,13 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('wss', function () {
+  event(new NewOrder('hello world'));
+  return [
+    'message' => 'Hello World'
+  ];
+});
 
 Route::post('/foo', function (Request $request) {
   $user = App\User::create($request->merge([
