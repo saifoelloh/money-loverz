@@ -53,7 +53,6 @@ class MakeOrderController extends Controller
     {
       $orderCount = Order::whereDate('created_at', '=', date('Y-m-d'))->count();
       $code = "PKG".sprintf('%02d', $request->package).date("dmy").sprintf('%04d', $orderCount + 1);
-      $clock = date("H.i", time());
 
       $customer = User::where('phone', $request->phone)->first();
       if ($customer==null) {
@@ -133,32 +132,23 @@ class MakeOrderController extends Controller
     {
       $order = Order::where('code', $code)->first();
       $menu = Menu::where('name', $request->menu)->first();
-      $clock = date("H.i", time());
 
-      if ($clock < 17) {
-        if ($order->menus()->count() < $order->package->total_items) {
-          try {
-            $order->menus()->attach($menu->id, [
-              'antar' => $request->antar,
-              'optional' => $request->optional,
-            ]);
-            return redirect(route('make-order.index', $code))->with([
-              'status' => 'Pesanan berhasil ditambahkan',
-              'success' => true
-            ]);
-          } catch (Exception $e) {
-            return redirect(route('make-order.index', $code))->with([
-              'status' => 'Gagal menambah pesanan',
-              'success' => false
-            ]);
-          }
-        }
-      } else {
+      try {
+        $order->menus()->attach($menu->id, [
+          'antar' => $request->antar,
+          'optional' => $request->optional,
+        ]);
         return redirect(route('make-order.index', $code))->with([
-          'status' => 'Maaf kami sudah tutup untuk hari ini',
+          'status' => 'Pesanan berhasil ditambahkan',
+          'success' => true
+        ]);
+      } catch (Exception $e) {
+        return redirect(route('make-order.index', $code))->with([
+          'status' => 'Gagal menambah pesanan',
           'success' => false
         ]);
       }
+
     }
 
     /**
