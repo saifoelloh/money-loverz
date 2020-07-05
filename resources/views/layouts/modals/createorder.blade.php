@@ -20,7 +20,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
-              <input class="form-control" placeholder="John Smith" type="text" name="name">
+              <input class="form-control" placeholder="John Smith" type="text" name="name" value="{{ isset($customer) ? $customer->nama : '' }}">
             </div>
           </div>
           <div class="form-group row">
@@ -30,7 +30,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-phone"></i></span>
                 </div>
-                <input class="form-control" placeholder="08xxxx" type="text" name="phone">
+                <input class="form-control" placeholder="08xxxx" type="text" name="phone" value="{{ isset($customer) ? $customer->phone : '' }}">
               </div>
             </div>
             <div class="col-sm-6">
@@ -39,7 +39,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                 </div>
-                <input class="form-control" placeholder="Email" type="email" name="email">
+                <input class="form-control" placeholder="Email" type="email" name="email" value="{{ isset($customer) ? $customer->email : '' }}">
               </div>
             </div>
           </div>
