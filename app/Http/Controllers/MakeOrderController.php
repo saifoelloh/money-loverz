@@ -130,7 +130,7 @@ class MakeOrderController extends Controller
     public function add(Request $request, $code)
     {
       $order = Order::where('code', $code)->first();
-      $menu = Menu::where('name', $request->menu)->first();
+      $menu = Menu::find($request->menu);
 
       try {
         $order->menus()->attach($menu->id, [
