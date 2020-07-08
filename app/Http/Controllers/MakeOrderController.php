@@ -19,7 +19,7 @@ class MakeOrderController extends Controller
     public function index($code) {
         $order = Order::with(['user:id,name,phone', 'package:id,name,type,total_items', 'menus'])->where('code', $code)->first();
         $menuOrder = new MenuOrder();
-        $menus = Menu::where('type', $order->package->type)->get(['name', 'price']);
+        $menus = Menu::where('type', $order->package->type)->get(['id', 'name', 'price']);
         $tambahans = $menuOrder->daftar['optional'];
 
         return view('pages.make-order.index', [
@@ -73,7 +73,6 @@ class MakeOrderController extends Controller
           'waktu' => $request->waktu
         ]);
         if ($order) {
-          event(new NewOrder($order));
           return redirect(route('make-order.index', $code));
         }
       } catch (\Throwable $th) {
