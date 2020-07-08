@@ -70,66 +70,26 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4">
-            <div class="card border-secondary mb-3" style="min-height: 20em;">
-                <div class="card-header bg-info text-white">Paket Diamond</div>
+          @foreach ($packages as $index => $package)
+            <div class="col-md-4" data-toggle="modal" data-toggle="modal" data-target="#modal-validation">
+              <div class="card border-secondary mb-3" style="min-height: 20em;">
+                <div class="card-header bg-info text-white">Paket {{ucwords($package->title)}}</div>
                 <div class="card-body">
-                    <h5 class="card-title">Rp. 360.000,-</h5>
-                    <p class="card-text">Bebas pilih menu sesukamu.<br><span class="badge badge-danger">Free</span> pilih nasi merah / kentang rebus.<br><span class="badge badge-danger">Free</span> buah potong setiap hari.</p>
+                  <h5 class="card-title">
+                    {{ "Rp ".number_format($package->price, 0) }}
+                  </h5>
+                  <p class="card-text">
+                    {{ $package->description }}
+                  </p>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">20x Makan Siang (4 minggu).</small>
+                  <small class="text-muted">
+                    {{ $package->total_items."x" }} Makan Siang (4 minggu).
+                  </small>
                 </div>
+              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card border-secondary mb-3" style="min-height: 20em;">
-                <div class="card-header bg-warning text-white">Paket Gold</div>
-                <div class="card-body">
-                    <h5 class="card-title">Rp. 260.000,-</h5>
-                    <p class="card-text">Bebas pilih menu sesukamu.<br><span class="badge badge-danger">Free</span> pilih nasi merah / kentang rebus.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">15x Makan Siang (3 minggu).</small>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card border-secondary mb-3" style="min-height: 20em;">
-                <div class="card-header bg-success text-white">Paket Platinum</div>
-                <div class="card-body">
-                    <h5 class="card-title">Rp. 180.000,-</h5>
-                    <p class="card-text">Bebas pilih menu sesukamu.<br><span class="badge badge-danger">Free</span> pilih nasi merah.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">10x Makan Siang (2 minggu).</small>
-                </div>
-            </div>
-          </div>
-          <div class="offset-md-2 col-md-4">
-            <div class="card border-secondary mb-3">
-                <div class="card-header bg-default text-white">Paket Silver</div>
-                <div class="card-body">
-                    <h5 class="card-title">Rp. 95.000,-</h5>
-                    <p class="card-text">Bebas pilih menu sesukamu.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">5x Makan Siang (1 minggu).</small>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card border-secondary mb-3">
-                <div class="card-header bg-primary text-white">Paket Coba</div>
-                <div class="card-body">
-                    <h5 class="card-title">Harga sesuai katalog</h5>
-                    <p class="card-text">Bebas pilih menu sesukamu.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">3x Makan Siang.</small>
-                </div>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>
@@ -168,7 +128,8 @@
     </div>
 
     <!-- Modal -->
-    @include('layouts.modals.createorder')
+    @include('layouts.modals.validation')
     @include('layouts.modals.checkorder')
+    @include('layouts.modals.createorder')
 
 @endsection
