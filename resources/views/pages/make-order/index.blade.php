@@ -217,7 +217,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <textarea class="form-control" name="alamat"></textarea>
+                      <textarea class="form-control text-disabled" name="alamat" disabled>{{ $order->user->address }}</textarea>
                     </div>
                   </div>
 
