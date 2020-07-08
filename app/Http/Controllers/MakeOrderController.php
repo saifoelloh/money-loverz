@@ -108,10 +108,9 @@ class MakeOrderController extends Controller
           'payment_method' => $request->pembayaran
         ]);
         if ($result) {
-          return redirect(route('landing-page'))->with([
-            'status' => 'Silahkan tunggu konfirmasi dari admin via WA',
-            'success' => true
-          ]);
+          return redirect(route('list-order.find', [
+            'phone' => $order->user->phone,
+          ]));
         }
       } catch (Exception $e) {
         return redirect(route('landing-page'))->with([
