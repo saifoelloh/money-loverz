@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 class LandingPageController extends Controller
 {
     public function index(Request $request) {
-        $packages = Package::all(['id', 'name']);
+        $packages = Package::all();
         $order = new Order();
         $menus = Menu::all()->groupBy('type');
         return view('welcome', [
