@@ -62,7 +62,9 @@
                   <th>Tanggal Pengiriman</th>
                   <th>Tambahan</th>
                   <th>Total</th>
-                  <th>Aksi</th>
+                  @if ($order->status != "confirmed")
+                    <th>Aksi</th>
+                  @endif
                 </tr>
               </thead>
               <tbody>
@@ -88,31 +90,35 @@
                     <td>{{ $tanggal }}</td>
                     <td>{{ $item->pivot->optional }}</td>
                     <td>{{ "Rp ".number_format($subTotal, 0) }}</td>
-                    <td>
-                      @if ($tanggal != date("D, d-M-Y"))
-                        <form action="{{route('make-order.destroy', [
-                          'code' => $code,
-                          'menuId' => $item->id,
-                          'antar' => $item->pivot->antar
-                        ])}}" method="POST">
-                        @method("DELETE")
-                        @csrf
-                        <button type="submit" class="btn btn-outline-danger btn-sm">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                        </form>
-                      @endif
-                    </td>
+                    @if ($order->status != "confirmed")
+                      <td>
+                        @if ($tanggal != date("D, d-M-Y"))
+                          <form action="{{route('make-order.destroy', [
+                            'code' => $code,
+                            'menuId' => $item->id,
+                            'antar' => $item->pivot->antar
+                          ])}}" method="POST">
+                          @method("DELETE")
+                          @csrf
+                          <button type="submit" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                          </form>
+                        @endif
+                      </td>
+                    @endif
                   </tr>
                   @php($i++)
                 @endforeach
 
-                <tr>
-                  <th class="text-left bg-primary" colspan="6"></th>
-                  <td>
-                    {{ "Rp ".number_format($total, 0) }}
-                  </td>
-                </tr>
+                @if ($limit != $order->package->total_items)
+                  <tr>
+                    <th class="text-left bg-primary" colspan="6"></th>
+                    <td>
+                      {{ "Rp ".number_format($total, 0) }}
+                    </td>
+                  </tr>
+                @endif
 
                 <!-- START Form -->
                 @if ($limit > 0 || $isEvent)
@@ -175,7 +181,7 @@
             <hr>
 
             <!-- Konfirmasi Pembelian -->
-            @if ($limit == 0)
+            @if ($limit == 0 && $order->status!=="confirmed")
               <form action="{{ route('make-order.checkout', $code)}}" method="POST" accept-charset="utf-8">
                 @method("PUT")
                 @csrf
@@ -217,7 +223,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <textarea class="form-control text-disabled" name="alamat" disabled>{{ $order->user->address }}</textarea>
+                      <textarea class="form-control text-disabled" name="alamat">{{ $order->user->address }}</textarea>
                     </div>
                   </div>
 
