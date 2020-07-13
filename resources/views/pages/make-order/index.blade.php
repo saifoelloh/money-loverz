@@ -111,7 +111,7 @@
                   @php($i++)
                 @endforeach
 
-                @if ($limit != $order->package->total_items)
+                @if ($limit != $order->package->total_items && $order->package->price > 0)
                   <tr>
                     <th class="text-left bg-primary" colspan="6"></th>
                     <td>

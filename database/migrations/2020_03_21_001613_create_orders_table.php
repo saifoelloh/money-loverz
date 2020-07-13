@@ -32,7 +32,8 @@ class CreateOrdersTable extends Migration
             $table->enum('waktu', [
               'dinner',
               'lunch',
-              'custom'
+              'dinner + lunch',
+              'event',
             ])->default('lunch');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')

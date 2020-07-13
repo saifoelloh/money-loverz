@@ -52,7 +52,8 @@ class Order extends Model
         'waktu' => [
           'dinner',
           'lunch',
-          'custom'
+          'dinner + lunch',
+          'event',
         ]
     ];
 
