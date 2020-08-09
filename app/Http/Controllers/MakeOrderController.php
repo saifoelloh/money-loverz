@@ -56,6 +56,7 @@ class MakeOrderController extends Controller
 
       $customer = User::where('phone', $request->phone)->first();
       if ($customer==null) {
+        // event(new NewOrder($customer));
         $customer = User::create([
           'name' => $request->name,
           'email' => $request->email,
@@ -74,7 +75,6 @@ class MakeOrderController extends Controller
           'waktu' => $request->waktu
         ]);
         if ($order) {
-          event(new NewOrder($order));
           return redirect(route('make-order.index', $code));
         }
       } catch (\Throwable $th) {
@@ -104,7 +104,6 @@ class MakeOrderController extends Controller
       $order = Order::where('code', $code)->first();
       try {
         $result = $order->update([
-          'status' => 'confirmed',
           'alamat' => $request->alamat,
           'payment_method' => $request->pembayaran
         ]);

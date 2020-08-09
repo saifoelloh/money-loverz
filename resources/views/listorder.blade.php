@@ -46,7 +46,7 @@
               <tbody>
                 @foreach ($orders as $id => $order)
                   @php
-                    $tanggal = date_format(date_create($order->created_at), "d F Y");
+                    $tanggal = date_format(date_create($order->created_at), "H:i D, d F Y");
                   @endphp
                   <tr>
                     <td>{{ $id+1 }}</td>

@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Package;
 use App\User;
-use App\Menu;
-use App\MenuOrder;
 use Illuminate\Http\Request;
 
 class ListOrderController extends Controller
 {
     public function find(Request $request)
     {
-      $customer = User::where('phone', $request->phone)->first();
+      $customer = User::where('phone', $request->phone)->with('orders')->first();
 
       if ($customer) {
         $packages = Package::all(['id', 'name']);

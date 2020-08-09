@@ -20,7 +20,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
-              <input class="form-control" placeholder="John Smith" type="text" name="name" value="{{ isset($customer) ? $customer->nama : '' }}">
+              <input class="form-control" placeholder="John Smith" type="text" name="name" value="{{ isset($customer) ? $customer->name : '' }}">
             </div>
           </div>
           <div class="form-group row">
@@ -103,12 +103,7 @@
 
 
           <div class="row">
-            <div class="col-12 col-md-9">
-              <a href="#" class="btn btn-outline-white d-block d-md-inline-block ml-auto mb-2" data-dismiss="modal" data-toggle="modal" data-target="#modal-check">
-                Cek Pesanan
-              </a>
-            </div>
-            <div class="col-12 col-md-3 text-right">
+            <div class="col-12 text-center">
               <button type="submit" class="btn btn-white btn-block ml-auto">
                 Buat Pesanan
               </button>

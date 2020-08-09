@@ -159,7 +159,6 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $admin = auth()->user();
       $order = Order::find($id);
 
       if ($request->bukti == null) {
@@ -178,7 +177,6 @@ class OrderController extends Controller
           'jalan' => $request->jalan,
           'bukti' => $photo,
           'package_id' => $request->package,
-          'user_id' => $admin->id,
         ]);
         if ($result) {
           return redirect(route('order.index'));

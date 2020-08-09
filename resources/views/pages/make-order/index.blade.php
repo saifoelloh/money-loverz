@@ -132,20 +132,15 @@
                     @csrf
                     <tr>
                       <td></td>
-                      <td>
+                      <td colspan="2">
                         <div class="form-group">
                           <select class="form-control js-example-basic-single" name="menu">
                             @foreach ($menus as $menu)
                               <option value="{{ $menu->id }}">
-                              {{ ucwords($menu->name) }}
+                              {{ ucwords($menu->name)." - Rp ".number_format($menu->price, 0) }}
                               </option>
                             @endforeach
                           </select>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="form-group">
-                          <input class="form-control" type="text" id="price" value="Rp 0" disabled>
                         </div>
                       </td>
                       <td>
@@ -187,7 +182,7 @@
             <hr>
 
             <!-- Konfirmasi Pembelian -->
-            @if ($limit == 0 && $order->status!=="confirmed")
+            @if ($limit == 0 && $order->status==="created")
               <form action="{{ route('make-order.checkout', $code)}}" method="POST" accept-charset="utf-8">
                 @method("PUT")
                 @csrf
