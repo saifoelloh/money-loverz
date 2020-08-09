@@ -61,7 +61,7 @@
           <div class="form-group">
             <label for="name" class="form-label">Alamat Lengkap</label>
             <div class="input-group input-group-alternative">
-              <textarea class="form-control" name="alamat"></textarea>
+              <textarea class="form-control" name="address"></textarea>
             </div>
           </div>
           <div class="form-group row">
