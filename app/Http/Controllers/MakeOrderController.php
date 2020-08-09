@@ -74,6 +74,7 @@ class MakeOrderController extends Controller
           'waktu' => $request->waktu
         ]);
         if ($order) {
+          event(new NewOrder($order));
           return redirect(route('make-order.index', $code));
         }
       } catch (\Throwable $th) {
