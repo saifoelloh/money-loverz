@@ -50,14 +50,16 @@
                   <span class="nav-link-inner--text">{{ __('Kontak Kami') }}</span>
                 </a>
               </li>
-              <li class="nav-item ml-lg-4 pt-1">
-                <a href="#" class="btn btn-block btn-info btn-icon" data-toggle="modal" data-target="#modal-validation">
-                  <span class="btn-inner--icon">
-                    <i class="fa fa-shopping-cart"></i>
-                  </span>
-                  <span class="nav-link-inner--text">Order Sekarang</span>
-                </a>
-              </li>
+              @if ($_SERVER['REQUEST_URI']=="/")
+                <li class="nav-item ml-lg-4 pt-1">
+                  <a href="#" class="btn btn-block btn-info btn-icon" data-toggle="modal" data-target="#modal-validation">
+                    <span class="btn-inner--icon">
+                      <i class="fa fa-shopping-cart"></i>
+                    </span>
+                    <span class="nav-link-inner--text">Order Sekarang</span>
+                  </a>
+                </li>
+              @endif
             </ul>
         </div>
     </div>
