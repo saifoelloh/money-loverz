@@ -104,6 +104,7 @@ class MakeOrderController extends Controller
       $order = Order::where('code', $code)->first();
       try {
         $result = $order->update([
+          'status' => 'checking',
           'alamat' => $request->alamat,
           'payment_method' => $request->pembayaran
         ]);

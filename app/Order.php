@@ -29,6 +29,7 @@ class Order extends Model
         ],
         'status' => [
             'created',
+            'checking',
             'confirmed',
             'proceed',
             'completed',

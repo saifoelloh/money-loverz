@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             ])->default('transfer');
             $table->enum('status', [
                 'created',
+                'checking',
                 'confirmed',
                 'proceed',
                 'complete',
