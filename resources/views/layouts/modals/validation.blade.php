@@ -19,7 +19,7 @@
             <span class="nav-link-inner--text">Sudah Order</span>
           </button>
 
-          <button class="btn btn-info btn-icon btn-block" data-toggle="modal" data-target="#modal-form">
+          <button class="btn btn-danger btn-icon btn-block" data-toggle="modal" data-target="#modal-form">
             <span class="btn-inner--icon">
               <i class="fa fa-times"></i>
             </span>

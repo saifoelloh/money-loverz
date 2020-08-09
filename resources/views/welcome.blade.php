@@ -84,7 +84,7 @@
                 </div>
                 <div class="card-footer">
                   <small class="text-muted">
-                    {{ $package->total_items."x" }} Makan Siang (4 minggu).
+                    {{ $package->total_items."x" }} Makan Siang.
                   </small>
                 </div>
               </div>

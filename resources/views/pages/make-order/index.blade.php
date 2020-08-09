@@ -88,7 +88,13 @@
                     <td>{{ "Rp ".number_format($item->price, 0) }}</td>
                     <td>{{ $item->pivot->total }}</td>
                     <td>{{ $tanggal }}</td>
-                    <td>{{ $item->pivot->optional }}</td>
+                    <td>
+                      {{
+                        $item->pivot->optional!=""
+                          ? $item->pivot->optional
+                          : "-"
+                      }}
+                    </td>
                     <td>{{ "Rp ".number_format($subTotal, 0) }}</td>
                     @if ($order->status != "confirmed")
                       <td>
